@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update course [[${course.title}]]</title>
+</head>
+<body>
+<a data-th-href="@{/musical-school/courses/course/{courseId}(courseId=${course.id})}">Course</a>
+<h1>Update course [[${course.title}]]</h1>
+<form method="post" data-th-action="@{/musical-school/courses/course/{courseId}/edit(courseId=${course.id})}">
+    <label>
+        Name: <br>
+        <input type="text" name="title" data-th-value="${course.title}">
+    </label><br>
+    <label>
+        Name Curriculum: <br>
+        <input type="text" name="titleCurriculum" data-th-value="${course.titleCurriculum}">
+    </label><br>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

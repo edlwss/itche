@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses Music-school</title>
+</head>
+<body>
+<a data-th-href="@{/musical-school/courses/create}">Create new course</a>
+<h1>Курсы</h1>
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-th-each="course :${courses}">
+        <td data-th-text="${course.id}"></td>
+        <td>
+            <a data-th-href="@{/musical-school/courses/course/{courseId}(courseId=${course.id})}"
+            data-th-text="${course.title}"> </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
