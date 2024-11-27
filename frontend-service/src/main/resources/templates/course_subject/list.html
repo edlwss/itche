@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Курсы и предметы</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .course {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .course-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .subject-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .subject-item {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Курсы и их предметы</h1>
+
+<!-- Сначала группируем курсы -->
+<div data-th-each="course : ${courseSubjects}">
+    <div class="course">
+        <!-- Показываем название курса -->
+        <div class="course-title" data-th-text="${course.course.title}">Название курса</div>
+        <ul class="subject-list">
+            <!-- Вложенный цикл для предметов этого курса -->
+            <li data-th-text="${course.subject.title}" class="subject-item">Название предмета</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

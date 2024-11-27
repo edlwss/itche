@@ -10,6 +10,7 @@
 
   <modules>
     <module>frontend-service</module>
+    <module>backend-service</module>
   </modules>
 
   <dependencyManagement>
