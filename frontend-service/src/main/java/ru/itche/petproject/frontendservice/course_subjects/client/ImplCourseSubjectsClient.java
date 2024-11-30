@@ -13,6 +13,7 @@ import ru.itche.petproject.frontendservice.course_subjects.entityRecord.CourseSu
 import ru.itche.petproject.frontendservice.subject.entityRecord.Subject;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,6 +23,18 @@ public class ImplCourseSubjectsClient implements CourseSubjectsRestClient{
 
     private static final ParameterizedTypeReference<List<CourseSubjects>> COUR_SUB_TYPE_REFERENCE =
             new ParameterizedTypeReference<>(){};
+
+    private static final ParameterizedTypeReference<Map<String, List<Subject>>> COURSE_SUBJECTS_TYPE_REFERENCE =
+            new ParameterizedTypeReference<>() {};
+
+    @Override
+    public Map<String, List<Subject>> getSubjectsByCourse(Integer courseId) {
+        return restClient
+                .get()
+                .uri("/musical-school-api/course-subjects/{courseId}", courseId)
+                .retrieve()
+                .body(COURSE_SUBJECTS_TYPE_REFERENCE);
+    }
 
     @Override
     public List<CourseSubjects> getAllCourseSubjects() {

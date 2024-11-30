@@ -1,8 +1,11 @@
 package ru.itche.petproject.backendservice.course_subjects.service;
 
+import ru.itche.petproject.backendservice.course.entity.Course;
 import ru.itche.petproject.backendservice.course_subjects.entity.CourseSubjects;
+import ru.itche.petproject.backendservice.subject.entity.Subject;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface CourseSubjectsService {
@@ -16,4 +19,6 @@ public interface CourseSubjectsService {
     void updateCourseSubjects(int courSubId, String details);
 
     void deleteCourseSubjects(int courSubId);
+
+    Map<String, List<Subject>> getSubjectsByCourse(Integer courseId);
 }

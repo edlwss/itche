@@ -47,6 +47,6 @@ public class SubjectController {
     @PostMapping("delete")
     public String deleteSubject(@ModelAttribute("subject") Subject subject) {
         this.subjectRestClient.deleteSubject(subject.id());
-        return "redirect:/musical-school/courses/list";
+        return "redirect:/musical-school/subjects/list";
     }
 }

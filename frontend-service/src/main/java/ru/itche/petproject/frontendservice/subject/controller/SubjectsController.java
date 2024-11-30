@@ -21,7 +21,7 @@ public class SubjectsController {
     @GetMapping("list")
     public String getSubjectsList(Model model) {
         model.addAttribute("subjects", this.subjectRestClient.getAllSubjects());
-        return "subject/detail";
+        return "subject/list";
     }
 
     @GetMapping("create")
@@ -32,6 +32,6 @@ public class SubjectsController {
     @PostMapping("create")
     public String createSubject(NewSubjectPayload payload) {
         this.subjectRestClient.createSubject(payload.title(), payload.titleSyllabus());
-        return "redirect:/musical-school/courses/list";
+        return "redirect:/musical-school/subjects/list";
     }
 }

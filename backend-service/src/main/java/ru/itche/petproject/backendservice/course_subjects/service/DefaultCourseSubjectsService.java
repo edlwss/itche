@@ -10,7 +10,10 @@ import ru.itche.petproject.backendservice.subject.entity.Subject;
 import ru.itche.petproject.backendservice.course.entity.Course;
 import ru.itche.petproject.backendservice.subject.repository.SubjectRepository;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
@@ -25,6 +28,22 @@ public class DefaultCourseSubjectsService implements CourseSubjectsService {
     @Override
     public Iterable<CourseSubjects> getAllCourseSubjects() {
         return this.courseSubjectsRepository.findAll();
+    }
+
+    @Override
+    public Map<String, List<Subject>> getSubjectsByCourse(Integer courseId) {
+        List<Object[]> rawResults = courseSubjectsRepository.findSubjectsByCourseId(courseId);
+
+        Map<String, List<Subject>> result = new LinkedHashMap<>();
+        if (!rawResults.isEmpty()) {
+            String courseTitle = (String) rawResults.get(0)[0]; // Название курса (одно для всех записей)
+            List<Subject> subjects = rawResults.stream()
+                    .map(row -> new Subject((Integer) row[1], (String) row[2], null, null)) // Создаем объекты Subject
+                    .toList();
+
+            result.put(courseTitle, subjects);
+        }
+        return result;
     }
 
     @Override

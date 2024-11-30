@@ -18,7 +18,7 @@
     <tr data-th-each="course :${courses}">
         <td data-th-text="${course.id}"></td>
         <td>
-            <a data-th-href="@{/musical-school/courses/course/{courseId}(courseId=${course.id})}"
+            <a data-th-href="@{/musical-school/course-subjects/{courseId}(courseId=${course.id})}"
             data-th-text="${course.title}"> </a>
         </td>
     </tr>
