@@ -10,15 +10,7 @@ import java.util.Optional;
 
 public interface CourseSubjectsRestClient {
 
-    Iterable<CourseSubjects> getAllCourseSubjects();
+    void addSubjectsToCourse(Integer courseId, List<Integer> subjectIds);
 
     Map<String, List<Subject>> getSubjectsByCourse(Integer courseId);
-
-    void setAllSubjectsToCourse(Integer courseId, List<Integer> subjectIds);
-
-    Optional<CourseSubjects> findCourseSubjects(int courSubId);
-
-    void updateCourseSubjects(int courSubId, String details);
-
-    void deleteCourseSubjects(int courSubId);
 }

@@ -26,59 +26,39 @@ public class DefaultCourseSubjectsService implements CourseSubjectsService {
     private final SubjectRepository subjectRepository;
 
     @Override
-    public Iterable<CourseSubjects> getAllCourseSubjects() {
-        return this.courseSubjectsRepository.findAll();
-    }
-
-    @Override
     public Map<String, List<Subject>> getSubjectsByCourse(Integer courseId) {
         List<Object[]> rawResults = courseSubjectsRepository.findSubjectsByCourseId(courseId);
 
         Map<String, List<Subject>> result = new LinkedHashMap<>();
         if (!rawResults.isEmpty()) {
-            String courseTitle = (String) rawResults.get(0)[0]; // Название курса (одно для всех записей)
+            String courseTitle = (String) rawResults.get(0)[0];
             List<Subject> subjects = rawResults.stream()
-                    .map(row -> new Subject((Integer) row[1], (String) row[2], null, null)) // Создаем объекты Subject
+                    .map(row -> new Subject((Integer) row[1], (String) row[2], null, null))
                     .toList();
-
             result.put(courseTitle, subjects);
         }
         return result;
     }
 
     @Override
-    public Optional<CourseSubjects> findCourseSubjects(int courSubId) {
-        return this.courseSubjectsRepository.findById(courSubId);
-    }
-
-    @Override
     @Transactional
-    public void setAllSubjectsToCourse(Integer courseId, List<Integer> subjectIds) {
+    public void addSubjectsToCourse(Integer courseId, List<Integer> subjectsIds) {
+        // Получаем курс из базы данных
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("Курс с id " + courseId + " не найден"));
 
-       Course course = courseRepository.findById(courseId).orElseThrow();
-        Iterable<Subject> subjects = subjectRepository.findAllById(subjectIds);
+        // Проходимся по всем ID предметов и создаем записи CourseSubjects
+        List<CourseSubjects> courseSubjects = subjectsIds.stream()
+                .map(subjectId -> {
+                    Subject subject = subjectRepository.findById(subjectId)
+                            .orElseThrow(() -> new IllegalArgumentException("Предмет с id " + subjectId + " не найден"));
 
-        List<CourseSubjects> courseSubjectsList = StreamSupport.stream(subjects.spliterator(), false)
-                .map(subject -> new CourseSubjects(null, course, subject, null))
+                    return new CourseSubjects(null, course, subject, null); // details = null
+                })
                 .toList();
 
-        this.courseSubjectsRepository.saveAll(courseSubjectsList);
+        // Сохраняем все записи в базу
+        courseSubjectsRepository.saveAll(courseSubjects);
     }
 
-
-
-    @Override
-    @Transactional
-    public void updateCourseSubjects(int courSubId, String details) {
-        this.courseSubjectsRepository.findById(courSubId)
-                .ifPresent(courSubject -> {
-                    courSubject.setDetails(details);
-                });
-    }
-
-    @Override
-    @Transactional
-    public void deleteCourseSubjects(int courSubId) {
-        this.courseSubjectsRepository.deleteById(courSubId);
-    }
 }

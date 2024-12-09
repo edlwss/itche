@@ -31,6 +31,7 @@
         <ul class="subject-list">
             <li data-th-each="subject : ${entry.value}" data-th-text="${subject.title}" class="subject-item">Название предмета</li>
         </ul>
+        <a data-th-href="@{/musical-school/course-subjects/{courseId}/add(courseId=${courseId})}">+subject</a>
     </div>
 </div>
 

@@ -16,7 +16,7 @@ public class CourseSubjects {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_subjects_generator")
-    @SequenceGenerator(name = "course_subject_generator", sequenceName = "musical_school.course_subjects_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "course_subjects_generator", sequenceName = "musical_school.course_subjects_id_seq", allocationSize = 1)
     Integer id;
 
     @ManyToOne

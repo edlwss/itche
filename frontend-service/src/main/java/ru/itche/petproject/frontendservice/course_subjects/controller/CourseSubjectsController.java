@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.itche.petproject.frontendservice.course.controller.payload.NewCoursePayload;
-import ru.itche.petproject.frontendservice.course.entityRecord.Course;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.itche.petproject.frontendservice.course_subjects.client.CourseSubjectsRestClient;
+import ru.itche.petproject.frontendservice.subject.client.SubjectRestClient;
 import ru.itche.petproject.frontendservice.subject.entityRecord.Subject;
 
 import java.util.List;
@@ -21,6 +21,7 @@ import java.util.Map;
 public class CourseSubjectsController {
 
     private final CourseSubjectsRestClient restClient;
+    private final SubjectRestClient subjectRestClient;
 
     @GetMapping
     public String getCourseSubjects(@PathVariable Integer courseId, Model model) {
@@ -29,14 +30,18 @@ public class CourseSubjectsController {
         return "course_subject/list";
     }
 
-//    @GetMapping("create")
-//    public String createCoursePage() {
-//        return "course/create";
-//    }
-//
-//    @PostMapping("create")
-//    public String createCourse(NewCoursePayload payload) {
-//        this.courseRestClient.createCourse(payload.title(), payload.titleCurriculum());
-//        return "redirect:/musical-school/courses/list";
-//    }
+    @GetMapping("add")
+    public String showAddSubjectsPage(@PathVariable Integer courseId, Model model) {
+        Iterable<Subject> subjects = subjectRestClient.getAllSubjects();
+        model.addAttribute("subjects", subjects);
+        model.addAttribute("courseId", courseId);
+        return "course_subject/add_subjects";
+    }
+
+    @PostMapping("add")
+    public String addSubjectsToCourse(@PathVariable Integer courseId,
+                                      @RequestParam List<Integer> subjectIds) {
+        restClient.addSubjectsToCourse(courseId, subjectIds);
+        return "redirect:/musical-school/course-subjects/%d".formatted(courseId);
+    }
 }

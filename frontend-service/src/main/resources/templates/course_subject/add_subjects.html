@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Добавление предметов в курс</title>
+</head>
+<body>
+<h1 data-th-text="'Добавление предметов в ' + ${courseId}"></h1>
+
+<form data-th-action="@{/musical-school/course-subjects/{courseId}/add(courseId=${courseId})}" method="post">
+  <ul>
+    <li data-th-each="subject : ${subjects}">
+      <label>
+        <input type="checkbox" name="subjectIds" data-th-value="${subject.id}">
+        <span data-th-text="${subject.title}">Название предмета</span>
+      </label>
+    </li>
+  </ul>
+  <button type="submit">Сохранить</button>
+</form>
+</body>
+</html>
