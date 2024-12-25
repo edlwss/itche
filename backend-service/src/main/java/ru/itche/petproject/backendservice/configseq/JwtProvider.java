@@ -1,4 +1,4 @@
-package ru.itche.petproject.backendservice.config;
+package ru.itche.petproject.backendservice.configseq;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

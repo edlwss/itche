@@ -1,4 +1,4 @@
-package ru.itche.petproject.backendservice.config;
+package ru.itche.petproject.backendservice.configseq;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package ru.itche.petproject.backendservice.config;
+package ru.itche.petproject.backendservice.configseq;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

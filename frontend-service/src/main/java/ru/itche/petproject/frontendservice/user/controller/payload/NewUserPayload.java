@@ -1,6 +1,4 @@
-package ru.itche.petproject.backendservice.user.controller.payload;
-
-import ru.itche.petproject.backendservice.user.entity.Role;
+package ru.itche.petproject.frontendservice.user.controller.payload;
 
 import java.time.LocalDate;
 

@@ -1,30 +1,15 @@
 package ru.itche.petproject.backendservice.user.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.itche.petproject.backendservice.user.repository.UserRepository;
+import ru.itche.petproject.backendservice.user.entity.Role;
+import ru.itche.petproject.backendservice.user.entity.User;
 
-@Service
-@RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+import java.time.LocalDate;
 
-    private final UserRepository userRepository;
+public interface UserService {
 
-    @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.userRepository.findByUsername(username)
-                .map(user -> User.builder()
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .authorities(user.getRole().getNameRole()) // Преобразуем роль в GrantedAuthority
-                        .build())
-                .orElseThrow(() -> new UsernameNotFoundException("User %s not found".formatted(username)));
-    }
+    User createUser(String lastName, String firstName, String middleName,
+                    LocalDate dateOfBirth, String photo, String phoneNumber,
+                    String email, String username, String password, Role role);
+
+
 }

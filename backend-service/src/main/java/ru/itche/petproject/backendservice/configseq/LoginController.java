@@ -1,4 +1,4 @@
-package ru.itche.petproject.backendservice.user.controller;
+package ru.itche.petproject.backendservice.configseq;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import ru.itche.petproject.backendservice.config.JwtProvider;
 
 import java.util.Map;
 

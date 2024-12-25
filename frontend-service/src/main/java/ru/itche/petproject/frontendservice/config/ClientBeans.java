@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 import ru.itche.petproject.frontendservice.course.client.ImplCourseRestClient;
+import ru.itche.petproject.frontendservice.student.client.ImplStudentRestClient;
 import ru.itche.petproject.frontendservice.subject.client.ImplSubjectRestClient;
 import ru.itche.petproject.frontendservice.course_subjects.client.ImplCourseSubjectsClient;
 import ru.itche.petproject.frontendservice.user.client.ImplUserRestController;
@@ -23,13 +24,21 @@ public class ClientBeans {
     }
 
     @Bean
-    public ImplCourseRestClient courseRestClient(RestClient restClient) {
-        return new ImplCourseRestClient(restClient);
+    public ImplCourseRestClient courseRestClient(RestClient restClient,
+                                                 HttpSession session) {
+        return new ImplCourseRestClient(restClient, session);
     }
 
     @Bean
-    public ImplSubjectRestClient subjectRestClient(RestClient restClient) {
-        return new ImplSubjectRestClient(restClient);
+    public ImplStudentRestClient studentRestClient(RestClient restClient,
+                                                  HttpSession session) {
+        return new ImplStudentRestClient(restClient, session);
+    }
+
+    @Bean
+    public ImplSubjectRestClient subjectRestClient(RestClient restClient,
+                                                   HttpSession session) {
+        return new ImplSubjectRestClient(restClient, session);
     }
 
     @Bean
