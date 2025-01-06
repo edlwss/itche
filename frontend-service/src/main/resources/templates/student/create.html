@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание студента</title>
+</head>
+<body>
+<h1>Создание студента</h1>
+<form action="/musical-school/students/create" method="post" enctype="multipart/form-data">
+    <h2>Данные пользователя</h2>
+    <label>
+        Фамилия:
+        <input type="text" name="userPayload.lastName" required>
+    </label>
+    <br>
+    <label>
+        Имя:
+        <input type="text" name="userPayload.firstName" required>
+    </label>
+    <br>
+    <label>
+        Отчество:
+        <input type="text" name="userPayload.middleName">
+    </label>
+    <br>
+    <label>
+        Дата рождения:
+        <input type="date" name="userPayload.dateOfBirth" required>
+    </label>
+    <br>
+    <label>
+        Телефон:
+        <input type="text" name="userPayload.phoneNumber" required>
+    </label>
+    <br>
+    <label>
+        Email:
+        <input type="email" name="userPayload.email" required>
+    </label>
+    <br>
+    <label>
+        Имя пользователя:
+        <input type="text" name="userPayload.username" required>
+    </label>
+    <br>
+    <label>
+        Пароль:
+        <input type="password" name="userPayload.password" required>
+    </label>
+    <br>
+    <label>
+        Фото:
+        <input type="file" name="photo" accept="image/*" required>
+    </label>
+
+    <h2>Данные студента</h2>
+    <label>Group:
+        <select name="group" id="groupSelect">
+            <option value="" disabled selected>Choose a group</option>
+            <option data-th-each="group : ${groups}"
+                    data-th-value="${group.id}"
+                    data-th-text="${group.title()}"></option>
+        </select>
+    </label>
+    <br>
+    <label>
+        Дополнительные детали:
+        <textarea name="details"></textarea>
+    </label>
+    <br>
+    <button type="submit">Создать</button>
+</form>
+</body>
+</html>

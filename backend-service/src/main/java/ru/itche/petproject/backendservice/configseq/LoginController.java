@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping
 @RequiredArgsConstructor
 public class LoginController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestParam String username, @RequestParam String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
@@ -30,6 +30,21 @@ public class LoginController {
 
         // Возвращаем токен клиенту
         return ResponseEntity.ok(Map.of("token", token));
+    }
+
+    @GetMapping("/role")
+    public String getRoleFromToken(@RequestHeader("Authorization") String token) {
+        // Убираем префикс "Bearer " из токена
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        String role = jwtProvider.getRoleFromToken(token);
+        if (role != null) {
+            return role; // Возвращаем роль
+        } else {
+            return "ROLE_ANONYMOUS"; // Возвращаем роль по умолчанию
+        }
     }
 
 }

@@ -6,6 +6,6 @@ public interface UserRestClient {
 
     UserToken authenticate(String username, String password);
 
-    boolean validateToken(String token);
+    String getUserRoleFromServer();
 
 }

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Информация об teacher</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    .photo-container {
+      flex: 1;
+      max-width: 250px;
+    }
+
+    .photo-wrapper {
+      width: 250px;
+      height: 250px;
+      overflow: hidden;
+      /*border-radius: 50%; !* Обрезка в форме круга, можно убрать для квадрата *!*/
+    }
+
+    .photo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .info-container {
+      flex: 2;
+    }
+    .info-container h2 {
+      margin-bottom: 10px;
+    }
+    .info-container p {
+      margin: 5px 0;
+    }
+    .info-title {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<h1>Информация об ученике</h1>
+
+<div class="container">
+  <div class="photo-container">
+    <div class="photo-wrapper">
+      <img th:src="@{/img/{photo}(photo=${teacher.user.photo})}"
+           alt="Фото учителя">
+    </div>
+  </div>
+  <div class="info-container">
+    <p><span class="info-title">Имя:</span> <span data-th-text="${teacher.user.lastName} + ' '
+                                                              + ${teacher.user.firstName} + ' '
+                                                              + ${teacher.user.middleName}"></span></p>
+    <p><span class="info-title">Дата рождения:</span> <span data-th-text="${teacher.user.dateOfBirth}"></span></p>
+    <p><span class="info-title">Телефон:</span> <span data-th-text="${teacher.user.phoneNumber}"></span></p>
+    <p><span class="info-title">Email:</span> <span data-th-text="${teacher.user.email}"></span></p>
+    <p><span class="info-title">Детали:</span> <span data-th-text="${teacher.details}"></span></p>
+    <p><span class="info-title">Ведение предметов:</span></p>
+    <ul data-th-each="entry : ${teacher_subjects}" class="subject-list">
+      <li data-th-each="subject : ${entry.value}" data-th-text="${subject.title}" class="subject-item">Название предмета</li>
+    </ul>
+    <a data-th-href="@{/musical-school/teachers/teacher/{teacherId}/add(teacherId=${teacherId})}">+subject</a>
+  </div>
+  <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/teachers/teacher/{teacherId}/edit(teacherId=${teacher.id})}">Update</a>
+</div>
+
+</body>
+</html>

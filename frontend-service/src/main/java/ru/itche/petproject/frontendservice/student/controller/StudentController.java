@@ -4,61 +4,68 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.itche.petproject.frontendservice.group.ImplGroupRestClient;
 import ru.itche.petproject.frontendservice.student.client.StudentRestClient;
-import ru.itche.petproject.frontendservice.student.controller.payload.NewStudentPayload;
-import ru.itche.petproject.frontendservice.user.controller.payload.NewUserPayload;
+import ru.itche.petproject.frontendservice.student.controller.payload.UpdateStudentPayload;
+import ru.itche.petproject.frontendservice.student.entityRecord.Student;
+import ru.itche.petproject.frontendservice.user.client.UserRestClient;
+
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/students")
+@RequestMapping("/musical-school/students/student/{studentId:\\d+}")
 public class StudentController {
 
     private final StudentRestClient studentRestClient;
+    private final UserRestClient userRestClient;
+    private final ImplGroupRestClient groupRestClient;
 
-    @GetMapping("list")
-    public String getStudentsList(Model model) {
-        model.addAttribute("students", this.studentRestClient.getAllStudents());
-        return "student/list";
+    @ModelAttribute("student")
+    public Student getStudent(@PathVariable Integer studentId) {
+        return this.studentRestClient.findStudent(studentId).orElseThrow();
+    }
+    @ModelAttribute("role")
+    public String getRole() {
+        return this.userRestClient.getUserRoleFromServer();
     }
 
-    @GetMapping("create")
-    public String createStudentPage(Model model) {
-        model.addAttribute("studentPayload", new NewStudentPayload(null, null, null));
-        return "student/create";
-    }
-
-    @PostMapping("create")
-    public String createStudent(@ModelAttribute NewStudentPayload payload) {
-        this.studentRestClient.createStudent(payload);
-        return "redirect:/musical-school/students/list";
-    }
-
-    @GetMapping("{id}")
-    public String getStudentDetails(@PathVariable("id") int studentId, Model model) {
-        model.addAttribute("student", this.studentRestClient.findStudent(studentId).orElseThrow());
+    @GetMapping()
+    public String getStudentDetails() {
         return "student/details";
     }
 
-    @PostMapping("{id}/delete")
-    public String deleteStudent(@PathVariable("id") int studentId) {
-        this.studentRestClient.deleteStudent(studentId);
+    @GetMapping("/edit")
+    public String editStudentForm(Model model){
+        model.addAttribute("groups", groupRestClient.findAllGroups());
+        return "student/edit";
+    }
+
+    @PostMapping("edit")
+    public String updateStudent(@ModelAttribute("student") Student student,
+                                UpdateStudentPayload payload) {
+
+        studentRestClient.updateStudent(
+                student.id(),
+                payload.group(),
+                payload.details(),
+                payload.updateUserPayload().firstName(),
+                payload.updateUserPayload().lastName(),
+                payload.updateUserPayload().middleName(),
+                payload.updateUserPayload().dateOfBirth(),
+                payload.updateUserPayload().photo(),
+                payload.updateUserPayload().phoneNumber(),
+                payload.updateUserPayload().email()
+        );
+        return "redirect:/musical-school/students/student/" + student.id();
+    }
+
+
+    @PostMapping("delete")
+    public String deleteStudent(@ModelAttribute("student") Student student) {
+        this.studentRestClient.deleteStudent(student.id());
         return "redirect:/musical-school/students/list";
     }
 
-//    // Форма для редактирования информации о студенте
-//    @GetMapping("/{id}/edit")
-//    public String editStudentForm(@PathVariable("id") int studentId, Model model) {
-//        model.addAttribute("student", studentRestClient.findStudent(studentId).orElseThrow());
-//        model.addAttribute("updatePayload", new UpdateStudentPayload());
-//        return "students/edit";
-//    }
-//
-//    // Обработка редактирования информации о студенте
-//    @PostMapping("/{id}/edit")
-//    public String updateStudent(@PathVariable("id") int studentId,
-//                                @ModelAttribute("updatePayload") UpdateStudentPayload payload) {
-//        studentRestClient.updateStudent(studentId, payload);
-//        return "redirect:/students/" + studentId;
-//    }
+
 }
 

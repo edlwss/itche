@@ -24,7 +24,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String authenticateUser(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
+    public String authenticateUser(@RequestParam String username,
+                                   @RequestParam String password,
+                                   HttpSession session,
+                                   Model model) {
         try {
             UserToken token = userRestClient.authenticate(username, password);
             session.setAttribute("token", token.getToken());
@@ -36,9 +39,4 @@ public class UserController {
         }
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login";
-    }
 }

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Student</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .delete-button {
+            background-color: #f44336;
+        }
+
+        .delete-button:hover {
+            background-color: #e53935;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Update Teacher</h1>
+<div class="container">
+    <form method="post" data-th-action="@{/musical-school/teachers/teacher/{teacherId}/edit(teacherId=${teacher.id})}" >
+
+        <label>First Name:
+            <input type="text" name="userPayload.firstName" data-th-value="${teacher.user.firstName}" />
+        </label>
+        <label>Middle Name:
+            <input type="text" name="userPayload.middleName" data-th-value="${teacher.user.middleName}"  />
+        </label>
+        <label>Last Name:
+            <input type="text" name="userPayload.lastName" data-th-value="${teacher.user.lastName}" />
+        </label>
+        <label>Education:
+            <input type="text" name="education" data-th-value="${teacher.education}" />
+        </label>
+
+        <label>Date of Birth:
+            <input type="date" name="userPayload.dateOfBirth" data-th-value="${teacher.user.dateOfBirth}"  />
+        </label>
+        <label>Phone Number:
+            <input type="tel" name="userPayload.phoneNumber" data-th-value="${teacher.user.phoneNumber}" />
+        </label>
+        <label>Email:
+            <input type="email" name="userPayload.email" data-th-value="${teacher.user.email}"  />
+        </label>
+        <label>Details:
+            <textarea name="details" >[[${teacher.details}]]</textarea>
+        </label>
+
+        <label>Photo:
+            <input type="text" name="userPayload.photo" data-th-value="${teacher.user().photo()}" />
+        </label>
+        <button type="submit">Update Information</button>
+    </form>
+
+    <form method="post" data-th-action="@{/musical-school/teachers/teacher/{teacherId}/delete(teacherId=${teacher.id})}">
+        <button type="submit" class="delete-button">Delete Teacher</button>
+    </form>
+</div>
+</body>
+</html>

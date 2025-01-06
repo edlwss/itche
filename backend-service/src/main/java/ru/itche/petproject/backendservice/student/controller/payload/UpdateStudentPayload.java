@@ -1,7 +1,8 @@
 package ru.itche.petproject.backendservice.student.controller.payload;
 
-import ru.itche.petproject.backendservice.group.entity.Group;
-import ru.itche.petproject.backendservice.user.entity.User;
+import ru.itche.petproject.backendservice.user.controller.payload.UpdateUserPayload;
 
-public record UpdateStudentPayload (Integer group, String details){
+public record UpdateStudentPayload (Integer group,
+                                    String details,
+                                    UpdateUserPayload updateUserPayload) {
 }

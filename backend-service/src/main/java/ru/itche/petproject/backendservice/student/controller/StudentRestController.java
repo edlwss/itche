@@ -29,7 +29,7 @@ public class StudentRestController {
     public ResponseEntity<?> updateStudent(@PathVariable("studentId") int studentId,
                                           @RequestBody UpdateStudentPayload payload){
 
-        this.studentService.updateStudent(studentId, payload.group(), payload.details());
+        this.studentService.updateStudent(studentId, payload);
         return ResponseEntity.noContent()
                 .build();
 

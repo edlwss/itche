@@ -7,10 +7,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import ru.itche.petproject.frontendservice.student.controller.payload.NewStudentPayload;
 import ru.itche.petproject.frontendservice.student.entityRecord.Student;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -18,7 +20,6 @@ import java.util.Optional;
 public class ImplStudentRestClient implements StudentRestClient {
 
     private final RestClient restClient;
-
     private final HttpSession session;
 
     private static final ParameterizedTypeReference<List<Student>> STUDENT_TYPE_REFERENCE =
@@ -37,18 +38,47 @@ public class ImplStudentRestClient implements StudentRestClient {
     }
 
     @Override
-    public void createStudent(NewStudentPayload payload) {
+    public void createStudent(Integer group,
+                              String details,
+                              String firstName,
+                              String lastName,
+                              String middleName,
+                              LocalDate dateOfBirth,
+                              String photo,
+                              String phoneNumber,
+                              String email,
+                              String username,
+                              String password) {
+
         String token = (String) session.getAttribute("token");
 
+        Map<String, Object> userPayload = new HashMap<>();
+        userPayload.put("lastName", lastName);
+        userPayload.put("firstName", firstName);
+        userPayload.put("middleName", middleName);
+        userPayload.put("dateOfBirth", dateOfBirth);
+        userPayload.put("photo", photo);
+        userPayload.put("phoneNumber", phoneNumber);
+        userPayload.put("email", email);
+        userPayload.put("username", username);
+        userPayload.put("password", password);
+
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("group", group);
+        requestBody.put("details", details);
+        requestBody.put("userPayload", userPayload);
+
+        // Отправка POST-запроса
         restClient
                 .post()
                 .uri("/musical-school-api/students")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(payload)
+                .body(requestBody)
                 .retrieve()
-                .body(Student.class);
+                .toBodilessEntity();
     }
+
 
     @Override
     public Optional<Student> findStudent(int studentId) {
@@ -62,19 +92,45 @@ public class ImplStudentRestClient implements StudentRestClient {
                 .body(Student.class));
     }
 
-//    @Override
-//    public void updateStudent(int studentId, UpdateStudentPayload payload) {
-//        String token = (String) session.getAttribute("token");
-//
-//        restClient
-//                .patch()
-//                .uri("/musical-school-api/students/student/{studentId}", studentId)
-//                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .body(payload)
-//                .retrieve()
-//                .toBodilessEntity();
-//    }
+    @Override
+    public void updateStudent(int studentId,
+                              Integer group,
+                              String details,
+                              String firstName,
+                              String lastName,
+                              String middleName,
+                              LocalDate dateOfBirth,
+                              String photo,
+                              String phoneNumber,
+                              String email) {
+
+        String token = (String) session.getAttribute("token");
+
+        Map<String, Object> userPayload = new HashMap<>();
+        userPayload.put("firstName", firstName);
+        userPayload.put("lastName", lastName);
+        userPayload.put("middleName", middleName);
+        userPayload.put("dateOfBirth", dateOfBirth);
+        userPayload.put("photo", photo);
+        userPayload.put("phoneNumber", phoneNumber);
+        userPayload.put("email", email);
+
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("group", group);
+        requestBody.put("details", details);
+        requestBody.put("updateUserPayload", userPayload);
+
+        restClient
+                .patch()
+                .uri("/musical-school-api/students/student/{studentId}", studentId)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(requestBody)
+                .retrieve()
+                .toBodilessEntity();
+    }
+
+
 
     @Override
     public void deleteStudent(int studentId) {

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Информация об ученике</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    .photo-container {
+      flex: 1;
+      max-width: 250px;
+    }
+
+    .photo-wrapper {
+      width: 250px;
+      height: 250px;
+      overflow: hidden;
+      /*border-radius: 50%; !* Обрезка в форме круга, можно убрать для квадрата *!*/
+    }
+
+    .photo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .info-container {
+      flex: 2;
+    }
+    .info-container h2 {
+      margin-bottom: 10px;
+    }
+    .info-container p {
+      margin: 5px 0;
+    }
+    .info-title {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<h1>Информация об ученике</h1>
+
+<div class="container">
+  <div class="photo-container">
+    <div class="photo-wrapper">
+      <img th:src="@{/img/{photo}(photo=${student.user.photo})}"
+           alt="Фото ученика">
+    </div>
+  </div>
+  <div class="info-container">
+    <h2 data-th-text="'Ученик ' + ${student.group.title}"></h2>
+    <p><span class="info-title">Имя:</span> <span data-th-text="${student.user.lastName} + ' ' + ${student.user.firstName} + ' ' + ${student.user.middleName}"></span></p>
+    <p><span class="info-title">Дата рождения:</span> <span data-th-text="${student.user.dateOfBirth}"></span></p>
+    <p><span class="info-title">Телефон:</span> <span data-th-text="${student.user.phoneNumber}"></span></p>
+    <p><span class="info-title">Email:</span> <span data-th-text="${student.user.email}"></span></p>
+    <p><span class="info-title">Программа обучения:</span> <span data-th-text="${student.group.course.titleCurriculum}"></span></p>
+    <p><span class="info-title">Детали:</span> <span data-th-text="${student.details}"></span></p>
+    <p><span class="info-title">Период обучения:</span>
+      <span data-th-text="${#dates.format(student.group.startEducation, 'yyyy-MM-dd')}"></span> —
+      <span data-th-text="${#dates.format(student.group.endEducation, 'yyyy-MM-dd')}"></span>
+    </p>
+  </div>
+  <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/students/student/{studentId}/edit(studentId=${student.id})}">Update</a>
+</div>
+
+</body>
+</html>

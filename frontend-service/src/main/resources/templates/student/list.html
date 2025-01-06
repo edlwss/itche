@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Список студентов</title>
@@ -45,23 +45,24 @@
 <body>
 <h1>Список студентов</h1>
 
-<a href="/students/new" class="add-student-btn">Добавить студента</a>
+<a data-th-if="${role == 'ROLE_ADMIN'}" href="/musical-school/students/create" class="add-student-btn">Добавить студента</a>
 
 <table>
     <thead>
     <tr>
         <th>Имя</th>
         <th>Группа</th>
+        <th>Курс</th>
     </tr>
     </thead>
     <tbody>
     <tr data-th-each="student : ${students}">
         <td>
-            <a data-th-href="@{/students/{id}(id=${student.id})}"
+            <a data-th-href="@{student/{studentId}(studentId=${student.id})}"
                data-th-text="${student.user.firstName} + ' ' + ${student.user.lastName}">
             </a>
         </td>
-        <td data-th-text="${student.group.title()}"></td>
+        <td data-th-text="${student.group.title}"></td>
         <td data-th-text="${student.group.course.title}"></td>
     </tr>
     </tbody>

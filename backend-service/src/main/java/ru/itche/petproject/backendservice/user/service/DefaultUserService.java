@@ -17,6 +17,7 @@ public class DefaultUserService implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
+    @Override
     @Transactional
     public User createUser(String lastName, String firstName, String middleName,
                            LocalDate dateOfBirth, String photo, String phoneNumber,
@@ -31,10 +32,28 @@ public class DefaultUserService implements UserService {
         user.setEmail(email);
         user.setUsername(username);
         String encodedPassword = passwordEncoder.encode(password);
-        user.setPassword(encodedPassword); // Пароль рекомендуется хэшировать
+        user.setPassword(encodedPassword);
         user.setRole(role);
 
         return userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateUser(Integer id, String lastName, String firstName, String middleName,
+                           LocalDate dateOfBirth, String photo, String phoneNumber, String email) {
+
+        this.userRepository.findById(id)
+                .ifPresent(user -> {
+                    user.setLastName(lastName);
+                    user.setFirstName(firstName);
+                    user.setMiddleName(middleName);
+                    user.setDateOfBirth(dateOfBirth);
+                    user.setPhoto(photo);
+                    user.setPhoneNumber(phoneNumber);
+                    user.setEmail(email);
+                });
 
     }
+
 }

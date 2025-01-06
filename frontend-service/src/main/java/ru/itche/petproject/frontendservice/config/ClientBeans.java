@@ -6,9 +6,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 import ru.itche.petproject.frontendservice.course.client.ImplCourseRestClient;
+import ru.itche.petproject.frontendservice.group.ImplGroupRestClient;
 import ru.itche.petproject.frontendservice.student.client.ImplStudentRestClient;
 import ru.itche.petproject.frontendservice.subject.client.ImplSubjectRestClient;
 import ru.itche.petproject.frontendservice.course_subjects.client.ImplCourseSubjectsClient;
+import ru.itche.petproject.frontendservice.teacher.client.ImplTeacherRestClient;
+import ru.itche.petproject.frontendservice.teacher.client.ImplTeacherSubjectsRestClient;
 import ru.itche.petproject.frontendservice.user.client.ImplUserRestController;
 
 
@@ -48,7 +51,26 @@ public class ClientBeans {
     }
 
     @Bean
-    public ImplUserRestController userRestClient(RestClient restClient) {
-        return new ImplUserRestController(restClient);
+    public ImplUserRestController userRestClient(RestClient restClient,
+                                                 HttpSession session) {
+        return new ImplUserRestController(restClient, session);
+    }
+
+    @Bean
+    public ImplGroupRestClient groupRestClient(RestClient restClient,
+                                              HttpSession session) {
+        return new  ImplGroupRestClient(restClient, session);
+    }
+
+    @Bean
+    public ImplTeacherRestClient teacherRestClient(RestClient restClient,
+                                                   HttpSession session) {
+        return new  ImplTeacherRestClient(restClient, session);
+    }
+
+    @Bean
+    public ImplTeacherSubjectsRestClient teacherSubjectsRestClient(RestClient restClient,
+                                                   HttpSession session) {
+        return new ImplTeacherSubjectsRestClient(restClient, session);
     }
 }

@@ -1,6 +1,8 @@
 package ru.itche.petproject.backendservice.student.service;
 
 import ru.itche.petproject.backendservice.group.entity.Group;
+import ru.itche.petproject.backendservice.student.controller.payload.NewStudentPayload;
+import ru.itche.petproject.backendservice.student.controller.payload.UpdateStudentPayload;
 import ru.itche.petproject.backendservice.student.entity.Student;
 import ru.itche.petproject.backendservice.user.entity.User;
 
@@ -10,11 +12,11 @@ import java.util.Optional;
 public interface StudentService {
     Iterable<Student> getAllStudents();
 
-    Student createStudent(User user, Integer groupId, String details);
+    Student createStudent(NewStudentPayload payload);
 
     Optional<Student> findStudent(int studentId);
 
-    void updateStudent(int studentId, Integer groupId, String details);
+    void updateStudent(Integer studentId, UpdateStudentPayload payload);
 
     void deleteStudent(int studentId);
 }

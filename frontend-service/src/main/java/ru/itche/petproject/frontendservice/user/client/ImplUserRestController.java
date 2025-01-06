@@ -1,5 +1,6 @@
 package ru.itche.petproject.frontendservice.user.client;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,9 +17,11 @@ import ru.itche.petproject.frontendservice.user.entityRecord.UserToken;
 public class ImplUserRestController implements UserRestClient{
 
     private final RestClient restClient;
+    private final HttpSession session;
 
+    //Базовые методы для всех юзеров
     public UserToken authenticate(String username, String password) {
-        // Создаем объект с данными для аутентификации в формате x-www-form-urlencoded
+
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("username", username);
         body.add("password", password);
@@ -33,14 +36,23 @@ public class ImplUserRestController implements UserRestClient{
 
     }
 
+    @Override
+    public String getUserRoleFromServer() {
+        String token = (String) session.getAttribute("token");
 
-    public boolean validateToken(String token) {
-        ResponseEntity<Void> response = restClient
+        if (token == null) {
+            return "ROLE_ANONYMOUS"; // Если токен не найден, возвращаем роль по умолчанию
+        }
+
+        return restClient
                 .get()
-                .uri("/musical-school-api/validate-token")
+                .uri("/role")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
-                .toBodilessEntity();
-        return response.getStatusCode().is2xxSuccessful();
+                .body(String.class);
     }
+
+    //методы админа
+
+
 }
