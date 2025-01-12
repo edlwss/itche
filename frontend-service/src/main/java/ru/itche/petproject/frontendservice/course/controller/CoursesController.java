@@ -1,9 +1,11 @@
 package ru.itche.petproject.frontendservice.course.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.itche.petproject.frontendservice.course.client.CourseRestClient;
@@ -16,9 +18,15 @@ import ru.itche.petproject.frontendservice.course.controller.payload.NewCoursePa
 public class CoursesController {
 
     private final CourseRestClient courseRestClient;
+    private  final HttpSession session;
 
-    @GetMapping("list")
-    public String getCoursesList(Model model) {
+    @ModelAttribute("role")
+    public String getRole() {
+        return this.session.getAttribute("role").toString();
+    }
+
+    @GetMapping("/list")
+    public String findAllCourses(Model model) {
         model.addAttribute("courses", this.courseRestClient.findAllCourses());
         return "course/list";
     }

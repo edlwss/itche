@@ -6,15 +6,12 @@
 </head>
 <body>
 <a data-th-href="@{/musical-school/courses/list}">List Course</a>
-<a data-th-href="@{/musical-school/courses/course/{courseId}/edit(courseId=${course.id})}">Update Course</a>
+<a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/courses/course/{courseId}/edit(courseId=${course.id})}">Update Course</a>
 <h1 data-th-text="${course.title}"></h1>
 <ul>
   <li><strong>ID</strong>: <span data-th-text="${course.id}"></span></li>
   <li><strong>Title</strong>: <span data-th-text="${course.title}"></span></li>
   <li><strong>Title Curriculum</strong>: <span data-th-text="${course.titleCurriculum()}"></span></li>
 </ul>
-<form method="post" data-th-action="@{/musical-school/courses/course/{courseId}/delete(courseId=${course.id})}">
-    <button type="submit">Delete</button>
-</form>
 </body>
 </html>

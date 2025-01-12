@@ -11,6 +11,7 @@ import ru.itche.petproject.backendservice.group.repository.GroupRepository;
 import ru.itche.petproject.backendservice.group.service.GroupService;
 import ru.itche.petproject.backendservice.student.entity.Student;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -22,8 +23,13 @@ public class GroupController {
     private final GroupService groupService;
 
     @GetMapping
-    public Iterable<Group> getGroups() {
+    public Map<String, List<Group>> getGroups() {
         return this.groupService.getGroups();
+    }
+
+    @GetMapping("/list")
+    public Iterable<Group> getGroupList() {
+        return this.groupService.getListGroups();
     }
 
     @GetMapping("/group/{groupId:\\d+}")

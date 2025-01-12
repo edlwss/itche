@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Создание урока</title>
+</head>
+<body>
+<h1>Создание урока</h1>
+
+<form method="post" th:action="@{/musical-school/lessons/create}">
+  <!-- Скрытая форма для передачи выбранных значений -->
+  <input type="hidden" name="groupId" th:value="${groupId}">
+  <input type="hidden" name="date" th:value="${date}">
+
+  <!-- Выпадающий список для выбора группы -->
+  <div class="form-group">
+    <label for="group">Группа:</label>
+    <select id="group" name="group">
+      <option data-th-each="group : ${groups}"
+              data-th-value="${group.id}"
+              data-th-text="${group.title}"
+              data-th-selected="${group.id == groupId}"></option>
+    </select>
+  </div>
+
+  <!-- Выпадающий список для выбора предмета -->
+  <div class="form-group">
+    <label for="subject">Предмет:</label>
+    <select id="subject" name="subject">
+      <option data-th-if="${subject.teacher().id().toString() == userId}" data-th-each="subject : ${subjects}"
+              data-th-value="${subject.id}"
+              data-th-text="${subject.title}"></option>
+    </select>
+  </div>
+
+  <!-- Поле с выбранной датой, которое нельзя редактировать -->
+  <div class="form-group">
+    <label for="dateLesson">Дата:</label>
+    <input type="text" id="dateLesson" name="dateLesson" th:value="${date}" readonly />
+  </div>
+
+  <!-- Выпадающий список для выбора времени урока -->
+  <div class="form-group">
+    <label for="timeLesson">Время урока:</label>
+    <select id="timeLesson" name="timeLesson">
+      <option value="08:00:00">08:00:00</option>
+      <option value="09:00">09:00</option>
+      <option value="10:00">10:00</option>
+      <option value="11:00">11:00</option>
+      <option value="12:00">12:00</option>
+      <option value="13:00">13:00</option>
+      <option value="14:00">14:00</option>
+      <option value="15:00">15:00</option>
+      <option value="16:00">16:00</option>
+      <option value="17:00">17:00</option>
+      <option value="18:00">18:00</option>
+    </select>
+  </div>
+
+  <!-- Кнопка отправки формы -->
+  <button type="submit" class="button">Создать урок</button>
+</form>
+
+</body>
+</html>

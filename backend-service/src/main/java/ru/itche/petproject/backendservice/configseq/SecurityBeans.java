@@ -21,6 +21,16 @@ public class SecurityBeans {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/musical-school-api/courses",
+                                "/musical-school-api/course-subjects/{courseId:\\d+}",
+                                "musical-school-api/subjects/**",
+                                "musical-school-api/teachers/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"musical-school-api/groups/**",
+                                "/musical-school-api/lessons",
+                                "musical-school-api/students/student/{studentId:\\d+}",
+                                "/musical-school-api/grade/{studentId:\\d+}").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                        .requestMatchers("musical-school-api/lessons/**",
+                                "musical-school-api/grade/**").hasRole("TEACHER")
                         .requestMatchers(HttpMethod.GET, "/musical-school-api/students/**").hasAnyRole("STUDENT", "ADMIN")
                         .requestMatchers("/musical-school-api/**").hasRole("ADMIN")
 

@@ -6,12 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 import ru.itche.petproject.frontendservice.course.client.ImplCourseRestClient;
-import ru.itche.petproject.frontendservice.group.ImplGroupRestClient;
+import ru.itche.petproject.frontendservice.grade.client.ImplGradeRestClient;
+import ru.itche.petproject.frontendservice.group.client.ImplGroupRestClient;
+import ru.itche.petproject.frontendservice.lesson.client.ImplLessonRestClient;
 import ru.itche.petproject.frontendservice.student.client.ImplStudentRestClient;
 import ru.itche.petproject.frontendservice.subject.client.ImplSubjectRestClient;
 import ru.itche.petproject.frontendservice.course_subjects.client.ImplCourseSubjectsClient;
 import ru.itche.petproject.frontendservice.teacher.client.ImplTeacherRestClient;
-import ru.itche.petproject.frontendservice.teacher.client.ImplTeacherSubjectsRestClient;
 import ru.itche.petproject.frontendservice.user.client.ImplUserRestController;
 
 
@@ -21,6 +22,7 @@ public class ClientBeans {
     @Bean
     public RestClient restClient(
             @Value("${music-school.services.backend.uri:http://localhost:8081}") String baseUrl) {
+
         return RestClient.builder()
                 .baseUrl(baseUrl)
                 .build();
@@ -69,8 +71,15 @@ public class ClientBeans {
     }
 
     @Bean
-    public ImplTeacherSubjectsRestClient teacherSubjectsRestClient(RestClient restClient,
-                                                   HttpSession session) {
-        return new ImplTeacherSubjectsRestClient(restClient, session);
+    public ImplLessonRestClient lessonRestClient(RestClient restClient,
+                                                 HttpSession session) {
+        return new  ImplLessonRestClient(restClient, session);
     }
+
+    @Bean
+    public ImplGradeRestClient gradeRestClient(RestClient restClient,
+                                               HttpSession session) {
+        return new  ImplGradeRestClient(restClient, session);
+    }
+
 }

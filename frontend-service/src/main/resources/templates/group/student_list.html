@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список групп</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .course-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .group-list {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Список cтудентов группы</h1>
+
+<!-- Цикл по ключам (названиям курсов) в объекте groups -->
+<div data-th-each="entry : ${group_student}">
+    <!-- Отображаем название курса -->
+    <div class="course-title" data-th-text="${entry.key}"></div>
+
+    <!-- Список групп для текущего курса -->
+    <div class="group-list">
+        <div data-th-each="student : ${entry.value}">
+            <a data-th-href="@{/musical-school/students/student/{studentId}(studentId=${student.id})}"
+               data-th-text="${student.user.firstName()} + ' ' + ${student.user.lastName()}"></a>
+        </div>
+    </div>
+    <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/students/create/{groupId}(groupId=${groupId})}">+ Добавить нового ученика</a>
+</div>
+
+</body>
+</html>

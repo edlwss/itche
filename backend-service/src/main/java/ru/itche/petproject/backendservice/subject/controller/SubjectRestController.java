@@ -30,7 +30,8 @@ public class SubjectRestController {
     public ResponseEntity<?> updateCourse(@PathVariable("subjectId") int subjectId,
                                           @RequestBody UpdateSubjectPayload payload){
 
-        this.subjectService.updateSubject(subjectId, payload.title(), payload.titleSyllabus());
+        this.subjectService.updateSubject(subjectId, payload.title(), payload.titleSyllabus(),
+                payload.teacherId());
         return ResponseEntity.noContent()
                 .build();
 

@@ -1,9 +1,11 @@
 package ru.itche.petproject.frontendservice.course_subjects.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,12 @@ public class CourseSubjectsController {
 
     private final CourseSubjectsRestClient restClient;
     private final SubjectRestClient subjectRestClient;
+    private  final HttpSession session;
+
+    @ModelAttribute("role")
+    public String getRole() {
+        return this.session.getAttribute("role").toString();
+    }
 
     @GetMapping
     public String getCourseSubjects(@PathVariable Integer courseId, Model model) {

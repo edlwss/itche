@@ -38,7 +38,7 @@ public class DefaultStudentService implements StudentService {
 
     @Override
     @Transactional
-    public Student createStudent(NewStudentPayload payload) {
+    public Student createStudent(NewStudentPayload payload, Integer groupId) {
         Role studentRole = roleRepository.findByNameRole("ROLE_STUDENT")
                 .orElseThrow(() -> new IllegalStateException("Role STUDENT not found"));
 
@@ -52,10 +52,15 @@ public class DefaultStudentService implements StudentService {
                 payload.userPayload().email(),
                 payload.userPayload().username(),
                 payload.userPayload().password(),
-                studentRole
+                studentRole,
+                payload.userPayload().cardPayload().passportSeries(),
+                payload.userPayload().cardPayload().passportNumber(),
+                payload.userPayload().cardPayload().issuedBy(),
+                payload.userPayload().cardPayload().birthCertificateNumber(),
+                payload.userPayload().cardPayload().issueDate()
         );
 
-        Group group = groupRepository.findById(payload.group()).orElse(null);
+        Group group = groupRepository.findById(groupId).orElse(null);
 
         return studentRepository.save(new Student(null, user, group, payload.details()));
     }
@@ -64,7 +69,6 @@ public class DefaultStudentService implements StudentService {
     @Transactional
     public void updateStudent(Integer studentId, UpdateStudentPayload payload) {
 
-        Group group = groupRepository.findById(payload.group()).orElse(null);
         this.studentRepository.findById(studentId)
                 .ifPresent(student -> {
                     Integer userId = student.getUser().getId();
@@ -76,10 +80,16 @@ public class DefaultStudentService implements StudentService {
                             payload.updateUserPayload().dateOfBirth(),
                             payload.updateUserPayload().photo(),
                             payload.updateUserPayload().phoneNumber(),
-                            payload.updateUserPayload().email());
+                            payload.updateUserPayload().email(),
+                            payload.updateUserPayload().cardPayload().passportSeries(),
+                            payload.updateUserPayload().cardPayload().passportNumber(),
+                            payload.updateUserPayload().cardPayload().issuedBy(),
+                            payload.updateUserPayload().cardPayload().birthCertificateNumber(),
+                            payload.updateUserPayload().cardPayload().issueDate());
 
-                    student.setGroup(group);
+
                     student.setDetails(payload.details());
+                    student.setGroup(groupRepository.findById(payload.group()).orElse(null));
                 });
     }
 

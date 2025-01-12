@@ -1,5 +1,6 @@
 package ru.itche.petproject.backendservice.user.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,11 +8,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.itche.petproject.backendservice.id_card.entity.IdCard;
 
 
 import java.time.LocalDate;
@@ -63,9 +66,9 @@ public class User {
 //    @JoinColumn(name = "ID Адрес проживания")
 //    private Address address;
 //
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ID Удостоверение личности")
-//    private IdentityDocument identityDocument;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "idCard")
+    private IdCard idCard;
 
 
 }

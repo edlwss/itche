@@ -11,8 +11,9 @@ public interface GroupService {
 
     Map<String, List<Student>> getStudentsByGroup(Integer groupId);
 
-    Iterable<Group> getGroups();
+    Map<String, List<Group>> getGroups();
 
     Optional<Group> getGroup(Integer groupId);
 
+    Iterable<Group> getListGroups();
 }

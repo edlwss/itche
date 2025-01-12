@@ -9,7 +9,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
+import ru.itche.petproject.frontendservice.teacher.entityRecord.Teacher;
+import ru.itche.petproject.frontendservice.user.entityRecord.User;
 import ru.itche.petproject.frontendservice.user.entityRecord.UserToken;
+
+import java.util.Optional;
 
 
 @Component
@@ -35,24 +39,16 @@ public class ImplUserRestController implements UserRestClient{
                 .body(UserToken.class); // Преобразуем ответ в объект
 
     }
-
     @Override
-    public String getUserRoleFromServer() {
+    public Optional<User> findAdmin(int adminId) {
         String token = (String) session.getAttribute("token");
 
-        if (token == null) {
-            return "ROLE_ANONYMOUS"; // Если токен не найден, возвращаем роль по умолчанию
-        }
-
-        return restClient
+        return Optional.ofNullable(restClient
                 .get()
-                .uri("/role")
+                .uri("/musical-school-api/admin/{teacherId}", adminId)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
-                .body(String.class);
+                .body(User.class));
     }
-
-    //методы админа
-
 
 }

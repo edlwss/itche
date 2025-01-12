@@ -4,6 +4,5 @@ import ru.itche.petproject.backendservice.user.controller.payload.NewUserPayload
 
 public record NewStudentPayload (Integer id,
                                  NewUserPayload userPayload,
-                                 Integer group,
                                  String details) {
 }

@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Создание студента</h1>
-<form action="/musical-school/students/create" method="post" enctype="multipart/form-data">
+<form data-th-action="@{/musical-school/students/create/{groupId}(groupId=${groupId})}" method="post" enctype="multipart/form-data">
     <h2>Данные пользователя</h2>
     <label>
         Фамилия:
@@ -51,16 +51,6 @@
     <label>
         Фото:
         <input type="file" name="photo" accept="image/*" required>
-    </label>
-
-    <h2>Данные студента</h2>
-    <label>Group:
-        <select name="group" id="groupSelect">
-            <option value="" disabled selected>Choose a group</option>
-            <option data-th-each="group : ${groups}"
-                    data-th-value="${group.id}"
-                    data-th-text="${group.title()}"></option>
-        </select>
     </label>
     <br>
     <label>

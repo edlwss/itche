@@ -2,6 +2,7 @@ package ru.itche.petproject.backendservice.subject.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.itche.petproject.backendservice.teacher.entity.Teacher;
 
 import java.time.LocalDate;
 
@@ -28,6 +29,10 @@ public class Subject {
 
     @Column(name = "update_date")
     private LocalDate updateDate;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
 
     @PrePersist
     public void prePersist() {

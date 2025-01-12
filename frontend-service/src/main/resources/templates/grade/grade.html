@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grades and Attendance</title>
+</head>
+<body>
+<h1>Grades and Attendance for Group</h1>
+
+<!-- Удалены скрытые поля, т.к. они не используются в JavaScript -->
+<form>
+    <table>
+        <thead>
+        <tr>
+            <th>Student</th>
+            <th>Estimation</th>
+            <th>Presence</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Данные для каждого студента -->
+        <tr th:each="grade : ${grades}">
+            <td th:text="${grade.student.user.firstName} + ' ' + ${grade.student.user.lastName}"></td>
+            <td>
+                <select class="estimation" th:attr="data-student-id=${grade.student.id}">
+                    <option value="null" th:selected="${grade.estimation == null}">-</option>
+                    <option value="0" th:selected="${grade.estimation == 0}">0</option>
+                    <option value="1" th:selected="${grade.estimation == 1}">1</option>
+                    <option value="2" th:selected="${grade.estimation == 2}">2</option>
+                    <option value="3" th:selected="${grade.estimation == 3}">3</option>
+                    <option value="4" th:selected="${grade.estimation == 4}">4</option>
+                    <option value="5" th:selected="${grade.estimation == 5}">5</option>
+                </select>
+            </td>
+            <td>
+                <select class="presence" th:attr="data-student-id=${grade.student.id}">
+                    <option value="null" th:selected="${grade.presence == null}">-</option>
+                    <option value="Present" th:selected="${grade.presence == 'Present'}">Present</option>
+                    <option value="Absent" th:selected="${grade.presence == 'Absent'}">Absent</option>
+                </select>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button type="button" onclick="submitGrades()">Submit</button>
+</form>
+
+<script>
+    function submitGrades() {
+        // Задаем фиксированные значения groupId и lessonId
+        const groupId = new URLSearchParams(window.location.search).get("groupId");
+        const lessonId = new URLSearchParams(window.location.search).get("lessonId");
+
+        if (!groupId || !lessonId) {
+            console.error("Параметры groupId или lessonId отсутствуют в URL.");
+            return;
+        }
+
+        // Собираем данные оценок и посещаемости
+        const estimations = {};
+        const presences = {};
+
+        document.querySelectorAll(".estimation").forEach(select => {
+            const studentId = select.getAttribute("data-student-id");
+            estimations[studentId] = select.value;
+        });
+
+        document.querySelectorAll(".presence").forEach(select => {
+            const studentId = select.getAttribute("data-student-id");
+            presences[studentId] = select.value;
+        });
+
+        const data = {
+            estimation: estimations,
+            presence: presences,
+        };
+
+        // Отправляем запрос
+        fetch(`/musical-school/grade/add?groupId=${groupId}&lessonId=${lessonId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = `/musical-school/lessons?groupId=${groupId}&year=2025&month=1`;
+                } else {
+                    console.error("Ошибка при отправке данных.");
+                }
+            })
+            .catch(error => console.error("Произошла ошибка:", error));
+    }
+</script>
+
+</body>
+</html>

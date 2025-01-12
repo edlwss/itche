@@ -1,3 +1,5 @@
 package ru.itche.petproject.frontendservice.subject.entityRecord;
 
-public record Subject(Integer id, String title, String titleSyllabus) {}
+import ru.itche.petproject.frontendservice.teacher.entityRecord.Teacher;
+
+public record Subject(Integer id, String title, String titleSyllabus, Teacher teacher) {}

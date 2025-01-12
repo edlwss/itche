@@ -1,28 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Courses Music-school</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список групп</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .course-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .group-list {
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
-<a data-th-href="@{/musical-school/courses/create}">Create new course</a>
-<h1>Курсы</h1>
-<table>
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Name</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr data-th-each="course :${courses}">
-        <td data-th-text="${course.id}"></td>
-        <td>
-            <a data-th-href="@{/musical-school/course-subjects/{courseId}(courseId=${course.id})}"
-            data-th-text="${course.title}"> </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+
+<h1>Список курсов и групп</h1>
+
+<!-- Цикл по ключам (названиям курсов) в объекте groups -->
+<div data-th-each="entry : ${courses}">
+    <!-- Отображаем название курса -->
+    <a data-th-href="@{/musical-school/course-subjects/{courseId}(courseId=${entry.id()})}"
+         class="course-title" data-th-text="${entry.title()}"></a>
+</div>
+
 </body>
 </html>

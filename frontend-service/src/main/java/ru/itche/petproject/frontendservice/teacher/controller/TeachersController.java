@@ -1,5 +1,6 @@
 package ru.itche.petproject.frontendservice.teacher.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +26,12 @@ import java.nio.file.Paths;
 public class TeachersController {
 
     private final TeacherRestClient teacherRestClient;
-    private final UserRestClient userRestClient;
+    private final HttpSession session;
 
     @GetMapping("list")
     public String getTeachersList(Model model) {
         model.addAttribute("teachers", this.teacherRestClient.getAllTeachers());
-        model.addAttribute("role", this.userRestClient.getUserRoleFromServer());
+        model.addAttribute("role", this.session.getAttribute("role"));
         return "teacher/list";
     }
 
@@ -59,6 +60,6 @@ public class TeachersController {
                 payload.userPayload().username(),
                 payload.userPayload().password());
 
-        return "redirect:/musical-school/teacher/list";
+        return "redirect:/musical-school/teachers/list";
     }
 }

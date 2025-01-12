@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.itche.petproject.backendservice.student.controller.payload.NewStudentPayload;
-import ru.itche.petproject.backendservice.student.entity.Student;
 import ru.itche.petproject.backendservice.teacher.controller.payload.NewTeacherPayload;
 import ru.itche.petproject.backendservice.teacher.entity.Teacher;
 import ru.itche.petproject.backendservice.teacher.service.TeacherService;

@@ -55,7 +55,7 @@
   </style>
 </head>
 <body>
-<h1>Информация об ученике</h1>
+<h1>Информация об учителе</h1>
 
 <div class="container">
   <div class="photo-container">
@@ -73,10 +73,13 @@
     <p><span class="info-title">Email:</span> <span data-th-text="${teacher.user.email}"></span></p>
     <p><span class="info-title">Детали:</span> <span data-th-text="${teacher.details}"></span></p>
     <p><span class="info-title">Ведение предметов:</span></p>
-    <ul data-th-each="entry : ${teacher_subjects}" class="subject-list">
-      <li data-th-each="subject : ${entry.value}" data-th-text="${subject.title}" class="subject-item">Название предмета</li>
-    </ul>
-    <a data-th-href="@{/musical-school/teachers/teacher/{teacherId}/add(teacherId=${teacherId})}">+subject</a>
+    <div data-th-each="subject : ${teacher_subjects}" class="subject-list">
+        <a data-th-href="@{/musical-school/subjects/subject/{subjectId}(subjectId=${subject.id})}"
+           data-th-text="${subject.title}" class="subject-link">
+        </a>
+    </div>
+
+    <a data-th-if="${role == 'ROLE_ADMIN'}"  data-th-href="@{/musical-school/teachers/teacher/{teacherId}/add(teacherId=${teacherId})}">+subject</a>
   </div>
   <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/teachers/teacher/{teacherId}/edit(teacherId=${teacher.id})}">Update</a>
 </div>

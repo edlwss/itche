@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+        <meta charset="UTF-8">
+        <title>Информация об teacher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .photo-container {
+            flex: 1;
+            max-width: 250px;
+        }
+
+        .photo-wrapper {
+            width: 250px;
+            height: 250px;
+            overflow: hidden;
+            /*border-radius: 50%; !* Обрезка в форме круга, можно убрать для квадрата *!*/
+        }
+
+        .photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .info-container {
+            flex: 2;
+        }
+        .info-container h2 {
+            margin-bottom: 10px;
+        }
+        .info-container p {
+            margin: 5px 0;
+        }
+        .info-title {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Профиль админа [[${admin.lastName}]] [[${admin.firstName}]] </h1>
+
+<div class="container">
+    <div class="photo-container">
+        <div class="photo-wrapper">
+            <img th:src="@{/img/{photo}(photo=${admin.photo()})}"
+                 alt="Фото admin">
+        </div>
+    </div>
+    <div class="info-container">
+        <p><span class="info-title">Имя:</span> <span data-th-text="${admin.lastName} + ' '
+                                                              + ${admin.firstName} + ' '
+                                                              + ${admin.middleName}"></span></p>
+        <p><span class="info-title">Дата рождения:</span> <span data-th-text="${admin.dateOfBirth}"></span></p>
+        <p><span class="info-title">Телефон:</span> <span data-th-text="${admin.phoneNumber}"></span></p>
+        <p><span class="info-title">Email:</span> <span data-th-text="${admin.email}"></span></p>
+    </div>
+</div>
+
+</body>
+</html>

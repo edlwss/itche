@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface StudentRestClient {
     List<Student> getAllStudents();
 
-    void createStudent(Integer group,
+    void createStudent(Integer groupId,
                        String details,
                        String firstName,
                        String lastName,

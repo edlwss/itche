@@ -1,5 +1,6 @@
 package ru.itche.petproject.frontendservice.course.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +20,18 @@ import ru.itche.petproject.frontendservice.course.entityRecord.Course;
 public class CourseController {
 
     private final CourseRestClient courseRestClient;
+    private  final HttpSession session;
 
-    //выносим повторящийся код для страницы отображения курса и страницы редактирования курса
+    @ModelAttribute("role")
+    public String getRole() {
+        return this.session.getAttribute("role").toString();
+    }
+
     @ModelAttribute("course")
     public Course course(@PathVariable("courseId") Integer courseId) {
         return this.courseRestClient.findCourse(courseId).orElseThrow();
     }
+
 
     @GetMapping()
     public String getCourse() {

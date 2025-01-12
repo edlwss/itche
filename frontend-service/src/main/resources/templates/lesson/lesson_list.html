@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        nav {
+            background-color: #343a40;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            text-align: left;
+            margin-top: 20px;
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .day {
+            border: 1px solid #ddd;
+            padding: 10px;
+            height: 120px;
+            position: relative;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .day-header {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .day-content {
+            font-size: 0.9em;
+            overflow-y: auto;
+            color: #555;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .form-group label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        select, .button {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+            padding: 10px;
+            background-color: #343a40;
+            color: white;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    Расписание
+</header>
+
+<h1>Выберите параметры</h1>
+
+<form method="get" th:action="@{/musical-school/lessons}">
+    <div class="form-group">
+        <label for="group">Группа:</label>
+        <select id="group" name="groupId">
+            <option data-th-each="group : ${groups}"
+                    data-th-value="${group.id}"
+                    data-th-text="${group.title}"
+                    data-th-selected="${group.id == groupId}"></option>
+        </select>
+
+        <label for="year">Год:</label>
+        <select id="year" name="year">
+            <option th:value="2025" th:selected="${year == 2025}">2025</option>
+            <option th:value="2026" th:selected="${year == 2026}">2026</option>
+        </select>
+
+        <label for="month">Месяц:</label>
+        <select id="month" name="month">
+            <option th:value="1" th:selected="${month == 1}">Январь</option>
+            <option th:value="2" th:selected="${month == 2}">Февраль</option>
+            <option th:value="3" th:selected="${month == 3}">Март</option>
+            <!-- Добавьте остальные месяцы -->
+        </select>
+
+        <button type="submit" class="button">Показать</button>
+    </div>
+</form>
+
+<div id="calendarContainer" class="calendar">
+    <div data-th-each="day : ${lesson}">
+        <div class="day">
+            <div class="day-header" data-th-text="${day.key}" th:attr="data-date=${day.key}"></div>
+            <div class="day-content">
+                <div data-th-if="${day.value != null}">
+                    <!-- Ссылка с условиями для учителей -->
+                    <a data-th-each="event : ${day.value}"
+                       data-th-if="${role == 'ROLE_TEACHER' and event.subject.teacher().id().toString() == userId}"
+                       data-th-href="@{/musical-school/grade(groupId=${groupId}, lessonId=${event.id})}"
+                       data-th-text="${event.timeLesson} + ' ' + ${event.subject.title}">
+                    </a>
+                    <!-- Текст без ссылки для остальных -->
+                    <span data-th-each="event : ${day.value}"
+                          data-th-if="${!(role == 'ROLE_TEACHER' and event.subject.teacher().id().toString() == userId)}"
+                          data-th-text="${event.timeLesson} + ' ' + ${event.subject.title}">
+                    </span>
+                </div>
+                <!-- Проверка: если событий нет -->
+                <div data-th-if="${day.value == #lists.isEmpty(day.value)}">
+                    <div class="empty-cell">No lessons</div>
+                </div>
+                <a data-th-if="${role == 'ROLE_TEACHER'}" data-th-href="@{/musical-school/lessons/create(groupId=${groupId}, data=${day.key})}">Create</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    &copy; 2025 Musical School. All rights reserved.
+</footer>
+
+<script>
+    document.querySelectorAll('.day-header').forEach(header => {
+        const rawDate = header.getAttribute('data-date'); // Получаем строку даты
+        if (!rawDate) return; // Пропускаем, если атрибут отсутствует
+
+        const [year, month, day] = rawDate.split('-'); // Разбиваем строку на части
+        const date = new Date(year, month - 1, day); // Создаем объект Date (месяцы в JS от 0 до 11)
+
+        const options = { day: 'numeric', month: 'long' }; // Формат отображения
+        header.textContent = date.toLocaleDateString('ru-RU', options); // Устанавливаем текст
+    });
+</script>
+
+</body>
+</html>

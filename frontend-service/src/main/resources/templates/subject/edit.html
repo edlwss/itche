@@ -5,18 +5,39 @@
     <title>Update subject [[${subject.title}]]</title>
 </head>
 <body>
-<a data-th-href="@{/musical-school/subjects/subject/{subjectId}(subjectId=${subject.id})}">subject</a>
+<!-- Ссылка на предмет с параметром subjectId -->
+<a data-th-href="@{/musical-school/subjects/subject/{subjectId}(subjectId=${subject.id})}">Subject</a>
+
 <h1>Update subject [[${subject.title}]]</h1>
+
+<!-- Форма обновления предмета -->
 <form method="post" data-th-action="@{/musical-school/subjects/subject/{subjectId}/edit(subjectId=${subject.id})}">
     <label>
         Name: <br>
         <input type="text" name="title" data-th-value="${subject.title}">
     </label><br>
+
     <label>
         Name Curriculum: <br>
-        <input type="text" name="titleSyllabus" data-th-value="${subject.titleSyllabus()}">
+        <input type="text" name="titleSyllabus" data-th-value="${subject.titleSyllabus}">
+    </label><br>
+
+    <label>
+        Select Teacher: <br>
+        <select name="teacherId">
+            <option value="">-- Select Teacher --</option>
+            <option data-th-each="teacher : ${teachers}"
+                    data-th-value="${teacher.id}"
+                    data-th-text="${teacher.user().firstName() + ' ' + teacher.user().lastName()}">
+            </option>
+        </select>
     </label><br>
     <button type="submit">Update</button>
+    <form method="post"
+          data-th-action="@{/musical-school/subjects/subject/{subjectId}/delete(subjectId=${subject.id})}">
+        <button type="submit">Delete</button>
+    </form>
 </form>
+
 </body>
 </html>

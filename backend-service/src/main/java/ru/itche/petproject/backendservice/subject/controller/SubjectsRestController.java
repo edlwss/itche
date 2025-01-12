@@ -3,6 +3,8 @@ package ru.itche.petproject.backendservice.subject.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import ru.itche.petproject.backendservice.subject.controller.payload.NewSubjectP
 import ru.itche.petproject.backendservice.subject.entity.Subject;
 import ru.itche.petproject.backendservice.subject.service.SubjectService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,10 +32,21 @@ public class SubjectsRestController {
     @PostMapping
     public ResponseEntity<Subject> createSubject(@RequestBody NewSubjectPayload payload,
                                                UriComponentsBuilder uriComponentsBuilder) {
-        Subject subject = this.subjectService.createSubject(payload.title(), payload.titleSyllabus());
+        Subject subject = this.subjectService.createSubject(payload.title(), payload.titleSyllabus(),
+                payload.teacherId());
         return ResponseEntity.created(uriComponentsBuilder
                         .replacePath("/musical-school-api/subjects/subject/{subjectId}")
                         .build(Map.of("subjectId", subject.getId())))
                 .body(subject);
+    }
+
+    @GetMapping("{teacherId:\\d+}")
+    public Iterable<Subject> findSubjectsByTeacher(@PathVariable Integer teacherId) {
+        return this.subjectService.getSubjectsByTeacher(teacherId);
+    }
+
+    @PatchMapping("{teacherId:\\d+}")
+    public void changeTeacher(@PathVariable Integer teacherId, @RequestBody List<Integer> subjectsId) {
+        this.subjectService.chageTeacher(teacherId, subjectsId);
     }
 }

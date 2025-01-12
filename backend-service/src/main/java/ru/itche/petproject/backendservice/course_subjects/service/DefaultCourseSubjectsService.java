@@ -33,7 +33,7 @@ public class DefaultCourseSubjectsService implements CourseSubjectsService {
         if (!rawResults.isEmpty()) {
             String courseTitle = (String) rawResults.get(0)[0];
             List<Subject> subjects = rawResults.stream()
-                    .map(row -> new Subject((Integer) row[1], (String) row[2], null, null))
+                    .map(row -> new Subject((Integer) row[1], (String) row[2], null, null, null))
                     .toList();
             result.put(courseTitle, subjects);
         }

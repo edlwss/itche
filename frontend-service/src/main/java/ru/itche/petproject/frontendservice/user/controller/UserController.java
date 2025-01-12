@@ -30,9 +30,21 @@ public class UserController {
                                    Model model) {
         try {
             UserToken token = userRestClient.authenticate(username, password);
+
             session.setAttribute("token", token.getToken());
             session.setAttribute("role", token.getRole());
-            return "redirect:/";
+            session.setAttribute("userId", token.getUserId());
+
+
+            if (token.getRole().equals("ROLE_TEACHER")) {
+                return "redirect:/musical-school/teachers/teacher/" + token.getUserId();
+            } else if (token.getRole().equals("ROLE_STUDENT")) {
+                return "redirect:/musical-school/students/student/" + token.getUserId();
+            } else if (token.getRole().equals("ROLE_ADMIN")) {
+                return "redirect:/musical-school/admin/" + token.getUserId();
+            }
+
+            return "redirect:/musical-school"; // На случай, если роль неизвестна
         } catch (Exception e) {
             model.addAttribute("error", "Invalid username or password");
             return "user/login";

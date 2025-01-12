@@ -38,7 +38,7 @@ public class ImplStudentRestClient implements StudentRestClient {
     }
 
     @Override
-    public void createStudent(Integer group,
+    public void createStudent(Integer groupId,
                               String details,
                               String firstName,
                               String lastName,
@@ -64,14 +64,13 @@ public class ImplStudentRestClient implements StudentRestClient {
         userPayload.put("password", password);
 
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("group", group);
         requestBody.put("details", details);
         requestBody.put("userPayload", userPayload);
 
         // Отправка POST-запроса
         restClient
                 .post()
-                .uri("/musical-school-api/students")
+                .uri("/musical-school-api/students/{groupId}", groupId)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(requestBody)

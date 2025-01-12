@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface StudentService {
     Iterable<Student> getAllStudents();
 
-    Student createStudent(NewStudentPayload payload);
+    Student createStudent(NewStudentPayload payload, Integer groupId);
 
     Optional<Student> findStudent(int studentId);
 

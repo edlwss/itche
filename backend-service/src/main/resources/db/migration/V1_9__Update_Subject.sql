@@ -1,0 +1,5 @@
+ALTER TABLE subject
+    ADD teacher_id INTEGER;
+
+ALTER TABLE subject
+    ADD CONSTRAINT FK_SUBJECT_ON_TEACHER FOREIGN KEY (teacher_id) REFERENCES teacher (id);

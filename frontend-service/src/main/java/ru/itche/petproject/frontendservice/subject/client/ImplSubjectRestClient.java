@@ -36,7 +36,37 @@ public class ImplSubjectRestClient implements SubjectRestClient {
     }
 
     @Override
-    public void createSubject(String title, String syllabus) {
+    public List<Subject> getSubjectsByTeacher(Integer teacherId) {
+
+        String token = (String) session.getAttribute("token");
+
+        return restClient
+                .get()
+                .uri("/musical-school-api/subjects/{teacherId}", teacherId)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .retrieve()
+                .body(SUBJECT_TYPE_REFERENCE);
+
+    }
+
+    @Override
+    public void updateChageTeacher(Integer teacherId, List<Integer> subjectIds) {
+
+        String token = (String) session.getAttribute("token");
+
+        this.restClient
+                .patch()
+                .uri("/musical-school-api/subjects/{teacherId}", teacherId)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(subjectIds)
+                .retrieve()
+                .toBodilessEntity();
+
+    }
+
+    @Override
+    public void createSubject(String title, String syllabus, Integer teacherId) {
 
         String token = (String) session.getAttribute("token");
 
@@ -45,7 +75,7 @@ public class ImplSubjectRestClient implements SubjectRestClient {
                 .uri("/musical-school-api/subjects")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new NewSubjectPayload(title, syllabus))
+                .body(new NewSubjectPayload(title, syllabus, teacherId))
                 .retrieve()
                 .body(Subject.class);
     }
@@ -64,7 +94,7 @@ public class ImplSubjectRestClient implements SubjectRestClient {
     }
 
     @Override
-    public void updateSubject(int subjectId, String title, String syllabus) {
+    public void updateSubject(int subjectId, String title, String syllabus, Integer teacherId) {
 
         String token = (String) session.getAttribute("token");
 
@@ -73,7 +103,7 @@ public class ImplSubjectRestClient implements SubjectRestClient {
                 .uri("/musical-school-api/subjects/subject/{subjectId}", subjectId)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new UpdateSubjectPayload(title, syllabus))
+                .body(new UpdateSubjectPayload(title, syllabus, teacherId))
                 .retrieve()
                 .toBodilessEntity();
     }

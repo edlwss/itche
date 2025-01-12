@@ -6,7 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ControllerHome {
     @GetMapping("/")
+    public String login() {
+        return "user/login";
+    }
+
+    @GetMapping("/musical-school")
     public String index() {
-        return "index"; // Указывает на templates/index.html
+        return "home";
     }
 }

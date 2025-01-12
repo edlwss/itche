@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>New Subject Music-school</title>
+    <meta charset="UTF-8">
+    <title>New Subject Music-school</title>
 </head>
 <body>
 <!--<a data-th-href="@{/musical-school/subjects/list}">List course</a>-->
 <h1>Create new course</h1>
 <form method="post" data-th-action="@{/musical-school/subjects/create}">
     <label>
-      Name: <br>
-      <input type="text" name="title">
+        Name: <br>
+        <input type="text" name="title">
     </label><br>
     <label>
-      Name Sullabus: <br>
-      <input type="text" name="titleSyllabus">
+        Name Syllabus: <br>
+        <input type="text" name="titleSyllabus">
     </label><br>
-  <button type="submit">Create</button>
+    <label>
+        Select Teacher: <br>
+        <select name="teacherId">
+            <option value="">-- Select Teacher --</option>
+            <option data-th-each="teacher : ${teachers}"
+                    data-th-value="${teacher.id}"
+                    data-th-text="${teacher.user().firstName() + ' ' + teacher.user().lastName()}">
+            </option>
+        </select>
+    </label><br>
+    <button type="submit">Create</button>
 </form>
 </body>
 </html>

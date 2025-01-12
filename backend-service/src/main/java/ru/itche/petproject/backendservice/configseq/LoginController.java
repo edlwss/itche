@@ -7,6 +7,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import ru.itche.petproject.backendservice.student.repository.StudentRepository;
+import ru.itche.petproject.backendservice.teacher.repository.TeacherRepository;
+import ru.itche.petproject.backendservice.user.repository.UserRepository;
+import ru.itche.petproject.backendservice.user.service.UserService;
 
 import java.util.Map;
 
@@ -17,6 +21,9 @@ public class LoginController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
+    private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestParam String username, @RequestParam String password) {
@@ -28,23 +35,17 @@ public class LoginController {
         // Генерация JWT токена
         String token = jwtProvider.generateToken(authentication);
 
+        Integer userId = userRepository.findByUsername(username).orElseThrow().getId();
+        String userRole = jwtProvider.getRoleFromToken(token);
+
+        if(userRole.equals("ROLE_STUDENT")) {
+            userId = studentRepository.findStudentIdByUserId(userId);
+        } else if(userRole.equals("ROLE_TEACHER")) {
+            userId = teacherRepository.findTeacherIdByUserId(userId);
+        }
+
+
         // Возвращаем токен клиенту
-        return ResponseEntity.ok(Map.of("token", token));
+        return ResponseEntity.ok(Map.of("token", token, "userId", userId, "role", userRole));
     }
-
-    @GetMapping("/role")
-    public String getRoleFromToken(@RequestHeader("Authorization") String token) {
-        // Убираем префикс "Bearer " из токена
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        }
-
-        String role = jwtProvider.getRoleFromToken(token);
-        if (role != null) {
-            return role; // Возвращаем роль
-        } else {
-            return "ROLE_ANONYMOUS"; // Возвращаем роль по умолчанию
-        }
-    }
-
 }

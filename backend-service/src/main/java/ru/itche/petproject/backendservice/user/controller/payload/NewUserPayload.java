@@ -1,9 +1,12 @@
 package ru.itche.petproject.backendservice.user.controller.payload;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import ru.itche.petproject.backendservice.id_card.controller.payload.NewIdCardPayload;
 import ru.itche.petproject.backendservice.user.entity.Role;
 
 import java.time.LocalDate;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record NewUserPayload(String lastName,
                              String firstName,
                              String middleName,
@@ -12,5 +15,6 @@ public record NewUserPayload(String lastName,
                              String phoneNumber,
                              String email,
                              String username,
-                             String password) {
+                             String password,
+                             NewIdCardPayload cardPayload) {
 }

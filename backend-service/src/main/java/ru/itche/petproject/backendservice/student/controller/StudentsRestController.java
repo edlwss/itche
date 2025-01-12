@@ -22,12 +22,12 @@ public class StudentsRestController {
         return this.studentService.getAllStudents();
     }
 
-    @PostMapping
-    public ResponseEntity<Student> createStudent(@RequestBody NewStudentPayload payload,
+    @PostMapping("/{groupId:\\d+}")
+    public ResponseEntity<Student> createStudent(@PathVariable("groupId") Integer groupId,
+                                                @RequestBody NewStudentPayload payload,
                                                UriComponentsBuilder uriComponentsBuilder) {
 
-
-        Student student = studentService.createStudent(payload);
+        Student student = studentService.createStudent(payload, groupId);
 
         return ResponseEntity.created(uriComponentsBuilder
                         .replacePath("/musical-school-api/students/student/{studentId}")

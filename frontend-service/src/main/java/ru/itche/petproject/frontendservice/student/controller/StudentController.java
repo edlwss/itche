@@ -1,10 +1,11 @@
 package ru.itche.petproject.frontendservice.student.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.itche.petproject.frontendservice.group.ImplGroupRestClient;
+import ru.itche.petproject.frontendservice.group.client.ImplGroupRestClient;
 import ru.itche.petproject.frontendservice.student.client.StudentRestClient;
 import ru.itche.petproject.frontendservice.student.controller.payload.UpdateStudentPayload;
 import ru.itche.petproject.frontendservice.student.entityRecord.Student;
@@ -17,7 +18,7 @@ import ru.itche.petproject.frontendservice.user.client.UserRestClient;
 public class StudentController {
 
     private final StudentRestClient studentRestClient;
-    private final UserRestClient userRestClient;
+    private final HttpSession session;
     private final ImplGroupRestClient groupRestClient;
 
     @ModelAttribute("student")
@@ -26,7 +27,7 @@ public class StudentController {
     }
     @ModelAttribute("role")
     public String getRole() {
-        return this.userRestClient.getUserRoleFromServer();
+        return this.session.getAttribute("role").toString();
     }
 
     @GetMapping()
@@ -36,7 +37,7 @@ public class StudentController {
 
     @GetMapping("/edit")
     public String editStudentForm(Model model){
-        model.addAttribute("groups", groupRestClient.findAllGroups());
+        model.addAttribute("groups", this.groupRestClient.findListGroups());
         return "student/edit";
     }
 

@@ -5,16 +5,21 @@
   <title>[[${subject.title}]]</title>
 </head>
 <body>
-<a data-th-href="@{/musical-school/subjects/list}">List Course</a>
-<a data-th-href="@{/musical-school/subjects/subject/{subjectId}/edit(subjectId=${subject.id})}">Update subject</a>
+<a data-th-if="${role == 'ROLE_ADMIN'}"
+   data-th-href="@{/musical-school/subjects/subject/{subjectId}/edit(subjectId=${subject.id})}">
+    Update subject</a>
 <h1 data-th-text="${subject.title}"></h1>
 <ul>
   <li><strong>ID</strong>: <span data-th-text="${subject.id}"></span></li>
   <li><strong>Title</strong>: <span data-th-text="${subject.title}"></span></li>
   <li><strong>Title Syllabus</strong>: <span data-th-text="${subject.titleSyllabus()}"></span></li>
+    <li><strong>Teacher</strong>:
+        <a data-th-if="${subject.teacher != null}"
+           data-th-href="@{/musical-school/teachers/teacher/{teacherId}(teacherId=${subject.teacher.id})}"
+           data-th-text="${subject.teacher.user.firstName} + ' ' + ${subject.teacher.user.lastName}"></a>
+        <span data-th-unless="${subject.teacher != null}">No teacher assigned</span>
+    </li>
 </ul>
-<form method="post" data-th-action="@{/musical-school/subjects/subject/{subjectId}/delete(subjectId=${subject.id})}">
-    <button type="submit">Delete</button>
-</form>
+
 </body>
 </html>

@@ -71,7 +71,8 @@
     <p><span class="info-title">Телефон:</span> <span data-th-text="${student.user.phoneNumber}"></span></p>
     <p><span class="info-title">Email:</span> <span data-th-text="${student.user.email}"></span></p>
     <p><span class="info-title">Программа обучения:</span> <span data-th-text="${student.group.course.titleCurriculum}"></span></p>
-    <p><span class="info-title">Детали:</span> <span data-th-text="${student.details}"></span></p>
+    <p><span data-th-if="${role != 'ROLE_STUDENT'}"
+             class="info-title">Детали:</span> <span data-th-text="${student.details}"></span></p>
     <p><span class="info-title">Период обучения:</span>
       <span data-th-text="${#dates.format(student.group.startEducation, 'yyyy-MM-dd')}"></span> —
       <span data-th-text="${#dates.format(student.group.endEducation, 'yyyy-MM-dd')}"></span>

@@ -1,5 +1,6 @@
 package ru.itche.petproject.frontendservice.teacher.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,15 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.itche.petproject.frontendservice.student.controller.payload.UpdateStudentPayload;
-import ru.itche.petproject.frontendservice.student.entityRecord.Student;
 import ru.itche.petproject.frontendservice.subject.client.SubjectRestClient;
 import ru.itche.petproject.frontendservice.subject.entityRecord.Subject;
 import ru.itche.petproject.frontendservice.teacher.client.TeacherRestClient;
-import ru.itche.petproject.frontendservice.teacher.client.TeacherSubjectsRestClient;
 import ru.itche.petproject.frontendservice.teacher.controller.payload.UpdateTeacherPayload;
 import ru.itche.petproject.frontendservice.teacher.entityRecord.Teacher;
-import ru.itche.petproject.frontendservice.teacher.entityRecord.TeacherSubjects;
 import ru.itche.petproject.frontendservice.user.client.UserRestClient;
 
 import java.util.List;
@@ -29,9 +26,9 @@ import java.util.Map;
 public class TeacherController {
 
     private final TeacherRestClient teacherRestClient;
-    private final UserRestClient userRestClient;
-    private final TeacherSubjectsRestClient teacherSubjectsRestClient;
+    private final HttpSession session;
     private final SubjectRestClient subjectRestClient;
+
 
     @ModelAttribute("teacher")
     public Teacher getTeacher(@PathVariable Integer teacherId) {
@@ -39,13 +36,13 @@ public class TeacherController {
     }
 
     @ModelAttribute("teacher_subjects")
-    public Map<String, List<Subject>> getSubjectsByTeacher(@PathVariable Integer teacherId) {
-        return this.teacherSubjectsRestClient.getSubjectsByTeacher(teacherId);
+    public List<Subject> getSubjectsByTeacher(@PathVariable Integer teacherId) {
+        return this.subjectRestClient.getSubjectsByTeacher(teacherId);
     }
 
     @ModelAttribute("role")
     public String getRole() {
-        return this.userRestClient.getUserRoleFromServer();
+        return this.session.getAttribute("role").toString();
     }
 
     @GetMapping()
@@ -53,7 +50,7 @@ public class TeacherController {
         return "teacher/details";
     }
 
-    @GetMapping("/edit")
+    @GetMapping("edit")
     public String editTeacherForm(Model model) {
         return "teacher/edit";
     }
@@ -94,7 +91,7 @@ public class TeacherController {
     @PostMapping("add")
     public String addSubjectsToTeacher(@PathVariable Integer teacherId,
                                       @RequestParam List<Integer> subjectIds) {
-        teacherSubjectsRestClient.addSubjectsToTeacher(teacherId, subjectIds);
+        subjectRestClient.updateChageTeacher(teacherId, subjectIds);
         return "redirect:/musical-school/teachers/teacher/%d".formatted(teacherId);
     }
 }

@@ -17,6 +17,9 @@
         <input type="text" name="titleCurriculum" data-th-value="${course.titleCurriculum}">
     </label><br>
     <button type="submit">Update</button>
+    <form method="post" data-th-action="@{/musical-school/courses/course/{courseId}/delete(courseId=${course.id})}">
+        <button type="submit">Delete</button>
+    </form>
 </form>
 </body>
 </html>

@@ -11,6 +11,7 @@ import ru.itche.petproject.backendservice.user.entity.Role;
 import ru.itche.petproject.backendservice.user.entity.User;
 import ru.itche.petproject.backendservice.user.repository.RoleRepository;
 import ru.itche.petproject.backendservice.user.service.UserService;
+import ru.itche.petproject.backendservice.id_card.controller.payload.NewIdCardPayload;
 
 import java.util.Optional;
 
@@ -34,6 +35,10 @@ public class DefaultTeacherService implements TeacherService {
         Role studentRole = roleRepository.findByNameRole("ROLE_TEACHER")
                 .orElseThrow(() -> new IllegalStateException("Role STUDENT not found"));
 
+        NewIdCardPayload cardPayload = payload.userPayload().cardPayload() != null
+                ? payload.userPayload().cardPayload()
+                : new NewIdCardPayload(null, null, null, null, null);
+
         User user = userService.createUser(
                 payload.userPayload().lastName(),
                 payload.userPayload().firstName(),
@@ -44,10 +49,16 @@ public class DefaultTeacherService implements TeacherService {
                 payload.userPayload().email(),
                 payload.userPayload().username(),
                 payload.userPayload().password(),
-                studentRole
+                studentRole,
+                cardPayload.passportSeries(),
+                cardPayload.passportNumber(),
+                cardPayload.issuedBy(),
+                cardPayload.birthCertificateNumber(),
+                cardPayload.issueDate()
         );
 
-        return teacherRepository.save(new Teacher(null, user, payload.education(), payload.details()));
+        return teacherRepository.save(new Teacher(null, user, payload.education(),
+                payload.details()));
     }
 
     @Override
@@ -69,7 +80,12 @@ public class DefaultTeacherService implements TeacherService {
                             payload.userPayload().dateOfBirth(),
                             payload.userPayload().photo(),
                             payload.userPayload().phoneNumber(),
-                            payload.userPayload().email());
+                            payload.userPayload().email(),
+                            payload.userPayload().cardPayload().passportSeries(),
+                            payload.userPayload().cardPayload().passportNumber(),
+                            payload.userPayload().cardPayload().issuedBy(),
+                            payload.userPayload().cardPayload().birthCertificateNumber(),
+                            payload.userPayload().cardPayload().issueDate());
 
                     teacher.setEducation(payload.education());
                     teacher.setDetails(payload.details());
