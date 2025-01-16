@@ -1,8 +1,10 @@
 package ru.itche.petproject.frontendservice.subject.client;
 
 import ru.itche.petproject.frontendservice.subject.entityRecord.Subject;
+import ru.itche.petproject.frontendservice.teacher.entityRecord.Teacher;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface SubjectRestClient {
@@ -13,11 +15,15 @@ public interface SubjectRestClient {
 
     void deleteSubject(int subjectId);
 
-    Iterable<Subject> getAllSubjects();
+    List<Subject> getAllSubjects();
 
     void createSubject(String title, String titleSyllabus, Integer teacherId);
 
     List<Subject> getSubjectsByTeacher(Integer teacherId);
 
     void updateChageTeacher(Integer teacherId, List<Integer> subjectIds);
+
+    Map<Teacher, List<Subject>> getTeachersWithSubjects();
+
+    byte[] getGradePdfBySubject();
 }

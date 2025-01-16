@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.itche.petproject.backendservice.adress.entity.Address;
 import ru.itche.petproject.backendservice.id_card.entity.IdCard;
 
 
@@ -62,13 +63,15 @@ public class User {
     @JoinColumn(name = "role")
     private Role role;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ID Адрес проживания")
-//    private Address address;
-//
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "idCard")
     private IdCard idCard;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "address")
+    private Address address;
+
+
 
 
 }

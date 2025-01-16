@@ -8,6 +8,8 @@ import java.util.Map;
 public interface GradeRestClient {
 
     List<Grade> getGradesByGroup(Integer groupId, Integer lessonId);
-    List<Grade> createGrades(Integer groupId, Integer lessonId, Map<String,
+    void createGrades(Integer groupId, Integer lessonId, Map<String,
             Map<String, String>> data);
+    Map<String, List<Number>> getGradeByStudent(Integer studentId);
+    byte[] getGradePdfByStudent(Integer studentId);
 }

@@ -2,32 +2,55 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/img/iconic.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список групп</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .course-title {
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        .group-list {
-            margin-left: 20px;
-        }
-    </style>
+    <title>Курсы. Музыкальная школа</title>
+    <link rel="stylesheet" href="/css/course/list.css">
 </head>
 <body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/musical-school">Главная</a></li>
+            <li><a href="/">Выход</a></li>
+        </ul>
+    </nav>
+</header>
 
-<h1>Список курсов и групп</h1>
-
-<!-- Цикл по ключам (названиям курсов) в объекте groups -->
-<div data-th-each="entry : ${courses}">
-    <!-- Отображаем название курса -->
-    <a data-th-href="@{/musical-school/course-subjects/{courseId}(courseId=${entry.id()})}"
-         class="course-title" data-th-text="${entry.title()}"></a>
+<h1>Список курсов</h1>
+<div class="main-container">
+    <main>
+        <table class="courses-table">
+            <thead>
+            <tr>
+                <th>Название курса</th>
+                <th>Учебная программа</th>
+                <th>Дата обновления</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-th-each="course : ${courses}">
+                <td data-th-text="${course.title}"></td>
+                <td data-th-text="${course.titleCurriculum}"></td>
+                <td data-th-text="${course.updateDate}"></td>
+                <td>
+                    <a data-th-href="@{/musical-school/course-subjects/{courseId}(courseId=${course.id})}" class="learn-more-link">Узнать больше</a>
+                </td>
+                <td>
+                    <a data-th-if="${role == 'ROLE_ADMIN'}"
+                       data-th-href="@{/musical-school/courses/course/{courseId}/edit(courseId=${course.id})}"  class="learn-more-link">Редактировать курс</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
 </div>
-
+<a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/courses/create}"
+   class="btn btn-primary position-fixed">Добавить новый курс</a>
+<footer>
+    <p>&copy; 2025 Musical School. Все права защищены.</p>
+</footer>
 </body>
 </html>

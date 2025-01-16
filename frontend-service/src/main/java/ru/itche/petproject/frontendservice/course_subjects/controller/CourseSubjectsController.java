@@ -14,6 +14,7 @@ import ru.itche.petproject.frontendservice.course_subjects.client.CourseSubjects
 import ru.itche.petproject.frontendservice.subject.client.SubjectRestClient;
 import ru.itche.petproject.frontendservice.subject.entityRecord.Subject;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -40,16 +41,35 @@ public class CourseSubjectsController {
 
     @GetMapping("add")
     public String showAddSubjectsPage(@PathVariable Integer courseId, Model model) {
-        Iterable<Subject> subjects = subjectRestClient.getAllSubjects();
-        model.addAttribute("subjects", subjects);
+        List<Subject> allSubjects = subjectRestClient.getAllSubjects();
+        Map<String, List<Subject>> courseSubjects = restClient.getSubjectsByCourse(courseId);
+
+        List<Subject> subjectsInCourse = courseSubjects.values().stream()
+                .flatMap(List::stream)
+                .toList();
+
+        List<Subject> availableSubjects = allSubjects.stream()
+                .filter(subject -> subjectsInCourse.stream()
+                        .noneMatch(courseSubject -> courseSubject.id().equals(subject.id())))
+                .toList();
+
+        model.addAttribute("subjects", availableSubjects);
         model.addAttribute("courseId", courseId);
         return "course_subject/add_subjects";
     }
+
 
     @PostMapping("add")
     public String addSubjectsToCourse(@PathVariable Integer courseId,
                                       @RequestParam List<Integer> subjectIds) {
         restClient.addSubjectsToCourse(courseId, subjectIds);
+        return "redirect:/musical-school/course-subjects/%d".formatted(courseId);
+    }
+
+    @PostMapping("/{subjectId:\\d+}")
+    public String deleteSubjectToCourse(@PathVariable("courseId") Integer courseId,
+                                        @PathVariable("subjectId") Integer subjectId) {
+        restClient.deleteSubjectsFromCourse(courseId, subjectId);
         return "redirect:/musical-school/course-subjects/%d".formatted(courseId);
     }
 }

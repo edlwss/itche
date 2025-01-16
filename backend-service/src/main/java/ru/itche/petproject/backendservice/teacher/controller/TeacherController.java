@@ -15,7 +15,7 @@ import ru.itche.petproject.backendservice.teacher.entity.Teacher;
 import ru.itche.petproject.backendservice.teacher.service.TeacherService;
 
 @RestController
-@RequestMapping("musical-school-api/teachers/teacher/{teacherId:\\d}")
+@RequestMapping("musical-school-api/teachers/teacher/{teacherId:\\d+}")
 @RequiredArgsConstructor
 public class TeacherController {
 
@@ -23,7 +23,7 @@ public class TeacherController {
 
     @ModelAttribute("teacher")
     public Teacher getTeacher (@PathVariable("teacherId") int teacherId) {
-        return this.teacherService.findTeacher(teacherId).orElseThrow();
+        return this.teacherService.findTeacher(teacherId).orElseThrow(null);
     }
 
     @GetMapping
@@ -36,6 +36,7 @@ public class TeacherController {
                                            @RequestBody UpdateTeacherPayload payload){
 
         this.teacherService.updateTeacher(teacherId, payload);
+        System.out.println(payload);
         return ResponseEntity.noContent()
                 .build();
 

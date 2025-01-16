@@ -12,8 +12,8 @@ import java.util.Date;
 @Component
 public class JwtProvider {
 
-    private final Key jwtSecret = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Генерация секретного ключа
-    private final long jwtExpirationMs = 86400000; // Время жизни токена (24 часа)
+    private final Key jwtSecret = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final long jwtExpirationMs = 86400000;
 
     // Генерация токена
     public String generateToken(Authentication authentication) {
@@ -26,11 +26,11 @@ public class JwtProvider {
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
 
         return Jwts.builder()
-                .setSubject(username) // Устанавливаем имя пользователя
-                .setIssuedAt(now) // Дата выпуска токена
+                .setSubject(username)
+                .setIssuedAt(now)
                 .claim("role", role)
-                .setExpiration(expiryDate) // Дата истечения токена
-                .signWith(jwtSecret) // Подпись
+                .setExpiration(expiryDate)
+                .signWith(jwtSecret)
                 .compact();
     }
 

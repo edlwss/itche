@@ -43,4 +43,5 @@ public class SubjectRestController {
         return ResponseEntity.noContent()
                 .build();
     }
+
 }

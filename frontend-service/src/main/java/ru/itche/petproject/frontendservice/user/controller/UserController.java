@@ -46,7 +46,7 @@ public class UserController {
 
             return "redirect:/musical-school"; // На случай, если роль неизвестна
         } catch (Exception e) {
-            model.addAttribute("error", "Invalid username or password");
+            model.addAttribute("error", "Неверный пароль или логин!");
             return "user/login";
         }
     }

@@ -17,6 +17,7 @@ import lombok.Setter;
 import lombok.ToString;
 import ru.itche.petproject.backendservice.course.entity.Course;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -41,9 +42,9 @@ public class Group {
     private Course course;
 
     @Column(name = "start_education")
-    private Date startEducation;
+    private LocalDate startEducation;
 
     @Column(name = "end_education")
-    private Date endEducation;
+    private LocalDate endEducation;
 
 }

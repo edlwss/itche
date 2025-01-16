@@ -33,11 +33,6 @@ public class SubjectController {
         return this.subjectRestClient.findSubject(subjectId).orElseThrow();
     }
 
-    @GetMapping()
-    public String getSubject() {
-        return "subject/detail";
-    }
-
     @GetMapping("edit")
     public String getSubjectEditPage(Model model) {
         model.addAttribute("teachers", teacherRestClient.getAllTeachers());
@@ -48,12 +43,12 @@ public class SubjectController {
     public String updateSubject(@ModelAttribute("subject") Subject subject, UpdateSubjectPayload payload) {
         this.subjectRestClient.updateSubject(subject.id(), payload.title(), payload.titleSyllabus(),
                 payload.teacherId());
-        return "redirect:/musical-school/subjects/subject/%d".formatted(subject.id());
+        return "redirect:/musical-school/courses/list";
     }
 
     @PostMapping("delete")
     public String deleteSubject(@ModelAttribute("subject") Subject subject) {
         this.subjectRestClient.deleteSubject(subject.id());
-        return "redirect:/musical-school/subjects/list";
+        return "redirect:/musical-school/courses/list";
     }
 }

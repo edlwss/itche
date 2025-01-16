@@ -1,5 +1,7 @@
 package ru.itche.petproject.backendservice.configseq;
 
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,18 +22,19 @@ public class SecurityBeans {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/musical-school-api/courses",
+                        .requestMatchers("/login", "/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/musical-school-api/courses",
                                 "/musical-school-api/course-subjects/{courseId:\\d+}",
-                                "musical-school-api/subjects/**",
-                                "musical-school-api/teachers/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"musical-school-api/groups/**",
-                                "/musical-school-api/lessons",
+                                "/musical-school-api/subjects/**",
+                                "/musical-school-api/teachers",
+                                "/musical-school-api/teachers/teacher/{teacherId:\\d+}",
+                                "/musical-school-api/instruments/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "musical-school-api/groups/**",
+                                "/musical-school-api/lessons/**",
                                 "musical-school-api/students/student/{studentId:\\d+}",
-                                "/musical-school-api/grade/{studentId:\\d+}").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                                "/musical-school-api/grade/{studentId:\\d+}/**").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
                         .requestMatchers("musical-school-api/lessons/**",
                                 "musical-school-api/grade/**").hasRole("TEACHER")
-                        .requestMatchers(HttpMethod.GET, "/musical-school-api/students/**").hasAnyRole("STUDENT", "ADMIN")
                         .requestMatchers("/musical-school-api/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
@@ -51,4 +54,5 @@ public class SecurityBeans {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
 }

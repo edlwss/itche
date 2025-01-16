@@ -8,5 +8,7 @@ public record UpdateUserPayload(String lastName,
                                 LocalDate dateOfBirth,
                                 String photo,
                                 String phoneNumber,
-                                String email){
+                                String email,
+                                AddressPayload addressPayload,
+                                IdCardPayload idCardPayload){
 }

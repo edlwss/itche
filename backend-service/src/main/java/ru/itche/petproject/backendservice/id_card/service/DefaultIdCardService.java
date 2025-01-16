@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.itche.petproject.backendservice.id_card.entity.IdCard;
 import ru.itche.petproject.backendservice.id_card.repository.IdCardRepository;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -21,7 +22,7 @@ public class DefaultIdCardService implements IdCardService {
                                String passportNumber,
                                String issuedBy,
                                String birthCertificateNumber,
-                               Date issueDate){
+                               LocalDate issueDate){
         IdCard idCard = new IdCard();
         idCard.setPassportSeries(passportSeries);
         idCard.setPassportNumber(passportNumber);
@@ -39,7 +40,7 @@ public class DefaultIdCardService implements IdCardService {
                              String passportNumber,
                              String issuedBy,
                              String birthCertificateNumber,
-                             Date issueDate) {
+                             LocalDate issueDate) {
 
         this.idCardRepository.findById(idCard)
                 .ifPresent(idCard1 -> {

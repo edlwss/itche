@@ -1,0 +1,95 @@
+/* Основной стиль страницы */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Шапка страницы */
+header {
+    background-color: #4c8caf;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Контейнер для основного контента */
+.main-container {
+    display: flex;
+    justify-content: center; /* Центрируем контент по горизонтали */
+    padding: 20px 0;
+}
+
+/* Контейнер для формы */
+main {
+    width: 80%;
+    max-width: 600px; /* Ограничиваем ширину */
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Центрируем форму внутри контейнера */
+}
+
+/* Формы */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 10px;
+    font-size: 1em;
+    font-weight: bold; /* Жирный шрифт */
+    color: #4c8caf; /* Голубой цвет */
+}
+
+input {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    width: 100%; /* Поля ввода растягиваются на всю ширину */
+}
+
+input, select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    width: 100%; /* Поля ввода растягиваются на всю ширину */
+}
+
+button {
+    background-color: #4c8caf;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%; /* Кнопка растягивается на всю ширину */
+}
+
+button:hover {
+    background-color: #3b749c;
+}
+
+
+/* Подвал страницы */
+footer {
+    background-color: #4c8caf;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

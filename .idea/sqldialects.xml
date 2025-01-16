@@ -3,9 +3,19 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/backend-service/src/main/java/ru/itche/petproject/backendservice/course_subjects/repository/CourseSubjectsRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/backend-service/src/main/java/ru/itche/petproject/backendservice/grade/repository/GradeRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/backend-service/src/main/java/ru/itche/petproject/backendservice/instrument/repository/InstrumentsByUserRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/backend-service/src/main/java/ru/itche/petproject/backendservice/subject/repository/SubjectRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_10__add_Lesson.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_11__add_Grade.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_12__add_Address.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_13__update_course.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_14__add_instrument.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_15__add_user_and_instrument.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_16__update_bd.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_17__update_course_subject.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_18__update_group.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_1__Basic_shema.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_20__update_db.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_3__add_CourseSubjects.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_4__add_Users.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/backend-service/src/main/resources/db/migration/V1_5__add_Student.sql" dialect="PostgreSQL" />

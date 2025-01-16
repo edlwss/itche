@@ -28,4 +28,12 @@ public class CourseSubjectRestController {
         return ResponseEntity.noContent()
                 .build();
     }
+
+    @DeleteMapping("/{subjectId:\\d+}")
+    public ResponseEntity<Void> deleteSubjectToCourse(@PathVariable("courseId") int courseId,
+                                                      @PathVariable("subjectId") int subjectId) {
+        this.courseSubjectsService.deleteSubjectToCourse(courseId, subjectId);
+        return ResponseEntity.noContent()
+                .build();
+    }
 }

@@ -1,0 +1,247 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #4c8caf;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: center; /* Центрирует содержимое по горизонтали */
+    align-items: center; /* Центрирует содержимое по вертикали */
+    position: relative; /* Устанавливаем позицию для дочерних элементов */
+}
+
+header h2 {
+    position: absolute; /* Абсолютное позиционирование для центровки */
+    left: 50%; /* Центрируем по горизонтали */
+    transform: translateX(-50%); /* Убираем смещение от левого края */
+}
+
+header nav {
+    margin-right: auto; /* Отодвигаем меню навигации вправо */
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+h1 {
+    text-align: left;
+    margin-top: 20px;
+    margin-right: 10px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.day {
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 120px;
+    position: relative;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.day-header {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #4c8caf;
+}
+
+.day-content {
+    font-size: 0.9em;
+    overflow-y: auto;
+    color: #555;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.form-group label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+select, .button {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.button {
+    background-color: #4c8caf;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #4c8caf;
+}
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+    background-color: #4c8caf;
+    color: white;
+    border-radius: 8px;
+}
+.calendar .day-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.lesson-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px; /* Уменьшение шрифта */
+    margin-bottom: 5px; /* Отступы между строками */
+}
+
+.lesson-time {
+    flex: 1;
+    text-align: left;
+}
+
+.lesson-title {
+    flex: 2;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100px; /* Ограничение ширины, можно настроить под свои нужды */
+}
+
+.lesson-title:hover::after {
+    content: attr(data-title);
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    background-color:white;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s;
+}
+
+.lesson-title::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.button,
+.btn-pdf {
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4c8caf;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.button:hover,
+.btn-pdf:hover {
+    background-color: #90a7bf;
+}
+
+.btn-pdf {
+    margin-left: auto;
+}
+
+.lesson-title a, .lesson-title span {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.lesson-delete {
+    flex: 0.5;
+    text-align: right;
+}
+
+.delete-link {
+    background: none;
+    border: none;
+    color: #2b5179;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+a {
+    color: #4c8caf;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #2b5179;
+    text-decoration: underline;
+}

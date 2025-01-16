@@ -12,4 +12,6 @@ public interface LessonRestClient {
     Map<LocalDate, List<Lesson>> getGroupSchedule(Integer groupId, int year, int month);
     void createLesson(Integer group, Integer subject, LocalTime timeLesson,
                              LocalDate dateLesson);
+    void deleteLesson(Integer lessonId);
+    byte[] getGradePdf(Integer groupId, int year, int month);
 }

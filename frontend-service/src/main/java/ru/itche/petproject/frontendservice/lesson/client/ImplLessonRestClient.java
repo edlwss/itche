@@ -60,4 +60,35 @@ public class ImplLessonRestClient implements LessonRestClient {
                 .body(Lesson.class);
     }
 
+    @Override
+    public void deleteLesson(Integer lessonId) {
+
+        String token = (String) session.getAttribute("token");
+
+        restClient
+                .delete()
+                .uri("/musical-school-api/lessons/{lessonId}/delete", lessonId)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .retrieve()
+                .toBodilessEntity();
+    }
+
+    @Override
+    public byte[] getGradePdf(Integer groupId, int year, int month) {
+        String token = (String) session.getAttribute("token");
+
+        // Выполняем GET-запрос для получения PDF
+        return restClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/musical-school-api/lessons/pdf")
+                        .queryParam("groupId", groupId)
+                        .queryParam("year", year)
+                        .queryParam("month", month)
+                        .build())
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .retrieve()
+                .body(byte[].class); // Возвращаем PDF в виде массива байтов
+    }
+
 }

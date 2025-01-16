@@ -1,0 +1,153 @@
+/* Общие стили */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Шапка сайта */
+header {
+    background-color: #4c8caf;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    color: #4c8caf;
+    padding: 5px 0;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Основной контент */
+main {
+    padding: 20px;
+}
+
+/* Блок с кнопками */
+.buttons {
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-teacher-btn {
+    display: block; /* Заставляем кнопку занимать всю ширину */
+    width: 80%; /* Задаём такую же ширину, как у таблицы */
+    margin: 20px auto; /* Центрируем кнопку относительно страницы */
+    background-color: #4c8caf;
+    color: white;
+    padding: 15px 15px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.add-teacher-btn:hover {
+    background-color: #90a7bf;
+}
+
+
+/* Центрируем таблицу на странице */
+table {
+    margin: 20px auto;
+    width: 80%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Задаем ширину столбцов */
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #4c8caf;
+    color: white;
+}
+
+td:first-child {
+    width: 50%;
+}
+
+td:nth-child(2) {
+    width: 50%;
+}
+
+/* Дополнительные стили для строк */
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Стили для кнопки скачать PDF */
+a.btn.btn-primary {
+    display: inline-block;
+    background-color: #4c8caf;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+a.btn.btn-primary:hover {
+    background-color: #90a7bf;
+    transform: scale(1.05);
+}
+
+/* Фиксированное положение кнопки */
+.position-fixed {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Подвал сайта */
+footer {
+    background-color: #4c8caf;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+

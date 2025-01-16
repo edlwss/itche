@@ -2,42 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update subject [[${subject.title}]]</title>
+    <link rel="icon" type="image/png" href="/img/iconic.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Предметы. Обновление</title>
+    <link rel="stylesheet" href="/css/course/create.css"> <!-- Подключение CSS -->
 </head>
 <body>
-<!-- Ссылка на предмет с параметром subjectId -->
-<a data-th-href="@{/musical-school/subjects/subject/{subjectId}(subjectId=${subject.id})}">Subject</a>
 
-<h1>Update subject [[${subject.title}]]</h1>
+<header>
+    <h1>Обновление предмета [[${subject.title}]]</h1>
+</header>
 
-<!-- Форма обновления предмета -->
-<form method="post" data-th-action="@{/musical-school/subjects/subject/{subjectId}/edit(subjectId=${subject.id})}">
-    <label>
-        Name: <br>
-        <input type="text" name="title" data-th-value="${subject.title}">
-    </label><br>
+<div class="main-container">
+    <main>
+        <!-- Форма обновления предмета -->
+        <form method="post" data-th-action="@{/musical-school/subjects/subject/{subjectId}/edit(subjectId=${subject.id})}">
+            <label>
+                Название <br>
+                <input type="text" name="title" data-th-value="${subject.title}">
+            </label><br>
 
-    <label>
-        Name Curriculum: <br>
-        <input type="text" name="titleSyllabus" data-th-value="${subject.titleSyllabus}">
-    </label><br>
+            <label>
+                Силлабус <br>
+                <input type="text" name="titleSyllabus" data-th-value="${subject.titleSyllabus}">
+            </label><br>
 
-    <label>
-        Select Teacher: <br>
-        <select name="teacherId">
-            <option value="">-- Select Teacher --</option>
-            <option data-th-each="teacher : ${teachers}"
-                    data-th-value="${teacher.id}"
-                    data-th-text="${teacher.user().firstName() + ' ' + teacher.user().lastName()}">
-            </option>
-        </select>
-    </label><br>
-    <button type="submit">Update</button>
-    <form method="post"
-          data-th-action="@{/musical-school/subjects/subject/{subjectId}/delete(subjectId=${subject.id})}">
-        <button type="submit">Delete</button>
-    </form>
-</form>
+            <label>
+                Преподаватель <br>
+                <select name="teacherId">
+                    <option data-th-if="${subject.teacher() != null}"
+                            data-th-value="${subject.teacher.id}"
+                            data-th-text="${subject.teacher.user.firstName} + ' ' + ${subject.teacher.user.lastName}">
+                    </option>
+                    <option data-th-each="teacher : ${teachers}"
+                            data-th-if="${teacher.user() != null}"
+                            data-th-value="${teacher.id}"
+                            data-th-text="${teacher.user().firstName()} + ' ' + ${teacher.user().lastName()}">
+                    </option>
+                </select>
+            </label><br>
+            <button type="submit">Редактировать</button>
+        </form>
+
+        <!-- Форма удаления предмета -->
+        <form method="post" data-th-action="@{/musical-school/subjects/subject/{subjectId}/delete(subjectId=${subject.id})}">
+            <button type="submit">Удалить</button>
+        </form>
+    </main>
+</div>
+
+<footer>
+    <p>&copy; 2025 Musical School. All rights reserved.</p>
+</footer>
 
 </body>
 </html>

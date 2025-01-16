@@ -13,4 +13,6 @@ public interface CourseSubjectsRestClient {
     void addSubjectsToCourse(Integer courseId, List<Integer> subjectIds);
 
     Map<String, List<Subject>> getSubjectsByCourse(Integer courseId);
+
+    void deleteSubjectsFromCourse(Integer courseId, Integer subjectId);
 }

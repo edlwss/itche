@@ -1,82 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-        <html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
-        <head>
-        <meta charset="UTF-8">
-        <title>Информация об teacher</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .container {
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: #f9f9f9;
-        }
-        .photo-container {
-            flex: 1;
-            max-width: 250px;
-        }
-
-        .photo-wrapper {
-            width: 250px;
-            height: 250px;
-            overflow: hidden;
-            /*border-radius: 50%; !* Обрезка в форме круга, можно убрать для квадрата *!*/
-        }
-
-        .photo-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .info-container {
-            flex: 2;
-        }
-        .info-container h2 {
-            margin-bottom: 10px;
-        }
-        .info-container p {
-            margin: 5px 0;
-        }
-        .info-title {
-            font-weight: bold;
-        }
-    </style>
+    <link rel="icon" type="image/png" href="/img/iconic.png">
+    <title>Информация об учителе</title>
+    <link rel="stylesheet" href="/css/user/detail.css">
 </head>
 <body>
-<h1>Профиль админа [[${admin.lastName}]] [[${admin.firstName}]] </h1>
+<header>
+    <h1>Администратор [[${admin.lastName} + ' ' + ${admin.firstName}]]</h1>
+</header>
 
 <div class="container">
     <div class="photo-container">
         <div class="photo-wrapper">
-            <img th:src="@{/img/{photo}(photo=${admin.photo()})}"
-                 alt="Фото admin">
+            <img th:src="@{/img/{photo}(photo=${admin.photo})}" alt="Фото admin">
         </div>
     </div>
     <div class="info-container">
-        <p><span class="info-title">Имя:</span> <span data-th-text="${admin.lastName} + ' '
-                                                              + ${admin.firstName} + ' '
-                                                              + ${admin.middleName}"></span></p>
+        <p><span class="info-title">Имя:</span> <span data-th-text="${admin.lastName} + ' ' + ${admin.firstName} + ' ' + ${admin.middleName}"></span></p>
         <p><span class="info-title">Дата рождения:</span> <span data-th-text="${admin.dateOfBirth}"></span></p>
         <p><span class="info-title">Телефон:</span> <span data-th-text="${admin.phoneNumber}"></span></p>
         <p><span class="info-title">Email:</span> <span data-th-text="${admin.email}"></span></p>
+
+        <div>
+            <h2>Паспортные данные</h2>
+            <p><span class="info-title">Серия:</span> <span data-th-text="${admin.idCard.passportSeries}"></span></p>
+            <p><span class="info-title">Номер:</span> <span data-th-text="${admin.idCard.passportNumber}"></span></p>
+            <p><span class="info-title">Кем выдано:</span> <span data-th-text="${admin.idCard.issuedBy}"></span></p>
+            <p><span class="info-title">Дата выдачи:</span> <span data-th-text="${admin.idCard.issueDate}"></span></p>
+
+            <h2>Адрес</h2>
+            <p><span class="info-title">Город:</span> <span data-th-text="${admin.address.city}"></span></p>
+            <p><span class="info-title">Улица:</span> <span data-th-text="${admin.address.street}"></span></p>
+            <p><span class="info-title">Дом:</span> <span data-th-text="${admin.address.home}"></span></p>
+            <p><span class="info-title">Квартира:</span> <span data-th-text="${admin.address.flat}"></span></p>
+
+        </div>
+
     </div>
 </div>
 
+<footer>
+    &copy; 2025 Музыкальная Школа. Все права защищены.
+</footer>
 </body>
 </html>

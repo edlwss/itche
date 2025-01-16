@@ -1,5 +1,7 @@
 package ru.itche.petproject.frontendservice.user.controller.payload;
 
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
+
 import java.time.LocalDate;
 
 public record NewUserPayload(String lastName,
@@ -10,5 +12,7 @@ public record NewUserPayload(String lastName,
                              String phoneNumber,
                              String email,
                              String username,
-                             String password) {
+                             String password,
+                             AddressPayload addressPayload,
+                             IdCardPayload idCardPayload) {
 }

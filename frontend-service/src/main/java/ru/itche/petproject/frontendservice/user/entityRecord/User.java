@@ -1,5 +1,7 @@
 package ru.itche.petproject.frontendservice.user.entityRecord;
 
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
+
 import java.time.LocalDate;
 
 public record User(Integer id,
@@ -11,5 +13,7 @@ public record User(Integer id,
                    String phoneNumber,
                    String email,
                    String username,
-                   String password) {
+                   String password,
+                   Address address,
+                   IdCard idCard) {
 }

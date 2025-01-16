@@ -1,0 +1,119 @@
+/* Основной стиль страницы */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Шапка сайта */
+header {
+    background-color: #4c8caf;
+    color: white;
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    text-align: center;
+    color: #4c8caf;
+    padding: 3px 0;
+    margin-bottom: 1px;
+}
+
+/* Основной контейнер */
+.main-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+/* Таблица групп */
+main {
+    width: 80%;
+    max-width: 700px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    justify-content: center;
+    display: flex;
+}
+
+.groups-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+.groups-table th, .groups-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.groups-table th {
+    background-color: #4c8caf;
+    color: white;
+    text-align: center;
+}
+
+.groups-table td {
+    font-size: 16px;
+}
+
+/* Кнопка "Подробнее" */
+.btn.btn-primary2 {
+    display: inline-block;
+    background-color: #4c8caf;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn.btn-primary2:hover {
+    background-color: #90a7bf;
+    transform: scale(1.05);
+}
+
+/* Подвал страницы */
+footer {
+    background-color: #4c8caf;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

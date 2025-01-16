@@ -38,19 +38,28 @@ public class ImplStudentRestClient implements StudentRestClient {
     }
 
     @Override
-    public void createStudent(Integer groupId,
-                              String details,
-                              String firstName,
-                              String lastName,
-                              String middleName,
-                              LocalDate dateOfBirth,
-                              String photo,
-                              String phoneNumber,
-                              String email,
-                              String username,
-                              String password) {
+    public void createStudent(Integer groupId, String details, String firstName,
+                              String lastName, String middleName, LocalDate dateOfBirth,
+                              String photo, String phoneNumber, String email, String username,
+                              String password,String passportSeries, String passportNumber, String issuedBy,
+                              LocalDate issueDate, String birthCertificateNumber,
+                              String city, String street, String home,
+                              String flat) {
 
         String token = (String) session.getAttribute("token");
+
+        Map<String, Object> addressPayload = new HashMap<>();
+        addressPayload.put("city", city);
+        addressPayload.put("street", street);
+        addressPayload.put("home", home);
+        addressPayload.put("flat", flat);
+
+        Map<String, Object> idCardPayload = new HashMap<>();
+        idCardPayload.put("issuedBy", issuedBy);
+        idCardPayload.put("birthCertificateNumber", birthCertificateNumber);
+        idCardPayload.put("issueDate", issueDate);
+        idCardPayload.put("passportSeries", passportSeries);
+        idCardPayload.put("passportNumber", passportNumber);
 
         Map<String, Object> userPayload = new HashMap<>();
         userPayload.put("lastName", lastName);
@@ -62,6 +71,8 @@ public class ImplStudentRestClient implements StudentRestClient {
         userPayload.put("email", email);
         userPayload.put("username", username);
         userPayload.put("password", password);
+        userPayload.put("addressPayload", addressPayload);
+        userPayload.put("cardPayload", idCardPayload);
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("details", details);
@@ -92,18 +103,28 @@ public class ImplStudentRestClient implements StudentRestClient {
     }
 
     @Override
-    public void updateStudent(int studentId,
-                              Integer group,
-                              String details,
-                              String firstName,
-                              String lastName,
-                              String middleName,
-                              LocalDate dateOfBirth,
-                              String photo,
-                              String phoneNumber,
-                              String email) {
+    public void updateStudent(int studentId, Integer group, String details, String firstName,
+                              String lastName, String middleName, LocalDate dateOfBirth,
+                              String photo, String phoneNumber, String email,
+                              String passportSeries, String passportNumber, String issuedBy,
+                              LocalDate issueDate, String birthCertificateNumber,
+                              String city, String street, String home,
+                              String flat) {
 
         String token = (String) session.getAttribute("token");
+
+        Map<String, Object> addressPayload = new HashMap<>();
+        addressPayload.put("city", city);
+        addressPayload.put("street", street);
+        addressPayload.put("home", home);
+        addressPayload.put("flat", flat);
+
+        Map<String, Object> idCardPayload = new HashMap<>();
+        idCardPayload.put("issuedBy", issuedBy);
+        idCardPayload.put("birthCertificateNumber", birthCertificateNumber);
+        idCardPayload.put("issueDate", issueDate);
+        idCardPayload.put("passportSeries", passportSeries);
+        idCardPayload.put("passportNumber", passportNumber);
 
         Map<String, Object> userPayload = new HashMap<>();
         userPayload.put("firstName", firstName);
@@ -113,11 +134,13 @@ public class ImplStudentRestClient implements StudentRestClient {
         userPayload.put("photo", photo);
         userPayload.put("phoneNumber", phoneNumber);
         userPayload.put("email", email);
+        userPayload.put("addressPayload", addressPayload);
+        userPayload.put("cardPayload", idCardPayload);
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("group", group);
         requestBody.put("details", details);
-        requestBody.put("updateUserPayload", userPayload);
+        requestBody.put("userPayload", userPayload);
 
         restClient
                 .patch()

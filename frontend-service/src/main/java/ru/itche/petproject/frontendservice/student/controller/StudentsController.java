@@ -59,8 +59,17 @@ public class StudentsController {
                 payload.userPayload().phoneNumber(),
                 payload.userPayload().email(),
                 payload.userPayload().username(),
-                payload.userPayload().password());
+                payload.userPayload().password(),
+                payload.userPayload().idCardPayload().passportSeries(),
+                payload.userPayload().idCardPayload().passportNumber(),
+                payload.userPayload().idCardPayload().issuedBy(),
+                payload.userPayload().idCardPayload().issueDate(),
+                payload.userPayload().idCardPayload().birthCertificateNumber(),
+                payload.userPayload().addressPayload().city(),
+                payload.userPayload().addressPayload().street(),
+                payload.userPayload().addressPayload().home(),
+                payload.userPayload().addressPayload().flat());
 
-        return "redirect:/musical-school/students/list";
+        return "redirect:/musical-school/groups/group-students/" + groupId;
     }
 }

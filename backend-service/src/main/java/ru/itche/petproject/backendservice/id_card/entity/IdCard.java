@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,5 +42,5 @@ public class IdCard {
     private String birthCertificateNumber;
 
     @Column(name = "issue_date")
-    private Date issueDate;
+    private LocalDate issueDate;
 }

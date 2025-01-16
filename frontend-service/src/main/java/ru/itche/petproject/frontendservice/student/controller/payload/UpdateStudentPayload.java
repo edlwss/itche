@@ -4,5 +4,5 @@ import ru.itche.petproject.frontendservice.user.controller.payload.UpdateUserPay
 
 public record UpdateStudentPayload(Integer group,
                                    String details,
-                                   UpdateUserPayload updateUserPayload) {
+                                   UpdateUserPayload userPayload) {
 }

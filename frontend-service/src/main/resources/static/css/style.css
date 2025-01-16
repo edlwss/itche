@@ -1,0 +1,107 @@
+/* Общие стили */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: url('/static/img/img_home.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Стили для хедера */
+.header {
+    background-color: #4c8caf;
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-dark .nav-link {
+    color: #eaeaea;
+    font-size: 16px;
+    margin-right: 15px;
+    transition: color 0.3s;
+}
+
+.navbar-dark .nav-link:hover {
+    color: #fff;
+}
+
+.navbar-dark .nav-link i {
+    margin-right: 5px;
+}
+
+/* Основное содержимое */
+.main-content {
+    padding: 100px 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    margin: 50px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-content h1 {
+    font-size: 46px;
+    color: #4c8caf;
+    margin-bottom: 25px;
+}
+
+.main-content p {
+    font-size: 19px;
+    margin-bottom: 25px;
+}
+
+.main-content p a {
+    display: inline-block;
+    width: 250px;
+    white-space: nowrap; /* Запрещает перенос текста на новую строку */
+    overflow: hidden;    /* Обрезает текст, который не помещается */
+    text-overflow: ellipsis; /* Добавляет многоточие, если текст слишком длинный */
+    text-align: center;
+}
+
+.main-content a.btn-primary {
+    background-color: #4c8caf;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+}
+
+
+.main-content a.btn-primary:hover {
+    background-color: #3a6e86;
+}
+
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 50px 15px;
+    }
+
+    .navbar-dark .nav-link {
+        font-size: 14px;
+        margin-right: 10px;
+    }
+}
+
+/* Подвал страницы */
+footer {
+    background-color: #4c8caf;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+

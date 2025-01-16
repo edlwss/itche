@@ -2,15 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Создание студента</title>
+    <link rel="icon" type="image/png" href="/img/iconic.png">
+    <title>Создание профиля учителя</title>
+    <link rel="stylesheet" href="/css/user/create.css">
 </head>
 <body>
-<h1>Создание студента</h1>
-<form data-th-action="@{/musical-school/students/create/{groupId}(groupId=${groupId})}" method="post" enctype="multipart/form-data">
-    <h2>Данные пользователя</h2>
+
+<header>
+    <h1>Создание профиля ученика</h1>
+</header>
+
+<form th:action="@{/musical-school/students/create/{groupId}(groupId=${groupId})}" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+    <h2>Личные данные</h2>
     <label>
         Фамилия:
-        <input type="text" name="userPayload.lastName" required>
+        <input type="text" id="lastName" name="userPayload.lastName" required onchange="generateUsername();">
     </label>
     <br>
     <label>
@@ -25,22 +31,22 @@
     <br>
     <label>
         Дата рождения:
-        <input type="date" name="userPayload.dateOfBirth" required>
+        <input type="date" id="dateOfBirth" name="userPayload.dateOfBirth" required onchange="toggleFields();">
     </label>
     <br>
     <label>
         Телефон:
-        <input type="text" name="userPayload.phoneNumber" required>
+        <input type="text" id="phoneNumber" name="userPayload.phoneNumber" required>
     </label>
     <br>
     <label>
         Email:
-        <input type="email" name="userPayload.email" required>
+        <input type="email" id="email" name="userPayload.email" required>
     </label>
     <br>
     <label>
         Имя пользователя:
-        <input type="text" name="userPayload.username" required>
+        <input type="text" id="username" name="userPayload.username" readonly>
     </label>
     <br>
     <label>
@@ -53,12 +59,124 @@
         <input type="file" name="photo" accept="image/*" required>
     </label>
     <br>
+
+    <div id="passportFields">
+        <div id="passportDetails">
+            <h2>Паспортные данные</h2>
+            <label>
+                Серия паспорта:
+                <input type="text" id="passportSeries" name="userPayload.idCardPayload.passportSeries" value="">
+            </label>
+            <br>
+            <label>
+                Номер паспорта:
+                <input type="text" id="passportNumber" name="userPayload.idCardPayload.passportNumber" value="">
+            </label>
+        </div>
+        <div id="birthCertificateField" style="display:none;">
+            <h2>Свидетельсво о рождении</h2>
+            <label>
+                Номер свидетельства о рождении:
+                <input type="text" name="userPayload.idCardPayload.birthCertificateNumber" value="">
+            </label>
+        </div>
+        <br>
+        <label>
+            Кем выдано:
+            <input type="text" name="userPayload.idCardPayload.issuedBy" >
+        </label>
+        <br>
+        <label>
+            Дата выдачи:
+            <input type="date" name="userPayload.idCardPayload.issueDate" >
+        </label>
+    </div>
+
+
+    <h2>Адрес</h2>
+    <label>
+        Город:
+        <input type="text" name="userPayload.addressPayload.city" required>
+    </label>
+    <br>
+    <label>
+        Улица:
+        <input type="text" name="userPayload.addressPayload.street" required>
+    </label>
+    <br>
+    <label>
+        Дом:
+        <input type="text" name="userPayload.addressPayload.home" required>
+    </label>
+    <br>
+    <label>
+        Квартира:
+        <input type="text" name="userPayload.addressPayload.flat">
+    </label>
+
+    <h2>Учебные данные</h2>
     <label>
         Дополнительные детали:
-        <textarea name="details"></textarea>
+        <textarea name="details" value=""></textarea>
     </label>
     <br>
     <button type="submit">Создать</button>
 </form>
+
+<footer>
+    &copy; 2025 Музыкальная Школа. Все права защищены.
+</footer>
+
+<script>
+    function toggleFields() {
+        const dateOfBirth = new Date(document.getElementById("dateOfBirth").value);
+        const age = new Date().getFullYear() - dateOfBirth.getFullYear();
+        document.getElementById("passportFields").style.display = "block";
+        document.getElementById("passportDetails").style.display = age >= 14 ? "block" : "none";
+        document.getElementById("birthCertificateField").style.display = age < 14 ? "block" : "none";
+    }
+
+    function validateForm() {
+        const phoneNumber = document.getElementById("phoneNumber").value;
+        const passportSeries = document.getElementById("passportSeries").value;
+        const passportNumber = document.getElementById("passportNumber").value;
+        const email = document.getElementById("email").value;
+
+        if (!/^\d{11}$/.test(phoneNumber)) {
+            alert("Телефон должен содержать ровно 11 цифр.");
+            return false;
+        }
+        if (document.getElementById("passportDetails").style.display === "block") {
+            if (!/^\d{4}$/.test(passportSeries)) {
+                alert("Серия паспорта должна содержать ровно 4 цифры.");
+                return false;
+            }
+            if (!/^\d{6}$/.test(passportNumber)) {
+                alert("Номер паспорта должен содержать ровно 6 цифр.");
+                return false;
+            }
+        }
+        if (!/@/.test(email)) {
+            alert("Email должен содержать '@'.");
+            return false;
+        }
+        return true;
+    }
+
+    function generateUsername() {
+        const lastName = document.getElementById("lastName").value.trim().toLowerCase();
+        const transliteratedLastName = lastName.replace(/[а-я]/gi, function(char) {
+            const map = {
+                'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e', 'ж': 'zh', 'з': 'z',
+                'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r',
+                'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch',
+                'ы': 'y', 'э': 'e', 'ю': 'yu', 'я': 'ya'
+            };
+            return map[char] || char;
+        });
+        document.getElementById("username").value = "student_" + transliteratedLastName;
+    }
+
+</script>
 </body>
 </html>

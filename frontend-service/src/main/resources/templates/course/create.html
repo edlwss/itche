@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>New Courses Music-school</title>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/img/iconic.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курс. Добавление</title>
+    <link rel="stylesheet" href="/css/course/create.css">
 </head>
 <body>
-<a data-th-href="@{/musical-school/courses/list}">List course</a>
-<h1>Create new course</h1>
-<form method="post" data-th-action="@{/musical-school/courses/create}">
-    <label>
-      Name: <br>
-      <input type="text" name="title">
-    </label><br>
-    <label>
-      Name Curriculum: <br>
-      <input type="text" name="titleCurriculum">
-    </label><br>
-  <button type="submit">Create</button>
-</form>
+
+<header>
+    <h1>Добавление нового курса</h1>
+</header>
+
+<div class="main-container">
+    <main>
+        <form method="post" data-th-action="@{/musical-school/courses/create}">
+            <label>
+                Название курса <br>
+                <input type="text" name="title" required>
+            </label><br>
+            <label>
+                Учебная программа <br>
+                <input type="text" name="titleCurriculum" required>
+            </label><br>
+            <button type="submit">Добавить</button>
+        </form>
+    </main>
+</div>
+
+<footer>
+    <p>&copy; 2025 Musical School. Все права защищены.</p>
+</footer>
+
 </body>
 </html>

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -27,6 +29,17 @@ public class Course {
 
     @Column(name = "title_curriculum")
     private String titleCurriculum;
-//    private Date updateDate;
-//    private Status status;
+
+    @Column (name = "update_course")
+    private LocalDate updateDate;
+
+    @PrePersist
+    public void prePersist() {
+        this.updateDate = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updateDate = LocalDate.now();
+    }
 }

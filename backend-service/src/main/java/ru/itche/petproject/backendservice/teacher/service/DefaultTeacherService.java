@@ -54,7 +54,11 @@ public class DefaultTeacherService implements TeacherService {
                 cardPayload.passportNumber(),
                 cardPayload.issuedBy(),
                 cardPayload.birthCertificateNumber(),
-                cardPayload.issueDate()
+                cardPayload.issueDate(),
+                payload.userPayload().addressPayload().city(),
+                payload.userPayload().addressPayload().street(),
+                payload.userPayload().addressPayload().home(),
+                payload.userPayload().addressPayload().flat()
         );
 
         return teacherRepository.save(new Teacher(null, user, payload.education(),
@@ -85,7 +89,11 @@ public class DefaultTeacherService implements TeacherService {
                             payload.userPayload().cardPayload().passportNumber(),
                             payload.userPayload().cardPayload().issuedBy(),
                             payload.userPayload().cardPayload().birthCertificateNumber(),
-                            payload.userPayload().cardPayload().issueDate());
+                            payload.userPayload().cardPayload().issueDate(),
+                            payload.userPayload().addressPayload().city(),
+                            payload.userPayload().addressPayload().street(),
+                            payload.userPayload().addressPayload().home(),
+                            payload.userPayload().addressPayload().flat());
 
                     teacher.setEducation(payload.education());
                     teacher.setDetails(payload.details());

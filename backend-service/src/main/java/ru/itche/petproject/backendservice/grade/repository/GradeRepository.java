@@ -29,7 +29,8 @@ public interface GradeRepository extends CrudRepository<Grade, Integer> {
     Optional<Grade> findByStudentAndLesson(@Param("studentId") Integer studentId, @Param("lessonId") Integer lessonId);
 
     @Query(value = """
-        SELECT s.title AS subjectTitle, g.estimation AS grade
+        SELECT s.title AS subjectTitle, g.estimation AS grade,
+               g.presence AS presence
         FROM musical_school.grade g
         JOIN musical_school.lesson l ON g.lesson_id = l.id
         JOIN musical_school.subject s ON l.subject = s.id

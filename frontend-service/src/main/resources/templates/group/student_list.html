@@ -2,40 +2,51 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/img/iconic.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список групп</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .course-title {
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        .group-list {
-            margin-left: 20px;
-        }
-    </style>
+    <title>Список студентов</title>
+    <link rel="stylesheet" href="/css/group/list.css">
 </head>
 <body>
 
-<h1>Список cтудентов группы</h1>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/musical-school">Главная</a></li>
+            <li><a href="/">Выход</a></li>
+        </ul>
+    </nav>
+</header>
 
-<!-- Цикл по ключам (названиям курсов) в объекте groups -->
 <div data-th-each="entry : ${group_student}">
-    <!-- Отображаем название курса -->
-    <div class="course-title" data-th-text="${entry.key}"></div>
+<h1>Список студентов группы [[${entry.key}]]</h1>
 
-    <!-- Список групп для текущего курса -->
-    <div class="group-list">
-        <div data-th-each="student : ${entry.value}">
-            <a data-th-href="@{/musical-school/students/student/{studentId}(studentId=${student.id})}"
-               data-th-text="${student.user.firstName()} + ' ' + ${student.user.lastName()}"></a>
-        </div>
-    </div>
-    <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/students/create/{groupId}(groupId=${groupId})}">+ Добавить нового ученика</a>
+<div class="main-container">
+    <main>
+        <table class="students-table">
+            <thead>
+            <tr>
+                <th>Ученик</th>
+                <th>Профиль</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-th-each="student : ${entry.value}">
+                <td data-th-text="${student.user.firstName} + ' ' + ${student.user.lastName}"></td>
+                <td>
+                    <a data-th-href="@{/musical-school/students/student/{studentId}(studentId=${student.id})}" class="btn btn-primary2">Перейти в профиль</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
 </div>
+
+<a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/students/create/{groupId}(groupId=${groupId})}" class="btn btn-primary position-fixed">Добавить нового ученика</a>
+</div>
+<footer>
+    <p>&copy; 2025 Musical School. Все права защищены.</p>
+</footer>
 
 </body>
 </html>

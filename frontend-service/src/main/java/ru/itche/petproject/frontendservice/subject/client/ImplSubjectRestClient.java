@@ -5,20 +5,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import ru.itche.petproject.frontendservice.subject.controller.payload.NewSubjectPayload;
 import ru.itche.petproject.frontendservice.subject.controller.payload.UpdateSubjectPayload;
 import ru.itche.petproject.frontendservice.subject.entityRecord.Subject;
+import ru.itche.petproject.frontendservice.teacher.client.TeacherRestClient;
+import ru.itche.petproject.frontendservice.teacher.entityRecord.Teacher;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+@Component
 @RequiredArgsConstructor
 public class ImplSubjectRestClient implements SubjectRestClient {
 
     private final RestClient restClient;
     private final HttpSession session;
+    private final TeacherRestClient teacherRestClient;
 
     private static final ParameterizedTypeReference<List<Subject>> SUBJECT_TYPE_REFERENCE =
+            new ParameterizedTypeReference<>(){};
+    private static final ParameterizedTypeReference<Map<Integer,List<Subject>>> TEACHER_SUBJECT_TYPE_REFERENCE =
             new ParameterizedTypeReference<>(){};
 
 
@@ -119,4 +129,45 @@ public class ImplSubjectRestClient implements SubjectRestClient {
                 .retrieve()
                 .toBodilessEntity();
     }
+
+    @Override
+    public Map<Teacher, List<Subject>> getTeachersWithSubjects() {
+
+        String token = (String) session.getAttribute("token");
+
+        // Исходная карта ID учителя -> список предметов
+        Map<Integer, List<Subject>> subjectsTeachers = restClient
+                .get()
+                .uri("/musical-school-api/subjects/teachers")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .retrieve()
+                .body(TEACHER_SUBJECT_TYPE_REFERENCE);
+
+        // Создаем новую карту: Учитель -> Список предметов
+        Map<Teacher, List<Subject>> teachersWithSubjects = new HashMap<>();
+
+        subjectsTeachers.forEach((teacherId, subjects) -> {
+            // Получаем сущность учителя по ID
+            Teacher teacher = teacherRestClient.findTeacher(teacherId).orElseThrow();
+
+            // Добавляем учителя и его предметы в новую карту
+            teachersWithSubjects.put(teacher, subjects);
+        });
+
+        return teachersWithSubjects;
+    }
+
+    @Override
+    public byte[] getGradePdfBySubject() {
+        String token = (String) session.getAttribute("token");
+
+        // Выполняем GET-запрос для получения PDF
+        return restClient
+                .get()
+                .uri("/musical-school-api/subjects/teachers/pdf")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .retrieve()
+                .body(byte[].class); // Возвращаем PDF в виде массива байтов
+    }
+
 }

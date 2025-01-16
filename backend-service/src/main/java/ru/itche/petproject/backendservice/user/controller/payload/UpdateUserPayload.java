@@ -1,6 +1,7 @@
 package ru.itche.petproject.backendservice.user.controller.payload;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import ru.itche.petproject.backendservice.adress.payload.UpdateAddressPayload;
 import ru.itche.petproject.backendservice.id_card.controller.payload.UpdateIdCardPayload;
 
 import java.time.LocalDate;
@@ -13,5 +14,6 @@ public record UpdateUserPayload (String lastName,
                                  String photo,
                                  String phoneNumber,
                                  String email,
-                                 UpdateIdCardPayload cardPayload) {
+                                 UpdateIdCardPayload cardPayload,
+                                 UpdateAddressPayload addressPayload) {
 }

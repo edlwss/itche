@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/img/iconic.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Оценки студента в музыкальной школе">
+    <meta name="author" content="Musical School">
+    <link rel="stylesheet" href="/css/grade/student.css">
+    <title>Табель успеваемости</title>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="/musical-school">Главная</a></li>
+            <li><a href="/">Выход</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>Табель успеваемости</h1>
+
+    <a th:href="@{/musical-school/grade/{studentId}/pdf(studentId=${studentId})}" class="btn btn-primary position-fixed">Скачать табель формата PDF</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Предмет</th>
+            <th>Средняя оценка</th>
+            <th>Кол-во посещенных занятий</th>
+            <th>Кол-во пропущенных занятий</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="grade : ${student_grade}">
+            <td th:text="${grade.key}"></td>
+            <td th:text="${grade.value[0]}"></td>
+            <td th:text="${grade.value[1]}"></td>
+            <td th:text="${grade.value[2]}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<!-- Подвал сайта -->
+<footer>
+    <p>&copy; 2025 Musical School. Все права защищены.</p>
+</footer>
+</body>
+</html>

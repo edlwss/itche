@@ -10,12 +10,9 @@ import ru.itche.petproject.backendservice.subject.entity.Subject;
 import ru.itche.petproject.backendservice.course.entity.Course;
 import ru.itche.petproject.backendservice.subject.repository.SubjectRepository;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +30,7 @@ public class DefaultCourseSubjectsService implements CourseSubjectsService {
         if (!rawResults.isEmpty()) {
             String courseTitle = (String) rawResults.get(0)[0];
             List<Subject> subjects = rawResults.stream()
-                    .map(row -> new Subject((Integer) row[1], (String) row[2], null, null, null))
+                    .map(row -> subjectRepository.findById((Integer) row[1]).orElseThrow())
                     .toList();
             result.put(courseTitle, subjects);
         }
@@ -53,12 +50,18 @@ public class DefaultCourseSubjectsService implements CourseSubjectsService {
                     Subject subject = subjectRepository.findById(subjectId)
                             .orElseThrow(() -> new IllegalArgumentException("Предмет с id " + subjectId + " не найден"));
 
-                    return new CourseSubjects(null, course, subject, null); // details = null
+                    return new CourseSubjects(null, course, subject, null);
                 })
                 .toList();
 
         // Сохраняем все записи в базу
         courseSubjectsRepository.saveAll(courseSubjects);
+    }
+
+    @Override
+    @Transactional
+    public void deleteSubjectToCourse(int courseId, int subjectId) {
+        this.courseSubjectsRepository.deleteByCourseIdAndSubjectId(courseId, subjectId);
     }
 
 }

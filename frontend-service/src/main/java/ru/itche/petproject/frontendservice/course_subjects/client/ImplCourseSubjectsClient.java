@@ -14,7 +14,7 @@ import java.util.Map;
 public class ImplCourseSubjectsClient implements CourseSubjectsRestClient {
 
     private final RestClient restClient;
-    private final HttpSession session; // Добавляем HttpSession как зависимость
+    private final HttpSession session;
 
     private static final ParameterizedTypeReference<Map<String, List<Subject>>> COURSE_SUBJECTS_TYPE_REFERENCE =
             new ParameterizedTypeReference<>() {};
@@ -29,6 +29,18 @@ public class ImplCourseSubjectsClient implements CourseSubjectsRestClient {
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
                 .body(COURSE_SUBJECTS_TYPE_REFERENCE);
+    }
+
+    @Override
+    public void deleteSubjectsFromCourse(Integer courseId, Integer subjectId) {
+        String token = (String) session.getAttribute("token");
+
+        restClient
+                .delete()
+                .uri("/musical-school-api/course-subjects/{courseId}/{subjectId}", courseId, subjectId)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .retrieve()
+                .toBodilessEntity();
     }
 
     @Override

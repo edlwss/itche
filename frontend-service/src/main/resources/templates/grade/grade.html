@@ -2,24 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/img/iconic.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grades and Attendance</title>
+    <link rel="stylesheet" href="/css/grade/grade.css">
+    <title>Учет успеваемости</title>
 </head>
 <body>
-<h1>Grades and Attendance for Group</h1>
 
-<!-- Удалены скрытые поля, т.к. они не используются в JavaScript -->
+<header>
+    <h1>Проставление посещаемости и успеваемости учащимся</h1>
+</header>
+
+
 <form>
     <table>
         <thead>
         <tr>
-            <th>Student</th>
-            <th>Estimation</th>
-            <th>Presence</th>
+            <th>Ученик</th>
+            <th>Оценка</th>
+            <th>Присутствие</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Данные для каждого студента -->
         <tr th:each="grade : ${grades}">
             <td th:text="${grade.student.user.firstName} + ' ' + ${grade.student.user.lastName}"></td>
             <td>
@@ -36,19 +40,20 @@
             <td>
                 <select class="presence" th:attr="data-student-id=${grade.student.id}">
                     <option value="null" th:selected="${grade.presence == null}">-</option>
-                    <option value="Present" th:selected="${grade.presence == 'Present'}">Present</option>
-                    <option value="Absent" th:selected="${grade.presence == 'Absent'}">Absent</option>
+                    <option value="Присутствовал" th:selected="${grade.presence == 'Присутствовал'}">Присутствовал</option>
+                    <option value="Отсутствовал" th:selected="${grade.presence == 'Отсутствовал'}">Отсутствовал</option>
                 </select>
             </td>
         </tr>
         </tbody>
     </table>
-    <button type="button" onclick="submitGrades()">Submit</button>
+    <button type="button" onclick="submitGrades()">Сохранить</button>
 </form>
-
+<footer>
+    <p>&copy; 2025 Musical School. Все права защищены.</p>
+</footer>
 <script>
     function submitGrades() {
-        // Задаем фиксированные значения groupId и lessonId
         const groupId = new URLSearchParams(window.location.search).get("groupId");
         const lessonId = new URLSearchParams(window.location.search).get("lessonId");
 
@@ -57,7 +62,6 @@
             return;
         }
 
-        // Собираем данные оценок и посещаемости
         const estimations = {};
         const presences = {};
 
@@ -76,7 +80,6 @@
             presence: presences,
         };
 
-        // Отправляем запрос
         fetch(`/musical-school/grade/add?groupId=${groupId}&lessonId=${lessonId}`, {
             method: "POST",
             headers: {

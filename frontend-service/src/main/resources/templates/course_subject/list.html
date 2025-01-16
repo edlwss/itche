@@ -1,39 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/img/iconic.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Детали курса</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .course {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .subject-list {
-            list-style: none;
-            padding: 0;
-        }
-        .subject-item {
-            margin-left: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/course/list.css">
 </head>
 <body>
-<h1>Детали курса</h1>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/musical-school">Главная</a></li>
+            <li><a href="/">Выход</a></li>
+        </ul>
+    </nav>
+</header>
 
 <div data-th-each="entry : ${courseSubjects}">
-    <div class="course">
-        <h2 data-th-text="${entry.key}">Название курса</h2>
-        <ul class="subject-list">
-            <li data-th-each="subject : ${entry.value}" data-th-text="${subject.title}" class="subject-item">Название предмета</li>
-        </ul>
-        <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/course-subjects/{courseId}/add(courseId=${courseId})}">+subject</a>
+    <h1 data-th-text="${entry.key}"></h1>
+    <div class="main-container">
+        <main>
+            <table class="courses-table">
+                <thead>
+                <tr>
+                    <th>Название предмета</th>
+                    <th>Силлабус</th>
+                    <th>Преподаватель</th>
+                    <th>Дата обновления</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="subject : ${entry.value}">
+                    <td data-th-text="${subject.title}"></td>
+                    <td data-th-text="${subject.titleSyllabus}"></td>
+                    <td>
+                        <a class="learn-more-link" data-th-if="${subject.teacher != null}"
+                           data-th-href="@{/musical-school/teachers/teacher/{teacherId}(teacherId=${subject.teacher.id})}"
+                           data-th-text="${subject.teacher.user.firstName} + ' ' + ${subject.teacher.user.lastName}"></a>
+                        <span data-th-unless="${subject.teacher != null}">No teacher assigned</span>
+                    </td>
+                    <td data-th-text="${subject.updateDate()}"></td>
+                    <td>
+                        <a data-th-if="${role == 'ROLE_ADMIN'}"
+                           data-th-href="@{/musical-school/subjects/subject/{subjectId}/edit(subjectId=${subject.id})} " class="learn-more-link">Редактировать</a>
+                    </td>
+                    <td>
+                        <form data-th-if="${role == 'ROLE_ADMIN'}"
+                              data-th-action="@{/musical-school/course-subjects/{courseId}/{subjectId}(courseId=${courseId}, subjectId=${subject.id})}"
+                              method="post" style="display:inline;">
+                            <button type="submit" class="delete-link" onclick="return confirm('Вы точно хотите удалить урок?');">
+                                &#x2716; <!-- Крестик -->
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </main>
     </div>
 </div>
 
+<a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/course-subjects/{courseId}/add(courseId=${courseId})}" class="btn btn-primary position-fixed">Добавить предмет в курс</a>
+<a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/subjects/create}" class="btn btn-primary2 position-fixed2">Создать новый предмет</a>
+<footer>
+    <p>&copy; 2025 Musical School. Все права защищены.</p>
+</footer>
 </body>
 </html>

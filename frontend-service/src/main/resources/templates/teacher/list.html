@@ -2,71 +2,51 @@
 <html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Список студентов</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            text-align: center;
-        }
-        .add-student-btn {
-            display: block;
-            margin: 20px auto;
-            text-align: center;
-            font-size: 16px;
-            text-decoration: none;
-            color: #fff;
-            background-color: #4CAF50;
-            padding: 10px 20px;
-            border-radius: 5px;
-        }
-        .add-student-btn:hover {
-            background-color: #45a049;
-        }
-        table {
-            width: 80%;
-            margin: 0 auto;
-            border-collapse: collapse;
-            text-align: left;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-        tr {
-            cursor: pointer;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
+    <link rel="icon" type="image/png" href="/img/iconic.png">
+    <title>Список учителей</title>
+    <link rel="stylesheet" href="/css/user/list_teacher.css">
 </head>
 <body>
-<h1>Список teachers</h1>
-
-<a data-th-if="${role == 'ROLE_ADMIN'}" href="/musical-school/teachers/create" class="add-student-btn">Добавить учителя</a>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/musical-school">Главная</a></li>
+            <li><a href="/">Вход/выход</a></li>
+        </ul>
+    </nav>
+</header>
+<h1>Список учителей</h1>
+<div class="buttons">
+    <a data-th-if="${role == 'ROLE_ADMIN'}" href="/musical-school/teachers/create" class="add-teacher-btn">Добавить учителя</a>
+    <a class="btn btn-primary position-fixed" href="/musical-school/subjects/teachers/pdf" >Скачать список PDF</a>
+</div>
 
 <table>
     <thead>
     <tr>
-        <th>Имя</th>
-<!--        <th>Группа</th>-->
-<!--        <th>Курс</th>-->
+        <th>Имя и фамилия</th>
+        <th>Предметы</th>
     </tr>
     </thead>
     <tbody>
-    <tr data-th-each="teacher : ${teachers}">
+    <tr data-th-each="entry : ${subjects_teachers}">
         <td>
-            <a data-th-href="@{teacher/{teacherId}(teacherId=${teacher.id})}"
-               data-th-text="${teacher.user.firstName} + ' ' + ${teacher.user.lastName}">
-            </a>
+            <a data-th-href="@{/musical-school/teachers/teacher/{teacherId}(teacherId=${entry.key.id})}"
+               data-th-text="${entry.key.user.firstName} + ' ' + ${entry.key.user.lastName}"></a>
         </td>
-<!--        <td data-th-text="${student.group.title}"></td>-->
-<!--        <td data-th-text="${student.group.course.title}"></td>-->
+        <td>
+    <span data-th-each="subject, iterStat : ${entry.value}">
+        <span data-th-text="${subject.title}"></span>
+        <span th:if="${!iterStat.last}">, </span>
+    </span>
+        </td>
     </tr>
     </tbody>
 </table>
+
+<footer>
+    <p>&copy; 2025 Музыкальная школа. Все права защищены.</p>
+</footer>
 
 </body>
 </html>

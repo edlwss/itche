@@ -3,13 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Музыкальная школа</title>
-</head>
-<body>
-    <h1>Музыкальная Школа</h1>
-    <a data-th-href="@{/musical-school/courses/list}">List Course</a><br>
-    <a data-th-href="@{/musical-school/teachers/list}">List Teacher</a><br>
-    <a data-th-href="@{/musical-school/groups}">List Groups</a><br>
-    <a data-th-href="@{/musical-school/lessons?groupId=1&year=2025&month=1}">List Lesson</a>
+    <link rel="icon" type="image/png" href="/img/iconic.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
+</head>
+<body style="background-image: url('/img/img_home.jpeg');
+background-repeat: no-repeat; background-position: center center;
+background-attachment: fixed; background-size: cover;">
+
+<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(255, 255, 255, 0.4); z-index: -1;"></div>
+
+<header class="header">
+    <div class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand">Музыкальная Школа</a>
+        <div class="navbar-nav ml-auto">
+
+            <!-- Ссылка на группы (только для админов и учителей) -->
+            <a class="nav-link" href="/musical-school/groups"
+               th:href="@{/musical-school/groups}"
+               th:if="${role == 'ROLE_ADMIN' || role == 'ROLE_TEACHER'}">
+                <i class="bi bi-list-ul"></i> Группы
+            </a>
+
+            <!-- Ссылка на расписание уроков (для админов, учителей и студентов) -->
+            <a class="nav-link" href="/musical-school/lessons?groupId=1&year=2025&month=1"
+               th:href="@{/musical-school/lessons(groupId=2, year=2025, month=1)}"
+               th:if="${role == 'ROLE_ADMIN' || role == 'ROLE_TEACHER' || role == 'ROLE_STUDENT'}">
+                <i class="bi bi-calendar"></i> Расписание уроков
+            </a>
+
+            <a class="nav-link" href="#"
+               th:href="@{'/musical-school/teachers/teacher/' + ${userId}}"
+               th:if="${role == 'ROLE_TEACHER'}">
+                <i class="bi bi-person"></i> Профиль
+            </a>
+            <a class="nav-link" href="#"
+               th:href="@{'/musical-school/students/student/' + ${userId}}"
+               th:if="${role == 'ROLE_STUDENT'}">
+                <i class="bi bi-person"></i> Профиль
+            </a>
+            <a class="nav-link" href="#"
+               th:href="@{'/musical-school/admin/' + ${userId}}"
+               th:if="${role == 'ROLE_ADMIN'}">
+                <i class="bi bi-person"></i> Профиль
+            </a>
+            <a class="nav-link" href="/"><i class="bi bi-box-arrow-right"></i>Вход/выход</a>
+        </div>
+    </div>
+</header>
+
+<main class="main-content text-center">
+    <h1>Музыкальная школа</h1>
+    <p>Откройте для себя мир музыки! Присоединяйтесь к нашим курсам и обучайтесь у лучших преподавателей.</p>
+    <p><a href="/musical-school/courses/list" class="btn btn-primary">Смотреть курсы</a></p>
+    <p><a href="/musical-school/teachers/list" class="btn btn-primary">Преподавательский состав</a></p>
+</main>
+
+<footer class="footer text-center">
+    <p>&copy; 2025 Музыкальная Школа. Все права защищены.</p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

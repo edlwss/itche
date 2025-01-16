@@ -1,0 +1,119 @@
+/* Основные стили */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Шапка */
+header {
+    background-color: #4c8caf;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+/* Подвал */
+footer {
+    background-color: #4c8caf;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px; /* Добавим отступ сверху для разделения с контентом */
+}
+
+
+/* Форма */
+form {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="email"],
+input[type="password"],
+input[type="file"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4c8caf;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3a6d8b;
+}
+
+/* Стили для паспортных полей */
+#passportFields,
+#birthCertificateField {
+    margin-top: 20px;
+}
+
+/* Стили для заголовков секций */
+h2 {
+    color: #4c8caf;
+    border-bottom: 2px solid #4c8caf;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+/* Стили для label */
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Стили для input с атрибутом list */
+input[list] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Стили для datalist (не применяются напрямую к option, так как их внешний вид зависит от браузера) */
+datalist {
+    display: none; /* Это нужно для корректного отображения в некоторых браузерах */
+}
+
+/* Стили для фокуса на input */
+input[list]:focus {
+    border-color: #4c8caf;
+    box-shadow: 0 0 5px rgba(76, 140, 175, 0.5);
+}
+

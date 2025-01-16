@@ -3,6 +3,7 @@ package ru.itche.petproject.backendservice.subject.service;
 import ru.itche.petproject.backendservice.subject.entity.Subject;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface SubjectService {
@@ -20,4 +21,8 @@ public interface SubjectService {
     Iterable<Subject> getSubjectsByTeacher(Integer teacherId);
 
     void chageTeacher(Integer teacherId, List<Integer> subjectsId);
+
+    Map<Integer, List<Subject>> getSubjectsGroupedByTeacher();
+
+    byte[] generatePdf();
 }

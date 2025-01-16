@@ -58,7 +58,11 @@ public class UserRestController {
                 payload.cardPayload().passportNumber(),
                 payload.cardPayload().issuedBy(),
                 payload.cardPayload().birthCertificateNumber(),
-                payload.cardPayload().issueDate());
+                payload.cardPayload().issueDate(),
+                payload.addressPayload().city(),
+                payload.addressPayload().street(),
+                payload.addressPayload().home(),
+                payload.addressPayload().flat());
 
         return ResponseEntity.created(uriComponentsBuilder
                         .replacePath("/musical-school-api/admin/{userId}")
@@ -82,7 +86,11 @@ public class UserRestController {
                 payload.cardPayload().passportNumber(),
                 payload.cardPayload().issuedBy(),
                 payload.cardPayload().birthCertificateNumber(),
-                payload.cardPayload().issueDate());
+                payload.cardPayload().issueDate(),
+                payload.addressPayload().city(),
+                payload.addressPayload().street(),
+                payload.addressPayload().home(),
+                payload.addressPayload().flat());
 
         return ResponseEntity.noContent()
                 .build();

@@ -2,8 +2,12 @@ package ru.itche.petproject.frontendservice.lesson.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,7 +56,8 @@ public class LessonController {
             @RequestParam Integer month,
             Model model) {
 
-        Map<LocalDate, List<Lesson>> schedule = lessonRestClient.getGroupSchedule(groupId, year, month);
+        Map<LocalDate, List<Lesson>> schedule =
+                lessonRestClient.getGroupSchedule(groupId, year, month);
 
         List<Group> groups = groupsRestClient.findListGroups();
 
@@ -69,6 +74,7 @@ public class LessonController {
     public String createCoursePage(Model model,
                                    @RequestParam("groupId") Integer groupId,
                                    @RequestParam("data") LocalDate date) {
+
         model.addAttribute("groupId", groupId);
         model.addAttribute("date", date);
         model.addAttribute("groups", groupsRestClient.findListGroups());
@@ -82,5 +88,28 @@ public class LessonController {
         this.lessonRestClient.createLesson(payload.group(), payload.subject(), payload.timeLesson(),
                 payload.dateLesson());
         return "redirect:/musical-school/lessons?groupId=1&year=2025&month=1";
+    }
+
+    @PostMapping("/{lessonId:\\d+}")
+    public String deleteLesson(@PathVariable Integer lessonId,
+                               @RequestParam Integer groupId,
+                               @RequestParam Integer year,
+                               @RequestParam Integer month
+                               ) {
+        this.lessonRestClient.deleteLesson(lessonId);
+        return "redirect:/musical-school/lessons?groupId="+groupId+"&year="+year+"&month="+month;
+    }
+
+    @GetMapping("/pdf")
+    public ResponseEntity<byte[]> downloadGradePdf(@RequestParam("groupId") Integer groupId,
+                                                   @RequestParam("year") Integer year,
+                                                   @RequestParam("month") Integer month) {
+
+        byte[] pdfContent = lessonRestClient.getGradePdf(groupId, year, month);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=lessons" + ".pdf");
+
+        return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
     }
 }

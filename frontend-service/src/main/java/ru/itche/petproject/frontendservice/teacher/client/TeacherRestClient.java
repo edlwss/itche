@@ -2,6 +2,7 @@ package ru.itche.petproject.frontendservice.teacher.client;
 import ru.itche.petproject.frontendservice.teacher.entityRecord.Teacher;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +10,7 @@ public interface TeacherRestClient {
 
     List<Teacher> getAllTeachers();
 
-    void createTeacher(String education,
+    Teacher createTeacher(String education,
                        String details,
                        String firstName,
                        String lastName,
@@ -19,7 +20,11 @@ public interface TeacherRestClient {
                        String phoneNumber,
                        String email,
                        String username,
-                       String password);
+                       String password,
+                       String passportNumber, String issuedBy,
+                       String birthCertificateNumber, LocalDate issueDate,
+                       String city, String street, String home,
+                       String flat, String passportSeries);
 
     Optional<Teacher> findTeacher(int teacherId);
 
@@ -34,5 +39,9 @@ public interface TeacherRestClient {
                        LocalDate dateOfBirth,
                        String photo,
                        String phoneNumber,
-                       String email);
+                       String email,
+                       String passportNumber, String issuedBy,
+                       String birthCertificateNumber, LocalDate issueDate,
+                       String city, String street, String home,
+                       String flat, String passportSeries);
 }

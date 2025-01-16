@@ -28,7 +28,7 @@ public class DefaultCourseService implements CourseService {
     @Override
     @Transactional
     public Course createCourse(String title, String titleCurriculum) {
-        return this.courseRepository.save(new Course(null, title, titleCurriculum));
+        return this.courseRepository.save(new Course(null, title, titleCurriculum, null));
     }
 
     @Override

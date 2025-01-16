@@ -30,8 +30,8 @@ public class Subject {
     @Column(name = "update_date")
     private LocalDate updateDate;
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "teacher_id", nullable = true)
     private Teacher teacher;
 
     @PrePersist

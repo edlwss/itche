@@ -33,11 +33,6 @@ public class CourseController {
     }
 
 
-    @GetMapping()
-    public String getCourse() {
-        return "course/detail";
-    }
-
     @GetMapping("edit")
     public String getCourseEditPage() {
         return "course/edit";
@@ -46,7 +41,7 @@ public class CourseController {
     @PostMapping("edit")
     public String updateCourse(@ModelAttribute("course") Course course, UpdateCoursePayload payload) {
         this.courseRestClient.updateCourse(course.id(), payload.title(), payload.titleCurriculum());
-        return "redirect:/musical-school/courses/course/%d".formatted(course.id());
+        return "redirect:/musical-school/course-subjects/%d".formatted(course.id());
     }
 
     @PostMapping("delete")

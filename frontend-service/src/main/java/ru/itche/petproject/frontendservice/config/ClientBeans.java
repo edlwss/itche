@@ -8,6 +8,7 @@ import org.springframework.web.client.RestClient;
 import ru.itche.petproject.frontendservice.course.client.ImplCourseRestClient;
 import ru.itche.petproject.frontendservice.grade.client.ImplGradeRestClient;
 import ru.itche.petproject.frontendservice.group.client.ImplGroupRestClient;
+import ru.itche.petproject.frontendservice.instrument.client.ImplInstrumentClient;
 import ru.itche.petproject.frontendservice.lesson.client.ImplLessonRestClient;
 import ru.itche.petproject.frontendservice.student.client.ImplStudentRestClient;
 import ru.itche.petproject.frontendservice.subject.client.ImplSubjectRestClient;
@@ -40,11 +41,6 @@ public class ClientBeans {
         return new ImplStudentRestClient(restClient, session);
     }
 
-    @Bean
-    public ImplSubjectRestClient subjectRestClient(RestClient restClient,
-                                                   HttpSession session) {
-        return new ImplSubjectRestClient(restClient, session);
-    }
 
     @Bean
     public ImplCourseSubjectsClient courseSubjectsRestClient(RestClient restClient,

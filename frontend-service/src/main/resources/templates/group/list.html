@@ -2,38 +2,54 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/img/iconic.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Список групп</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .course-title {
-      font-weight: bold;
-      font-size: 1.2em;
-      margin-top: 20px;
-    }
-    .group-list {
-      margin-left: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/group/list_all.css">
 </head>
 <body>
 
-<h1>Список курсов и групп</h1>
+<header>
+  <nav>
+    <ul>
+      <li><a href="/musical-school">Главная</a></li>
+      <li><a href="/">Выход</a></li>
+    </ul>
+  </nav>
+</header>
 
-<!-- Цикл по ключам (названиям курсов) в объекте groups -->
 <div data-th-each="entry : ${groups}">
-  <!-- Отображаем название курса -->
-  <div class="course-title" data-th-text="${entry.key}"></div>
+  <h1 data-th-text="'Список групп курса: ' + ${entry.key}"></h1>
 
-  <!-- Список групп для текущего курса -->
-  <div class="group-list">
-    <div data-th-each="group : ${entry.value}">
-      <a data-th-href="@{/musical-school/groups/group-students/{groupId}(groupId=${group.id})}" data-th-text="${group.title}"></a>
-    </div>
+  <div class="main-container">
+    <main>
+      <table class="groups-table">
+        <thead>
+        <tr>
+          <th>Название группы</th>
+          <th>Дата начала</th>
+          <th>Дата окончания</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="group : ${entry.value}">
+          <td data-th-text="${group.title}"></td>
+          <td class="date-cell" data-th-text="${group.startEducation()}"></td>
+          <td class="date-cell" data-th-text="${group.endEducation()}"></td>
+          <td>
+            <a data-th-href="@{/musical-school/groups/group-students/{groupId}(groupId=${group.id})}" class="btn btn-primary2">Узнать подробнее</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </main>
   </div>
 </div>
+
+<footer>
+  <p>&copy; 2025 Musical School. Все права защищены.</p>
+</footer>
 
 </body>
 </html>

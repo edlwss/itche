@@ -57,7 +57,11 @@ public class DefaultStudentService implements StudentService {
                 payload.userPayload().cardPayload().passportNumber(),
                 payload.userPayload().cardPayload().issuedBy(),
                 payload.userPayload().cardPayload().birthCertificateNumber(),
-                payload.userPayload().cardPayload().issueDate()
+                payload.userPayload().cardPayload().issueDate(),
+                payload.userPayload().addressPayload().city(),
+                payload.userPayload().addressPayload().street(),
+                payload.userPayload().addressPayload().home(),
+                payload.userPayload().addressPayload().flat()
         );
 
         Group group = groupRepository.findById(groupId).orElse(null);
@@ -74,18 +78,22 @@ public class DefaultStudentService implements StudentService {
                     Integer userId = student.getUser().getId();
 
                     this.userService.updateUser(userId,
-                            payload.updateUserPayload().lastName(),
-                            payload.updateUserPayload().firstName(),
-                            payload.updateUserPayload().middleName(),
-                            payload.updateUserPayload().dateOfBirth(),
-                            payload.updateUserPayload().photo(),
-                            payload.updateUserPayload().phoneNumber(),
-                            payload.updateUserPayload().email(),
-                            payload.updateUserPayload().cardPayload().passportSeries(),
-                            payload.updateUserPayload().cardPayload().passportNumber(),
-                            payload.updateUserPayload().cardPayload().issuedBy(),
-                            payload.updateUserPayload().cardPayload().birthCertificateNumber(),
-                            payload.updateUserPayload().cardPayload().issueDate());
+                            payload.userPayload().lastName(),
+                            payload.userPayload().firstName(),
+                            payload.userPayload().middleName(),
+                            payload.userPayload().dateOfBirth(),
+                            payload.userPayload().photo(),
+                            payload.userPayload().phoneNumber(),
+                            payload.userPayload().email(),
+                            payload.userPayload().cardPayload().passportSeries(),
+                            payload.userPayload().cardPayload().passportNumber(),
+                            payload.userPayload().cardPayload().issuedBy(),
+                            payload.userPayload().cardPayload().birthCertificateNumber(),
+                            payload.userPayload().cardPayload().issueDate(),
+                            payload.userPayload().addressPayload().city(),
+                            payload.userPayload().addressPayload().street(),
+                            payload.userPayload().addressPayload().home(),
+                            payload.userPayload().addressPayload().flat());
 
 
                     student.setDetails(payload.details());

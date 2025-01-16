@@ -1,85 +1,91 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/img/iconic.png">
   <title>Информация об ученике</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    .container {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      gap: 20px;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      background-color: #f9f9f9;
-    }
-    .photo-container {
-      flex: 1;
-      max-width: 250px;
-    }
-
-    .photo-wrapper {
-      width: 250px;
-      height: 250px;
-      overflow: hidden;
-      /*border-radius: 50%; !* Обрезка в форме круга, можно убрать для квадрата *!*/
-    }
-
-    .photo-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .info-container {
-      flex: 2;
-    }
-    .info-container h2 {
-      margin-bottom: 10px;
-    }
-    .info-container p {
-      margin: 5px 0;
-    }
-    .info-title {
-      font-weight: bold;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/user/detail.css">
 </head>
 <body>
-<h1>Информация об ученике</h1>
+<header>
+  <h1>Ученик [[${student.user.lastName} + ' ' + ${student.user.firstName}]]</h1>
+</header>
 
 <div class="container">
   <div class="photo-container">
     <div class="photo-wrapper">
-      <img th:src="@{/img/{photo}(photo=${student.user.photo})}"
-           alt="Фото ученика">
+      <img th:src="@{/img/{photo}(photo=${student.user.photo})}" alt="Фото ученика">
     </div>
   </div>
   <div class="info-container">
-    <h2 data-th-text="'Ученик ' + ${student.group.title}"></h2>
-    <p><span class="info-title">Имя:</span> <span data-th-text="${student.user.lastName} + ' ' + ${student.user.firstName} + ' ' + ${student.user.middleName}"></span></p>
-    <p><span class="info-title">Дата рождения:</span> <span data-th-text="${student.user.dateOfBirth}"></span></p>
-    <p><span class="info-title">Телефон:</span> <span data-th-text="${student.user.phoneNumber}"></span></p>
-    <p><span class="info-title">Email:</span> <span data-th-text="${student.user.email}"></span></p>
-    <p><span class="info-title">Программа обучения:</span> <span data-th-text="${student.group.course.titleCurriculum}"></span></p>
-    <p><span data-th-if="${role != 'ROLE_STUDENT'}"
-             class="info-title">Детали:</span> <span data-th-text="${student.details}"></span></p>
-    <p><span class="info-title">Период обучения:</span>
-      <span data-th-text="${#dates.format(student.group.startEducation, 'yyyy-MM-dd')}"></span> —
-      <span data-th-text="${#dates.format(student.group.endEducation, 'yyyy-MM-dd')}"></span>
+    <p><span class="info-title">Имя:</span>
+      <span data-th-text="${student.user.lastName} + ' ' + ${student.user.firstName}
+      + ' ' + ${student.user.middleName}"></span></p>
+
+    <p><span class="info-title">Группа:</span>
+      <a th:href="@{'/musical-school/groups/group-students/' +
+      ${student.group.id}}" data-th-text="${student.group.title}"></a>
     </p>
+
+
+    <p><span data-th-if="${role == 'ROLE_ADMIN' || userId == student.id.toString}"
+             class="info-title">Дата рождения:</span>
+      <span data-th-if="${role == 'ROLE_ADMIN' || userId == student.id.toString}"
+            data-th-text="${student.user.dateOfBirth}"></span></p>
+
+    <p><span data-th-if="${role == 'ROLE_ADMIN' || userId == student.id.toString}"
+             class="info-title">Телефон:</span>
+      <span data-th-if="${role == 'ROLE_ADMIN' || userId == student.id.toString}"
+            data-th-text="${student.user.phoneNumber}"></span></p>
+
+    <p><span data-th-if="${role == 'ROLE_ADMIN' || userId == student.id.toString}"
+             class="info-title">Email:</span>
+      <span data-th-if="${role == 'ROLE_ADMIN' || userId == student.id.toString}"
+            data-th-text="${student.user.email}"></span></p>
+
+    <div data-th-if="${role == 'ROLE_ADMIN' || userId == student.id.toString}">
+      <h2>Паспортные данные</h2>
+      <p><span class="info-title">Серия:</span> <span data-th-text="${student.user.idCard.passportSeries}"></span></p>
+      <p><span class="info-title">Номер:</span> <span data-th-text="${student.user.idCard.passportNumber}"></span></p>
+      <p><span class="info-title">Кем выдано:</span> <span data-th-text="${student.user.idCard.issuedBy}"></span></p>
+      <p><span class="info-title">Дата выдачи:</span> <span data-th-text="${student.user.idCard.issueDate}"></span></p>
+
+      <h2>Адрес</h2>
+      <p><span class="info-title">Город:</span> <span data-th-text="${student.user.address.city}"></span></p>
+      <p><span class="info-title">Улица:</span> <span data-th-text="${student.user.address.street}"></span></p>
+      <p><span class="info-title">Дом:</span> <span data-th-text="${student.user.address.home}"></span></p>
+      <p><span class="info-title">Квартира:</span> <span data-th-text="${student.user.address.flat}"></span></p>
+
+      <h2>Учебные данные</h2>
+      <p><span data-th-if="${role == 'ROLE_ADMIN' || role == 'ROLE_TEACHER'|| userId == student.id.toString}"
+               class="info-title">Табель успеваемости:</span>
+        <a data-th-if="${role == 'ROLE_ADMIN' || role == 'ROLE_TEACHER' || userId == student.id.toString}"
+           data-th-href="@{/musical-school/grade/{studentId}(studentId=${student.id()})}"
+           data-th-text="'Табель успеваемости ученика:' + ' ' + ${student.group.title}
+           + ' ' + ${student.user.firstName} + ' ' + ${student.user.lastName()}"
+        ></a></p>
+
+      <p><span class="info-title">Детали:</span> <span data-th-text="${student.details}"></span></p>
+
+      <p><span class="info-title">Владение инструментами:</span>
+        <div class="subject-list" data-th-each="inst : ${instrument}">
+            <li data-th-text="${inst.name}" class="subject-link"></li>
+      <form data-th-if="${role == 'ROLE_ADMIN'}"
+            data-th-action="@{/musical-school/instrument/{instrumentId}/{userId}(instrumentId=${inst.id()}, userId=${student.user.id})}"
+            method="post" style="display:inline;">
+        <button type="submit" class="delete-link" onclick="return confirm('Вы точно хотите удалить инструмент?');">
+          &#x2716; <!-- Крестик -->
+        </button>
+      </form>
+    </div>
+    </div>
+
+    <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/students/student/{studentId}/edit(studentId=${student.id})}" class="button">Редактировать профиль</a>
   </div>
-  <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/students/student/{studentId}/edit(studentId=${student.id})}">Update</a>
 </div>
 
+<footer>
+  &copy; 2025 Музыкальная Школа. Все права защищены.
+</footer>
 </body>
 </html>

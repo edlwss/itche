@@ -2,122 +2,173 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Update Student</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f9;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: #ffffff;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin: 10px 0 5px;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        textarea {
-            height: 100px;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .delete-button {
-            background-color: #f44336;
-        }
-
-        .delete-button:hover {
-            background-color: #e53935;
-        }
-
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #4CAF50;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="icon" type="image/png" href="/img/iconic.png">
+    <title>Обновление профиля</title>
+    <link rel="stylesheet" href="/css/user/create.css">
 </head>
 <body>
 
-<h1>Update Teacher</h1>
-<div class="container">
-    <form method="post" data-th-action="@{/musical-school/teachers/teacher/{teacherId}/edit(teacherId=${teacher.id})}" >
+<header>
+    <h1>Обновление профиля</h1>
+</header>
 
-        <label>First Name:
-            <input type="text" name="userPayload.firstName" data-th-value="${teacher.user.firstName}" />
-        </label>
-        <label>Middle Name:
-            <input type="text" name="userPayload.middleName" data-th-value="${teacher.user.middleName}"  />
-        </label>
-        <label>Last Name:
-            <input type="text" name="userPayload.lastName" data-th-value="${teacher.user.lastName}" />
-        </label>
-        <label>Education:
-            <input type="text" name="education" data-th-value="${teacher.education}" />
-        </label>
+<form method="post" enctype="multipart/form-data" data-th-action="@{/musical-school/teachers/teacher/{teacherId}/edit(teacherId=${teacher.id})}" onsubmit="return validateForm();">
+    <h2>Личные данные</h2>
+    <label>
+        Фамилия:
+        <input type="text" id="lastName" name="userPayload.lastName" data-th-value="${teacher.user.lastName}" required onchange="generateUsername();">
+    </label>
+    <br>
+    <label>
+        Имя:
+        <input type="text" name="userPayload.firstName" data-th-value="${teacher.user.firstName}" required>
+    </label>
+    <br>
+    <label>
+        Отчество:
+        <input type="text" name="userPayload.middleName" data-th-value="${teacher.user.middleName}">
+    </label>
+    <br>
+    <label>
+        Дата рождения:
+        <input type="date" id="dateOfBirth" name="userPayload.dateOfBirth" data-th-value="${teacher.user.dateOfBirth}" required onchange="toggleFields();">
+    </label>
+    <br>
+    <label>
+        Телефон:
+        <input type="text" id="phoneNumber" name="userPayload.phoneNumber" data-th-value="${teacher.user.phoneNumber}" required>
+    </label>
+    <br>
+    <label>
+        Email:
+        <input type="email" id="email" name="userPayload.email" data-th-value="${teacher.user.email}" required>
+    </label>
+    <br>
+    <label>
+        Фото:
+        <input type="file" name="photo" accept="image/*" style="display: none;" id="photoInput">
+        <input type="text" readonly th:value="${teacher.user.photo ?: 'Файл не выбран'}" id="fileNameDisplay" style="cursor: pointer;">
+    </label>
 
-        <label>Date of Birth:
-            <input type="date" name="userPayload.dateOfBirth" data-th-value="${teacher.user.dateOfBirth}"  />
-        </label>
-        <label>Phone Number:
-            <input type="tel" name="userPayload.phoneNumber" data-th-value="${teacher.user.phoneNumber}" />
-        </label>
-        <label>Email:
-            <input type="email" name="userPayload.email" data-th-value="${teacher.user.email}"  />
-        </label>
-        <label>Details:
-            <textarea name="details" >[[${teacher.details}]]</textarea>
-        </label>
+    <input type="hidden" name="currentPhoto" th:value="${teacher.user.photo}">
+    <br>
 
-        <label>Photo:
-            <input type="text" name="userPayload.photo" data-th-value="${teacher.user().photo()}" />
+    <div id="passportFields">
+        <div id="passportDetails">
+            <h2>Паспортные данные</h2>
+            <label>
+                Серия паспорта:
+                <input type="text" id="passportSeries" name="userPayload.idCardPayload.passportSeries" data-th-value="${teacher.user.idCard.passportSeries}">
+            </label>
+            <br>
+            <label>
+                Номер паспорта:
+                <input type="text" id="passportNumber" name="userPayload.idCardPayload.passportNumber" data-th-value="${teacher.user.idCard.passportNumber}">
+            </label>
+        </div>
+        <br>
+        <label>
+            Кем выдано:
+            <input type="text" name="userPayload.idCardPayload.issuedBy" data-th-value="${teacher.user.idCard.issuedBy}">
         </label>
-        <button type="submit">Update Information</button>
-    </form>
+        <br>
+        <label>
+            Дата выдачи:
+            <input type="date" name="userPayload.idCardPayload.issueDate" data-th-value="${teacher.user.idCard.issueDate}">
+        </label>
+    </div>
 
-    <form method="post" data-th-action="@{/musical-school/teachers/teacher/{teacherId}/delete(teacherId=${teacher.id})}">
-        <button type="submit" class="delete-button">Delete Teacher</button>
-    </form>
-</div>
+    <h2>Адрес</h2>
+    <label>
+        Город:
+        <input type="text" name="userPayload.addressPayload.city" data-th-value="${teacher.user.address.city}" required>
+    </label>
+    <br>
+    <label>
+        Улица:
+        <input type="text" name="userPayload.addressPayload.street" data-th-value="${teacher.user.address.street}" required>
+    </label>
+    <br>
+    <label>
+        Дом:
+        <input type="text" name="userPayload.addressPayload.home" data-th-value="${teacher.user.address.home}" required>
+    </label>
+    <br>
+    <label>
+        Квартира:
+        <input type="text" name="userPayload.addressPayload.flat" data-th-value="${teacher.user.address.flat}">
+    </label>
+
+    <h2>Профессиональные данные</h2>
+    <label>
+        Образование:
+        <input type="text" name="education" data-th-value="${teacher.education}" required>
+    </label>
+    <br>
+    <label>
+        Дополнительные детали:
+        <textarea name="details" data-th-value="${teacher.details}"></textarea>
+    </label>
+    <br>
+    <button type="submit">Обновить профиль</button>
+</form>
+
+<form method="post" data-th-action="@{/musical-school/teachers/teacher/{teacherId}/delete(teacherId=${teacher.id})}">
+    <button type="submit" class="delete-button">Удалить профиль</button>
+</form>
+
+<footer>
+    &copy; 2025 Музыкальная Школа. Все права защищены.
+</footer>
+
+<script>
+
+    function validateForm() {
+        const phoneNumber = document.getElementById("phoneNumber").value;
+        const passportSeries = document.getElementById("passportSeries").value;
+        const passportNumber = document.getElementById("passportNumber").value;
+        const email = document.getElementById("email").value;
+
+        if (!/^\d{11}$/.test(phoneNumber)) {
+            alert("Телефон должен содержать ровно 11 цифр.");
+            return false;
+        }
+        if (document.getElementById("passportDetails").style.display === "block") {
+            if (!/^\d{4}$/.test(passportSeries)) {
+                alert("Серия паспорта должна содержать ровно 4 цифры.");
+                return false;
+            }
+            if (!/^\d{6}$/.test(passportNumber)) {
+                alert("Номер паспорта должен содержать ровно 6 цифр.");
+                return false;
+            }
+        }
+        if (!/@/.test(email)) {
+            alert("Email должен содержать '@'.");
+            return false;
+        }
+        return true;
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        const photoInput = document.getElementById("photoInput");
+        const fileNameDisplay = document.getElementById("fileNameDisplay");
+
+        // При клике на текстовое поле открываем диалог выбора файла
+        fileNameDisplay.addEventListener("click", function () {
+            photoInput.click();
+        });
+
+        // При выборе нового файла обновляем текстовое поле
+        photoInput.addEventListener("change", function () {
+            const file = photoInput.files[0];
+            if (file) {
+                fileNameDisplay.value = file.name; // Обновляем имя файла
+            } else {
+                fileNameDisplay.value = "${teacher.user.photo ?: 'Файл не выбран'}"; // Возвращаем старое имя
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

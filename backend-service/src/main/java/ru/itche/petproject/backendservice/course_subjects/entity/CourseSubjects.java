@@ -19,11 +19,11 @@ public class CourseSubjects {
     @SequenceGenerator(name = "course_subjects_generator", sequenceName = "musical_school.course_subjects_id_seq", allocationSize = 1)
     Integer id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "course")
     Course course;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "subject")
     Subject subject;
 

@@ -11,12 +11,11 @@ public interface LessonService {
 
     Lesson createLesson(Integer group, Integer subject, LocalTime localTime, LocalDate localDate);
 
-    void updateLesson(Integer id, Integer groupId, Integer subjectId, LocalTime timeLesson,
-                      LocalDate dateLesson);
-
     void deleteLesson(Integer id);
 
     Map<LocalDate, List<Lesson>> getCalendarFormattedSchedule(Integer groupId, int year, int month);
 
     Lesson findLessonId(Integer lessonId);
+
+    byte[] generateSchedulePdf(Integer groupId, int year, int month);
 }
