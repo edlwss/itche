@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,16 +36,20 @@ public class Group {
     private Integer id;
 
     @Column(name = "title")
+    @NotNull
     private String title;
 
     @ManyToOne
     @JoinColumn(name = "course")
+    @NotNull
     private Course course;
 
     @Column(name = "start_education")
+    @NotNull
     private LocalDate startEducation;
 
     @Column(name = "end_education")
+    @NotNull
     private LocalDate endEducation;
 
 }

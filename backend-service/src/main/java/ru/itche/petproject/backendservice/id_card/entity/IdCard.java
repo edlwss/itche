@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,11 +37,13 @@ public class IdCard {
     private String passportNumber;
 
     @Column(name = "issued_by")
+    @NotNull
     private String issuedBy;
 
     @Column(name = "birth_certificate_number", nullable = true)
     private String birthCertificateNumber;
 
     @Column(name = "issue_date")
+    @NotNull
     private LocalDate issueDate;
 }

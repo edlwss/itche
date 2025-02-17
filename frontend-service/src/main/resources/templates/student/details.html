@@ -9,6 +9,12 @@
 <body>
 <header>
   <h1>Ученик [[${student.user.lastName} + ' ' + ${student.user.firstName}]]</h1>
+  <nav>
+    <ul>
+      <li><a href="/musical-school">Главная</a></li>
+      <li><a href="/">Выход</a></li>
+    </ul>
+  </nav>
 </header>
 
 <div class="container">
@@ -44,18 +50,24 @@
             data-th-text="${student.user.email}"></span></p>
 
     <div data-th-if="${role == 'ROLE_ADMIN' || userId == student.id.toString}">
+    <div data-th-if="${student.group().id() == 7 || student.group().id() == 11 || student.group().id() == 12}">
       <h2>Паспортные данные</h2>
       <p><span class="info-title">Серия:</span> <span data-th-text="${student.user.idCard.passportSeries}"></span></p>
       <p><span class="info-title">Номер:</span> <span data-th-text="${student.user.idCard.passportNumber}"></span></p>
       <p><span class="info-title">Кем выдано:</span> <span data-th-text="${student.user.idCard.issuedBy}"></span></p>
       <p><span class="info-title">Дата выдачи:</span> <span data-th-text="${student.user.idCard.issueDate}"></span></p>
-
+    </div>
+    <div data-th-if="${student.group().id() != 7 && student.group().id() != 11 && student.group().id() != 12}">
+      <h2>Учетные данные</h2>
+      <p><span class="info-title">Номер свидетельсва о рождении:</span> <span data-th-text="${student.user.idCard.birthCertificateNumber()}"></span></p>
+      <p><span class="info-title">Дата выдачи:</span> <span data-th-text="${student.user.idCard.issueDate}"></span></p>
+    </div>
       <h2>Адрес</h2>
       <p><span class="info-title">Город:</span> <span data-th-text="${student.user.address.city}"></span></p>
       <p><span class="info-title">Улица:</span> <span data-th-text="${student.user.address.street}"></span></p>
       <p><span class="info-title">Дом:</span> <span data-th-text="${student.user.address.home}"></span></p>
       <p><span class="info-title">Квартира:</span> <span data-th-text="${student.user.address.flat}"></span></p>
-
+    </div>
       <h2>Учебные данные</h2>
       <p><span data-th-if="${role == 'ROLE_ADMIN' || role == 'ROLE_TEACHER'|| userId == student.id.toString}"
                class="info-title">Табель успеваемости:</span>
@@ -73,13 +85,10 @@
       <form data-th-if="${role == 'ROLE_ADMIN'}"
             data-th-action="@{/musical-school/instrument/{instrumentId}/{userId}(instrumentId=${inst.id()}, userId=${student.user.id})}"
             method="post" style="display:inline;">
-        <button type="submit" class="delete-link" onclick="return confirm('Вы точно хотите удалить инструмент?');">
-          &#x2716; <!-- Крестик -->
-        </button>
       </form>
-    </div>
-    </div>
 
+    </div>
+<br>
     <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/students/student/{studentId}/edit(studentId=${student.id})}" class="button">Редактировать профиль</a>
   </div>
 </div>

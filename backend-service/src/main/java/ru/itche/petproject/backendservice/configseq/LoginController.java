@@ -32,7 +32,6 @@ public class LoginController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Генерация JWT токена
         String token = jwtProvider.generateToken(authentication);
 
         Integer userId = userRepository.findByUsername(username).orElseThrow().getId();
@@ -44,8 +43,6 @@ public class LoginController {
             userId = teacherRepository.findTeacherIdByUserId(userId);
         }
 
-
-        // Возвращаем токен клиенту
         return ResponseEntity.ok(Map.of("token", token, "userId", userId, "role", userRole));
     }
 }

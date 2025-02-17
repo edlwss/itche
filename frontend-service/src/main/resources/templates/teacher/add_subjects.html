@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="/img/iconic.png">
     <title>Добавление предметов в курс</title>
+    <link rel="stylesheet" href="/css/course/add_subject.css">
 </head>
 <body>
-<h1 data-th-text="'Добавление предметов' + ${teacher.user().firstName()} +
+<header>
+<h1 data-th-text="'Добавление предметов' + ' ' + ${teacher.user().firstName()} + ' ' +
                                             ${teacher.user().lastName()}"></h1>
-
+</header>
 <form data-th-action="@{/musical-school/teachers/teacher/{teacherId}/add(teacherId=${teacherId})}" method="post">
     <ul>
         <li data-th-each="subject : ${subjects}">
@@ -20,5 +22,8 @@
     </ul>
     <button type="submit">Сохранить</button>
 </form>
+<footer>
+    <p>&copy; 2025 Musical School. Все права защищены.</p>
+</footer>
 </body>
 </html>

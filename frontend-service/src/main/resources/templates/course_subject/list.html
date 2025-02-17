@@ -5,7 +5,7 @@
     <link rel="icon" type="image/png" href="/img/iconic.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Детали курса</title>
-    <link rel="stylesheet" href="/css/course/list.css">
+    <link rel="stylesheet" href="/css/course/list_s.css">
 </head>
 <body>
 <header>
@@ -65,7 +65,8 @@
 
 <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/course-subjects/{courseId}/add(courseId=${courseId})}" class="btn btn-primary position-fixed">Добавить предмет в курс</a>
 <a data-th-if="${role == 'ROLE_ADMIN'}" data-th-href="@{/musical-school/subjects/create}" class="btn btn-primary2 position-fixed2">Создать новый предмет</a>
-<footer>
+
+<footer style="margin-top: auto;">
     <p>&copy; 2025 Musical School. Все права защищены.</p>
 </footer>
 </body>

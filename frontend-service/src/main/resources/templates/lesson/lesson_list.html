@@ -69,14 +69,14 @@
 
                         <!-- Колонка с уроком -->
                         <div class="lesson-title"
-                             data-th-if="${role == 'ROLE_TEACHER' and event.subject.teacher().id().toString().toString() == userId}"
+                             data-th-if="${role == 'ROLE_TEACHER' and event.subject?.teacher()?.id()?.toString() == userId}"
                              data-th-attr="title=${event.subject.title}">
                             <a data-th-href="@{/musical-school/grade(groupId=${groupId}, lessonId=${event.id})}"
                                data-th-text="${event.subject.title}">
                             </a>
                         </div>
                         <div class="lesson-title"
-                             data-th-if="${!(role == 'ROLE_TEACHER' and event.subject.teacher.id.toString() == userId)}"
+                             data-th-if="${!(role == 'ROLE_TEACHER' and event.subject?.teacher()?.id()?.toString() == userId)}"
                              data-th-attr="title=${event.subject.title}"
                              data-th-text="${event.subject.title}">
                         </div>

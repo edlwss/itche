@@ -84,10 +84,9 @@ public class LessonController {
 
     @PostMapping("create")
     public String createLesson(NewLessonPayload payload) {
-        System.out.println(payload);
         this.lessonRestClient.createLesson(payload.group(), payload.subject(), payload.timeLesson(),
                 payload.dateLesson());
-        return "redirect:/musical-school/lessons?groupId=1&year=2025&month=1";
+        return "redirect:/musical-school/lessons?groupId="+payload.group()+"&year=2025&month=1";
     }
 
     @PostMapping("/{lessonId:\\d+}")

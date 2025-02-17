@@ -9,6 +9,12 @@
 <body>
 <header>
   <h1>Преподаватель [[${teacher.user.lastName} + ' ' + ${teacher.user.firstName}]]</h1>
+  <nav>
+    <ul>
+      <li><a href="/musical-school">Главная</a></li>
+      <li><a href="/">Выход</a></li>
+    </ul>
+  </nav>
 </header>
 
 <div class="container">
@@ -36,9 +42,6 @@
       <form data-th-if="${role == 'ROLE_ADMIN'}"
             data-th-action="@{/musical-school/instrument/{instrumentId}/{userId}(instrumentId=${inst.id()}, userId=${teacher.user.id})}"
             method="post" style="display:inline;">
-        <button type="submit" class="delete-link" onclick="return confirm('Вы точно хотите удалить инструмент?');">
-          &#x2716; <!-- Крестик -->
-        </button>
       </form>
     </div>
 

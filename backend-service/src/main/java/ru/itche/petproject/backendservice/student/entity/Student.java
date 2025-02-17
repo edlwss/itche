@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -37,10 +38,12 @@ public class Student {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "\"user\"")
+    @NotNull
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "\"group\"")
+    @NotNull
     private Group group;
 
     @Column(name = "details")

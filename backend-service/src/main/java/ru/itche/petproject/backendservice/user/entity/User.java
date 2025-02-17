@@ -11,6 +11,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,30 +36,46 @@ public class User {
     private Integer id;
 
     @Column(name = "last_name")
+    @NotNull
+    @Size(max = 100)
     private String lastName;
 
     @Column(name = "name")
+    @NotNull
+    @Size(max = 100)
     private String firstName;
 
     @Column(name = "middle_name")
+    @NotNull
+    @Size(max = 100)
     private String middleName;
 
     @Column(name = "data_of_birth")
+    @NotNull
     private LocalDate dateOfBirth;
 
     @Column(name = "photo")
-    private String photo; // Хранит путь к файлу или URL изображения
+    private String photo;
 
     @Column(name = "phone_number")
+    @NotNull
+    @Size(max = 11)
+    @Pattern(regexp = "^79\\d{9}$", message = "Формат номера неверный. Пример: 79999999999")
     private String phoneNumber;
 
     @Column(name = "email")
+    @NotNull
     private String email;
 
     @Column(name = "username")
+    @NotNull
+    @Size(min = 1, max = 100)
+
     private String username;
 
     @Column(name = "password")
+    @NotNull
+    @Size(min = 3, max = 100)
     private String password;
 
     @ManyToOne

@@ -3,11 +3,14 @@ package ru.itche.petproject.backendservice.group.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.itche.petproject.backendservice.course.entity.Course;
+import ru.itche.petproject.backendservice.course.repository.CourseRepository;
 import ru.itche.petproject.backendservice.group.entity.Group;
 import ru.itche.petproject.backendservice.group.repository.GroupRepository;
 import ru.itche.petproject.backendservice.student.entity.Student;
 import ru.itche.petproject.backendservice.student.repository.StudentRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,6 +24,7 @@ public class DefaultGroupService implements GroupService {
 
     private final GroupRepository groupRepository;
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     @Transactional
@@ -78,6 +82,16 @@ public class DefaultGroupService implements GroupService {
     @Override
     public Iterable<Group> getListGroups() {
         return groupRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void createGroup(String title, Integer course,
+                            LocalDate localDate, LocalDate localDate1) {
+
+        Course courseObj = courseRepository.findById(course).orElse(null);
+
+        this.groupRepository.save(new Group(null, title, courseObj, localDate, localDate1));
     }
 
 }

@@ -1,0 +1,169 @@
+/* Основной стиль страницы */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Шапка сайта */
+header {
+    background-color: #4c8caf;
+    color: white;
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    color: #4c8caf;
+    padding: 3px 0;
+    margin-bottom: 1px;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Контейнер для контента */
+.main-container {
+    display: flex;
+    justify-content: center; /* Центрируем контент по горизонтали */
+    padding: 20px 0;
+}
+
+/* Контейнер для таблицы */
+main {
+    width: 80%; /* Устанавливаем ширину таблицы */
+    max-width: 1200px; /* Ограничиваем максимальную ширину */
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Центрируем таблицу внутри контейнера */
+}
+
+/* Таблица курсов */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4c8caf;
+    color: white;
+}
+
+/* Стиль для ссылки "Узнать больше" */
+.learn-more-link {
+    color: #4c8caf;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.learn-more-link:hover {
+    text-decoration: underline;
+}
+
+/* Подвал страницы */
+footer {
+    text-align: center;
+    background-color: #4c8caf;
+    color: #fff;
+    padding: 10px 0;
+    margin-top: 20px;
+    width: 100%; /* Растягивает подвал на всю ширину */
+}
+
+/* Чтобы подвал оставался внизу, но не фиксирован */
+footer {
+    margin-top: auto; /* Это позволяет подвалу быть внизу страницы, если контента недостаточно */
+}
+
+/* Чтобы подвал оставался внизу, но не фиксирован */
+
+/* Общие стили для ссылки */
+a.btn.btn-primary {
+    display: inline-block;
+    background-color: #4c8caf;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+a.btn.btn-primary:hover {
+    background-color: #90a7bf;
+    transform: scale(1.05);
+}
+a.btn.btn-primary2{
+    display: inline-block;
+    background-color: #4c8caf;
+    color: #ffffff;
+    padding: 10px 30px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+a.btn.btn-primary2:hover {
+    background-color: #90a7bf;
+    transform: scale(1.05);
+}
+
+.position-fixed {
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    z-index: 1000;
+}
+
+.position-fixed2 {
+    position: fixed;
+    bottom: 20px;
+    left: 10px;
+    z-index: 1000;
+}
+
+.delete-link {
+    background: none;
+    border: none;
+    color: #2b5179;
+    cursor: pointer;
+    font-size: 12px;
+}

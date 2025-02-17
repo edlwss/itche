@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,15 +38,19 @@ public class Lesson {
 
     @ManyToOne()
     @JoinColumn(name = "group_id")
+    @NotNull
     private Group group;
 
     @ManyToOne()
     @JoinColumn(name = "subject")
+    @NotNull
     private Subject subject;
 
     @Column(name = "time_lesson")
+    @NotNull
     private LocalTime timeLesson;
 
     @Column(name = "date_lesson")
+    @NotNull
     private LocalDate dateLesson;
 }

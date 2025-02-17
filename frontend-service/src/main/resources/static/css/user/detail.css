@@ -13,16 +13,45 @@ body {
 
 header {
     background-color: #4c8caf;
-    color: #fff;
+    color: white;
     padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center; /* Центрирует содержимое по горизонтали */
+    align-items: center; /* Центрирует содержимое по вертикали */
+    position: relative; /* Устанавливаем позицию для дочерних элементов */
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2em;
+    position: absolute; /* Абсолютное позиционирование для центровки */
+    left: 50%; /* Центрируем по горизонтали */
+    transform: translateX(-50%); /* Убираем смещение от левого края */
 }
+
+header nav {
+    margin-right: auto; /* Отодвигаем меню навигации вправо */
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+    color: white;
+}
+
 
 .container {
     display: flex;

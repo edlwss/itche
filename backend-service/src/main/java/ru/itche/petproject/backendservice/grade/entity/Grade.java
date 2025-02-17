@@ -9,6 +9,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,15 +37,20 @@ public class Grade {
 
     @ManyToOne
     @JoinColumn(name = "lessonId")
+    @NotNull
     private Lesson lesson;
 
     @ManyToOne
     @JoinColumn(name = "studentId")
+    @NotNull
     private Student student;
 
+    @Min(1)
+    @Max(5)
     @Column(name = "estimation")
     Integer estimation;
 
     @Column(name = "presence")
+    @Pattern(regexp = "^(присутствовал|отсутствовал)$")
     String presence;
 }

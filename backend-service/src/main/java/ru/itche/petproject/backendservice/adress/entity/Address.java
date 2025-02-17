@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,14 +29,18 @@ public class Address {
     private Integer id;
 
     @Column(name = "city")
+    @NotNull
     private String city;
 
     @Column(name = "street")
+    @NotNull
     private String street;
 
     @Column(name = "home")
+    @NotNull
     private String home;
 
     @Column(name = "flat")
+    @NotNull
     private String flat;
 }

@@ -33,7 +33,7 @@
     <div class="form-group">
       <label for="subject">Предмет:</label>
       <select id="subject" name="subject">
-        <option data-th-if="${subject.teacher().id().toString() == userId}"
+        <option data-th-if="${subject?.teacher()?.id()?.toString() == userId}"
                 data-th-each="subject : ${subjects}"
                 data-th-value="${subject.id}"
                 data-th-text="${subject.title}"></option>

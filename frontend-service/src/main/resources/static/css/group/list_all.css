@@ -109,11 +109,15 @@ main {
 
 /* Подвал страницы */
 footer {
-    background-color: #4c8caf;
-    color: white;
     text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    background-color: #4c8caf;
+    color: #fff;
+    padding: 10px 0;
+    margin-top: 20px;
+    width: 100%; /* Растягивает подвал на всю ширину */
+}
+
+/* Чтобы подвал оставался внизу, но не фиксирован */
+footer {
+    margin-top: auto; /* Это позволяет подвалу быть внизу страницы, если контента недостаточно */
 }

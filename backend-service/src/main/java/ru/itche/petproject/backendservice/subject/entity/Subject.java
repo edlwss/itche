@@ -1,6 +1,7 @@
 package ru.itche.petproject.backendservice.subject.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import ru.itche.petproject.backendservice.teacher.entity.Teacher;
 
@@ -22,9 +23,11 @@ public class Subject {
     private Integer id;
 
     @Column(name = "title")
+    @NotNull
     private String title;
 
     @Column(name = "title_syllabus")
+    @NotNull
     private String titleSyllabus;
 
     @Column(name = "update_date")
